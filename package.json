@@ -12,5 +12,9 @@
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "svelte": "^3.44.0",
     "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "@rollup/plugin-dsv": "^2.0.3",
+    "d3-fetch": "^3.0.1"
   }
 }
