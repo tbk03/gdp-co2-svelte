@@ -13,6 +13,8 @@
 	import {	format		} from "d3-format"
 
     // import components
+	import AxisXCont from "./AxisXCont.svelte";
+	import AxisYCont from "./AxisYCont.svelte";
     
     // import scripts
 	import move from "../scripts/move";
@@ -71,11 +73,11 @@
 	// -------------------------------------------------------------------------------------------
 
 	$: scaleX = scaleLinear()
-				.domain(expandScale(extent(data, accessX), 0.1, 0.05))
+				.domain(expandScale(extent(data, accessX), 0, 0.05))
 				.range([0, dms.boundedWidth]);
 
 	$: scaleY = scaleLinear()
-				.domain(expandScale(extent(data, accessY), 0.1, 0.05))
+				.domain(expandScale(extent(data, accessY), 0, 0.05))
 				.range([dms.boundedHeight, 0]);
 	
 	$: scaleSize = scaleSqrt()
@@ -145,6 +147,16 @@
 	
 	<!-- the chart (all svg elements) -->
 	<svg width="{dms.width}" height="{dms.height}">
+
+		<!-- axis -->
+		<g style = "{move(dms.marginLeft, dms.height - dms.marginBottom)}">
+			<AxisXCont {chartSpecification}/>
+		</g>
+		<g style = "{move(dms.marginLeft, dms.marginTop)}">
+			<AxisYCont {chartSpecification}/>
+		</g>
+
+		<!-- scatter points -->
 		<g style = "{move(dms.marginLeft, dms.marginTop)}">
 			{#each data as d}
 				<circle
@@ -152,6 +164,9 @@
 					cx = {scaleX(accessX(d))}
 					cy = {scaleY(accessY(d))}
 					r = {scaleSize(accessSize(d))}
+					opacity=0.5
+
+					clip-path = 'url(#axis-cutoff)'
 					
 					on:mouseover={mouseOver}
 					on:mouseleave={mouseLeave}
@@ -163,6 +178,11 @@
 					country={accessCountry(d)}/>
 			{/each}
 		</g>
+			<!-- clip circles falling outside the axis -->
+		<clipPath id='axis-cutoff'>
+			<rect   width = {dms.boundedWidth}
+					height = {dms.boundedHeight}/>
+		</clipPath>
 	</svg>
 
 	<!-- the tooltip (html elements) -->
