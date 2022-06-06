@@ -1,15 +1,34 @@
 <script>
   import Standardplot from "./components/Standardplot.svelte";
+
+  $: chartsDMS = {
+    one: {width: 0, height: 0}
+  };
 </script>
 
 <main>
 
   <h1>Hello world!</h1>
 
-  <Standardplot/>
+  <div  class='chart-container' id='chart1'
+        bind:offsetWidth={chartsDMS.one.width}
+        bind:offsetHeight={chartsDMS.one.height}>
+
+    <Standardplot w={chartsDMS.one.width} h={chartsDMS.one.height}/>
+  </div>
+
+  <h1>Hello world again!</h1>
 </main>
 
 <style>
+
+  #chart1 {
+    height: 60vh;
+    max-width: 100%;
+  }
+
+  /* default from template below */
+
   :root {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;

@@ -48,8 +48,8 @@
     // -------------------------------------------------------------------------------------------
 	// 3. Define chart structure
 	// -------------------------------------------------------------------------------------------
-	let w;			// bound to offsetWidth
-	let h;          // bound to offsetHeight
+	export let w = 600;			// bound to offsetWidth
+	export let h = 600;          // bound to offsetHeight
 	let dms = {}; 
 
 	$: dms = {
@@ -80,5 +80,32 @@
 					.domain(extent(data, accessSize))
 					.range([dms.boundedWidth / 200, dms.boundedWidth / 50]);
 
+	// -------------------------------------------------------------------------------------------
+	// 5. Create chart specification object (to pass to other components - axis etc)
+	// -------------------------------------------------------------------------------------------
+
+	$: scales = {	x: scaleX, 
+					y: scaleY, 
+					size: scaleSize	};
+	
+	let accessors = {	x: accessX, 
+						y: accessY, 
+						size: accessSize 	};
+
+	$: chartSpecification = {	scales: scales, 
+								data: data, 
+								accessors: accessors,
+								dms: dms	};					
 
 </script>
+
+<svg width="{dms.width}" height="{dms.height}">
+	<g style = "{move(dms.marginLeft, dms.marginTop)}">
+		{#each data as d}
+			<circle
+				cx = {scaleX(accessX(d))}
+				cy = {scaleY(accessY(d))}
+				r = {scaleSize(accessSize(d))}/>
+		{/each}
+	</g>
+</svg>
