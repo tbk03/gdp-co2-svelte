@@ -23,8 +23,14 @@
 <style>
 
   #chart1 {
-    height: 60vh;
-    max-width: 100%;
+    /* to center */
+		margin: auto; 
+		display: flex;
+		height: 75vh;
+		max-height: 800px;
+
+		/* min-width: 600px; */
+		max-width: 900px;
   }
 
   /* default from template below */
