@@ -17,6 +17,7 @@
     "@rollup/plugin-dsv": "^2.0.3",
     "d3-array": "^3.1.6",
     "d3-fetch": "^3.0.1",
+    "d3-format": "^3.1.0",
     "d3-scale": "^4.0.2"
   }
 }

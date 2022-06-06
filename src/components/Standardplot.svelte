@@ -10,6 +10,7 @@
     import { 	scaleLinear,
 				scaleSqrt   } from "d3-scale";
     import {    extent      } from "d3-array";
+	import {	format		} from "d3-format"
 
     // import components
     
@@ -44,6 +45,7 @@
     let accessX = (d) => d.gdp_per_capita;
     let accessY = (d) => d.annual_co2_emissions_per_capita;
     let accessSize = (d) => d.population_historical_estimates;
+	let accessCountry = (d) => d.entity;
 
     // -------------------------------------------------------------------------------------------
 	// 3. Define chart structure
@@ -101,8 +103,11 @@
 	// 6. Add tooltips
 	// -------------------------------------------------------------------------------------------
 
-	let m = {x:0, y:0};
+	let m = {x:0, y:0}; // holds current mouse position
+	let tooltipText = "";
+	let showTooltip = false;
 
+	// (0, 0) is thetop, left corner of the chart-container div in App.svelte
 	function getAbsMousePos(event) {
 
 	let chartBounds = document  .getElementById("chart1")
@@ -110,42 +115,28 @@
 
 	return {x: event.clientX - chartBounds.x,
 			y: event.clientY - chartBounds.y}
+	}
 
-}
+	function createTooltipText(attributes){
+		let line1 = "<p class='country'>" + attributes.country.value + "</p>";
+		let line2 = "<p class='gdp'>$" + format(",")(attributes.datax.value) + "</p>";
+		let line3 = "<p class='co2'>" + format(".3r")(attributes.datay.value) + " tonnes CO<sub>2</sub></p>";
+		tooltipText = line1 + line2 + line3; 
+	}
 
 	function mouseOver(event){
-        // isHovered = true;
-        // // m.x = event.layerX;
-        // // m.y = event.layerY;
-
         m = getAbsMousePos(event);
-        // d.x = this.attributes.dx.value;
-        // d.y = this.attributes.dy.value;
-		// m.x = event.clientX;
-		// m.y = event.clientY;
-
-        console.log("layerX: ", event.layerX, " layerY: ", event.layerY);
-		console.log("m.x: ", m.x, " m.y: ", m.y);
-        // console.log("getLayerX", getLayerX(event));
-
-        // dispatch('message', {mouse: m,
-        //                     data: d,
-        //                     left: false });
+		showTooltip = true;
+		createTooltipText(this.attributes);
     }
 
     function mouseLeave(event){
-        // dispatch('message', {left: true});
+        showTooltip = false;
     }
 
     function mouseMove(event){
-        // m.x = event.layerX;
-        // m.y = event.layerY;
-
-        // m = getAbsMousePos(event);
-
-        // dispatch('message', {mouse: m,
-        //                     data: d,
-        //                     left: false });
+        m = getAbsMousePos(event);
+		showTooltip = true;
     }
 
 </script>
@@ -157,6 +148,7 @@
 		<g style = "{move(dms.marginLeft, dms.marginTop)}">
 			{#each data as d}
 				<circle
+					class="scatter-point"
 					cx = {scaleX(accessX(d))}
 					cy = {scaleY(accessY(d))}
 					r = {scaleSize(accessSize(d))}
@@ -166,25 +158,28 @@
 					on:focus={mouseOver}
 					on:mousemove={mouseMove}
 
-					dx={accessX(d)}
-					dy={accessY(d)}/>
+					datax={accessX(d)}
+					datay={accessY(d)}
+					country={accessCountry(d)}/>
 			{/each}
 		</g>
 	</svg>
 
 	<!-- the tooltip (html elements) -->
-	<div
-      class="tooltip"
-      style="
-        top:{m.y}px;
-        left:{m.x}px;
-      "
-    >
-      <!-- <slot detail={evt.detail.text}></slot> -->
-      <!-- <p> {@html `<b>x: </b> ${evt.detail.data.x}`}</p>
-      <p> {@html `<b>y: </b> ${evt.detail.data.y}`}</p> -->
-	  Hello {m.x}
-    </div>
+	{#if showTooltip}
+		<div
+		class="tooltip"
+		style="
+			top:{m.y}px;
+			left:{m.x}px;
+		"
+		>
+		<!-- <slot detail={evt.detail.text}></slot> -->
+		<!-- <p> {@html `<b>x: </b> ${evt.detail.data.x}`}</p>
+		<p> {@html `<b>y: </b> ${evt.detail.data.y}`}</p> -->
+		{@html tooltipText}
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -195,7 +190,10 @@
 	}
 
 	.tooltip {
-		width: 100px;
+		display: flex;
+		flex-direction: column;
+		max-height: 20vh;
+		max-width: 500px;
 		border: 1px solid #ccc;
 		font-size: 16px;
 		background: rgba(255, 255, 255, 0.85);
@@ -206,8 +204,32 @@
 		border-radius: 7.5px;
 		text-align: left;
 		padding-left: 10px;
+		padding-right: 10px;
 		padding-top: 5px;
-		padding-bottom: 5px;
+		padding-bottom: 20px;
 		line-height: 0.15;
 	}
+
+	/* styling html within tooltipString  
+	which is created in the script and inserted into the html layer*/
+	 div :global(.country) {
+		 font-size: 24px;
+		 font-weight: bold;
+		}
+
+	.scatter-point {
+        transition: fill 1s ease, 
+                    stroke-width 1s ease,
+                    stroke 1s ease;
+        /* -webkit-mask-image: url(paper_texture.png);
+        mask-image: url(paper_texture.png); */
+    }
+
+    /* neater than using this.setAttribute() in mouse handlers */
+    .scatter-point:hover{
+        fill:white;
+        stroke: black;
+        stroke-width: 1.25;
+        filter: drop-shadow(0 0 0.2rem black);
+    }
 </style>
