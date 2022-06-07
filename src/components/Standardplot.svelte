@@ -7,10 +7,11 @@
     import { onMount } from 'svelte';
 
     import { csv } from "d3-fetch";
-    import { 	scaleLinear,
-				scaleSqrt   } from "d3-scale";
-    import {    extent      } from "d3-array";
-	import {	format		} from "d3-format"
+    import { scaleLinear,
+			scaleSqrt } from "d3-scale";
+    import { extent } from "d3-array";
+	import { format	} from "d3-format";
+	import { tidy, filter, max, summarize } from '@tidyjs/tidy';
 
     // import components
 	import AxisXCont from "./AxisXCont.svelte";
@@ -28,7 +29,14 @@
 
     import dataset from "../data/gdp_co2_2015.json" 
 
-	$: data = dataset;
+	let data;
+
+	// get the maximum gdp per capital as the default
+	export let maxGDP = tidy(dataset, 
+							summarize({gdp_per_capita: max('gdp_per_capita')})
+							)[0].gdp_per_capita;
+
+	data = tidy(dataset, filter((d) => d.gdp_per_capita <= maxGDP));
 
     // alternative approach using csv in public folder but required ansyncronous processing
     // the import is more straight forward
@@ -110,6 +118,7 @@
 	// 6. Add tooltips
 	// -------------------------------------------------------------------------------------------
 
+	export let chartId;
 	let m = {x:0, y:0}; // holds current mouse position
 	let tooltipText = "";
 	let showTooltip = false;
@@ -117,7 +126,7 @@
 	// (0, 0) is thetop, left corner of the chart-container div in App.svelte
 	function getAbsMousePos(event) {
 
-	let chartBounds = document  .getElementById("chart1")
+	let chartBounds = document  .getElementById(chartId)
 								.getBoundingClientRect();
 
 	return {x: event.clientX - chartBounds.x,
@@ -149,7 +158,7 @@
 	// -------------------------------------------------------------------------------------------
 	// 7. Choose Chart Size
 	// -------------------------------------------------------------------------------------------
-	export let size = "large";
+	
 
 </script>
 

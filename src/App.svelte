@@ -2,7 +2,8 @@
   import Standardplot from "./components/Standardplot.svelte";
 
   $: chartsDMS = {
-    one: {width: 0, height: 0}
+    one: {width: 0, height: 0},
+    two: {width: 0, height: 0}
   };
 </script>
 
@@ -14,15 +15,25 @@
         bind:offsetWidth={chartsDMS.one.width}
         bind:offsetHeight={chartsDMS.one.height}>
 
-    <Standardplot w={chartsDMS.one.width} h={chartsDMS.one.height}/>
+    <Standardplot w={chartsDMS.one.width} 
+                  h={chartsDMS.one.height}
+                  chartId={'chart1'}/>
   </div>
 
   <h1>Hello world again!</h1>
+
+  <div  class='chart-container' id='chart2'
+        bind:offsetWidth={chartsDMS.two.width}
+        bind:offsetHeight={chartsDMS.two.height}>
+  <Standardplot w={chartsDMS.two.width} h={chartsDMS.two.height}
+    maxGDP={10000}
+    chartId={'chart2'}/>
+  </div>
 </main>
 
 <style>
 
-  #chart1 {
+  #chart1, #chart2{
     /* to center */
 		margin: auto; 
 		display: flex;
