@@ -34,7 +34,8 @@
 	// get the maximum gdp per capital as the default
 	export let maxGDP = tidy(dataset, 
 							summarize({gdp_per_capita: max('gdp_per_capita')})
-							)[0].gdp_per_capita;
+							)[0].gdp_per_capita; // get result as single number
+												// rather than array of objects
 
 	data = tidy(dataset, filter((d) => d.gdp_per_capita <= maxGDP));
 
