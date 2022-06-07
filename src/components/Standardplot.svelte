@@ -26,7 +26,9 @@
     // 1. Access and parse data
     // ------------------------------------------------------------------------------------------- 
 
-    import data from "../data/gdp_co2_2015.json"
+    import dataset from "../data/gdp_co2_2015.json" 
+
+	$: data = dataset;
 
     // alternative approach using csv in public folder but required ansyncronous processing
     // the import is more straight forward
@@ -72,12 +74,15 @@
 	// 4. Create scales
 	// -------------------------------------------------------------------------------------------
 
+	$: extentsX = expandScale(extent(data, accessX), 0, 0.05);
+	$: extentsY = expandScale(extent(data, accessY), 0, 0.05);
+
 	$: scaleX = scaleLinear()
-				.domain(expandScale(extent(data, accessX), 0, 0.05))
+				.domain(extentsX)
 				.range([0, dms.boundedWidth]);
 
 	$: scaleY = scaleLinear()
-				.domain(expandScale(extent(data, accessY), 0, 0.05))
+				.domain(extentsY)
 				.range([dms.boundedHeight, 0]);
 	
 	$: scaleSize = scaleSqrt()
@@ -140,6 +145,11 @@
         m = getAbsMousePos(event);
 		showTooltip = true;
     }
+
+	// -------------------------------------------------------------------------------------------
+	// 7. Choose Chart Size
+	// -------------------------------------------------------------------------------------------
+	export let size = "large";
 
 </script>
 
