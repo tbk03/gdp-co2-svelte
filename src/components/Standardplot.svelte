@@ -96,7 +96,7 @@
 	
 	$: scaleSize = scaleSqrt()
 					.domain(extent(data, accessSize))
-					.range([dms.boundedWidth / 200, dms.boundedWidth / 50]);
+					.range([dms.boundedWidth / 150, dms.boundedWidth / 40]);
 
 	// -------------------------------------------------------------------------------------------
 	// 5. Create chart specification object (to pass to other components - axis etc)
@@ -121,8 +121,11 @@
 
 	export let chartId;
 	let m = {x:0, y:0}; // holds current mouse position
+	let tt = {x:0, y:0}; // hold tooltip top left position which is based on mouse
 	let tooltipText = "";
 	let showTooltip = false;
+	let xRatio;
+	let yRatio;
 
 	// (0, 0) is thetop, left corner of the chart-container div in App.svelte
 	function getAbsMousePos(event) {
@@ -141,8 +144,17 @@
 		tooltipText = line1 + line2 + line3; 
 	}
 
+	// to keep tooltips within the bounds of the chart
+	function adjustTooltipPos(mousePos){
+		xRatio = mousePos.x / dms.boundedWidth;
+		yRatio = mousePos.y / dms.boundedHeight;
+		return {x: xRatio > 0.85 ? tt.x = mousePos.x - 150 : tt.x = mousePos.x,
+				y: yRatio > 0.85 ? tt.y = mousePos.y - 150 : tt.y = mousePos.y};
+	}
+
 	function mouseOver(event){
         m = getAbsMousePos(event);
+		tt = adjustTooltipPos(m);
 		showTooltip = true;
 		createTooltipText(this.attributes);
     }
@@ -153,6 +165,7 @@
 
     function mouseMove(event){
         m = getAbsMousePos(event);
+		tt = adjustTooltipPos(m);
 		showTooltip = true;
     }
 
@@ -210,8 +223,8 @@
 		<div
 		class="tooltip"
 		style="
-			top:{m.y}px;
-			left:{m.x}px;
+			top:{tt.y}px;
+			left:{tt.x}px;
 		"
 		>
 		<!-- <slot detail={evt.detail.text}></slot> -->
