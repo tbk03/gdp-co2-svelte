@@ -71,7 +71,7 @@
 		width: w,
 		height: h,
 		marginTop: 20,
-		marginBottom: 50,
+		marginBottom: 70,
 		marginLeft: 50,
 		marginRight: 20
 	};
@@ -170,9 +170,8 @@
     }
 
 	// -------------------------------------------------------------------------------------------
-	// 7. Choose Chart Size
+	// 7. Axis labels
 	// -------------------------------------------------------------------------------------------
-	
 
 </script>
 
@@ -211,11 +210,13 @@
 					country={accessCountry(d)}/>
 			{/each}
 		</g>
-			<!-- clip circles falling outside the axis -->
+		
+		<!-- clip circles falling outside the axis -->
 		<clipPath id='axis-cutoff'>
 			<rect   width = {dms.boundedWidth}
 					height = {dms.boundedHeight}/>
 		</clipPath>
+
 	</svg>
 
 	<!-- the tooltip (html elements) -->

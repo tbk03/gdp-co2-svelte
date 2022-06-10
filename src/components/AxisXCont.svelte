@@ -5,6 +5,7 @@
 <script>
     // export props
     export let chartSpecification;
+    export let xAxisLabelOffeset = 60;
 
     export let axisFormatting = {
         tickMajorLen: 7.5,
@@ -28,6 +29,8 @@
 
    // calculate scaled tick values (range)
    $: scaleTickValues = tickValues.map(d => chartSpecification.scales.x(d));
+
+   // format tick values for display on the axis
    $: formattedTickValues = tickValues.map(d => "$" + d.toLocaleString());
 
    // calculate coordinates for the end of axis baseline (range)
@@ -105,6 +108,13 @@
         {/if}
 
     {/each}
+
+    		<!-- axis labels -->
+		<text
+        x={chartSpecification.dms.width - chartSpecification.dms.marginRight - chartSpecification.dms.marginLeft}
+        y={xAxisLabelOffeset}
+        class="axis-label"
+        >GDP per capita</text>
 </g>
 
 <style>
@@ -142,8 +152,7 @@
 
     .major-tick-text{
         fill: var(--greyHighEmp);
-        font-weight: 550
-        ;
+        font-weight: 550;
     }
 
     .minor-tick-text{
@@ -159,5 +168,13 @@
     .minor-grid{
         stroke: var(--greyMinEmp);
         stroke-width: 0.5;
+    }
+
+    .axis-label{
+        font-family: 'Lato', sans-serif;
+        font-size: 18px;
+        fill: var(--greyMaxEmp);
+        font-weight: 600;
+        text-anchor: end;
     }
 </style>
