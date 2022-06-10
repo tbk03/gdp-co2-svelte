@@ -173,6 +173,7 @@
 
 </script>
 
+
 <div class="interactive-chart">
 	
 	<!-- the chart (all svg elements) -->
@@ -233,7 +234,7 @@
 	<!-- x axis label -->
 	<div class="axis-label"
 		style="top:{dms.height - 70}px; right:{dms.marginRight}px;">
-		<p><b>GDP per captia</b></p>
+		<p><b>GDP per capita</b></p>
 		<p style="font-size: 14px;">2011 USD adjusted for inflation</p>
 	</div>
 
