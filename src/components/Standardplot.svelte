@@ -4,9 +4,7 @@
     // 0. Setup - imports and variable declarations
     // ------------------------------------------------------------------------------------------- 
     // import libraries
-    import { onMount } from 'svelte';
 
-    import { csv } from "d3-fetch";
     import { scaleLinear,
 			scaleSqrt } from "d3-scale";
     import { extent } from "d3-array";
@@ -70,8 +68,8 @@
 	$: dms = {
 		width: w,
 		height: h,
-		marginTop: 20,
-		marginBottom: 70,
+		marginTop: 50,
+		marginBottom: 100,
 		marginLeft: 50,
 		marginRight: 20
 	};
@@ -223,10 +221,7 @@
 	{#if showTooltip}
 		<div
 		class="tooltip"
-		style="
-			top:{tt.y}px;
-			left:{tt.x}px;
-		"
+		style="top:{tt.y}px; left:{tt.x}px;"
 		>
 		<!-- <slot detail={evt.detail.text}></slot> -->
 		<!-- <p> {@html `<b>x: </b> ${evt.detail.data.x}`}</p>
@@ -234,13 +229,45 @@
 		{@html tooltipText}
 		</div>
 	{/if}
+
+	<!-- x axis label -->
+	<div class="axis-label"
+		style="top:{dms.height - 70}px; right:{dms.marginRight}px;">
+		<p><b>GDP per captia</b></p>
+		<p style="font-size: 14px;">2011 USD adjusted for inflation</p>
+	</div>
+
+	<div class="axis-label"
+		style="top:{dms.marginTop - 50}px; left:{dms.marginLeft - 15}px;">
+		<p><b>Carbon emissions per capita</b></p>
+		<p style="font-size: 14px;">Tonnes of CO<sub>2</sub> per year</p>
+	</div>
+
 </div>
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-	.tooltip, .interactive-chart {
+	:root {
+        --greyMaxEmp: #666666;
+        --greyHighEmp: #737373;
+        --greyLowEmp: #BFBFBF;
+        --greyMinEmp: #E5E5E5;
+    }
+
+	.tooltip, .interactive-chart .axis-label {
 		position: absolute;
+	}
+
+	.axis-label{
+		max-width: 300px;
+		text-align: right;
+		line-height: 20%;
+		flex-direction: column;
+		font-family: 'Lato', sans-serif;
+        font-size: 20px;
+        color: var(--greyMaxEmp);
+        text-anchor: end;
 	}
 
 	.tooltip {

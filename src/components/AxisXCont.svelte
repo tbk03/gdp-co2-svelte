@@ -5,7 +5,7 @@
 <script>
     // export props
     export let chartSpecification;
-    export let xAxisLabelOffeset = 60;
+    // export let xAxisLabelOffeset = 60;
 
     export let axisFormatting = {
         tickMajorLen: 7.5,
@@ -110,11 +110,11 @@
     {/each}
 
     		<!-- axis labels -->
-		<text
+		<!-- <text
         x={chartSpecification.dms.width - chartSpecification.dms.marginRight - chartSpecification.dms.marginLeft}
         y={xAxisLabelOffeset}
         class="axis-label"
-        >GDP per capita</text>
+        >GDP per capita</text> -->
 </g>
 
 <style>
