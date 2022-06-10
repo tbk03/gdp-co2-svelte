@@ -28,6 +28,7 @@
 
    // calculate scaled tick values (range)
    $: scaleTickValues = tickValues.map(d => chartSpecification.scales.x(d));
+   $: formattedTickValues = tickValues.map(d => "$" + d.toLocaleString());
 
    // calculate coordinates for the end of axis baseline (range)
    $: scaleMax = chartSpecification.scales.x.range()[1];
@@ -65,7 +66,7 @@
                     y = {axisFormatting.textMajorOffset}
                     text-anchor="middle">
                     <!-- the tick label itself -->
-                    {tickValues[i]}  </text>
+                    {formattedTickValues[i]}  </text>
             
             <!-- grid lines within plot -->
             {#if grid.majorGrid}
@@ -90,7 +91,7 @@
                     y = {axisFormatting.textMinorOffset}
                     text-anchor="middle">
                     <!-- the tick label itself -->
-                    {tickValues[i]}  </text>
+                    {formattedTickValues[i]}  </text>
             
             <!-- grid lines within plot -->
             {#if grid.minorGrid}
