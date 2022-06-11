@@ -250,7 +250,6 @@
 		<p style="font-size: 14px;">Tonnes of CO<sub>2</sub> per year</p>
 	</div>
 
-	{#if !showTooltip}
 	<!-- legend -->
 	<div 	class="legend"
 			style=	"top:{scaleY(20)}px; 
@@ -265,7 +264,6 @@
 		</div>
 
 		{#if dms.width > 800}
-		<div>Click for more details</div>
 		<svg class="legend-items"
 			width="{legendWidth}"
 			height="{legendHeight}">
@@ -288,8 +286,6 @@
 
 		{/if}
 	</div>
-	{/if}
-
 </div>
 
 <style>
@@ -323,7 +319,7 @@
 		padding: 15px;
 		display:flex;
 		flex-direction: column;
-		z-index: 15;
+		z-index: 14;
 		font-family: 'Lato', sans-serif;
 		border-radius: 7.5px;
 		text-align: left;
