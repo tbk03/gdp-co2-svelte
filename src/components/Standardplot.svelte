@@ -307,6 +307,10 @@
 		position: absolute;
 	}
 
+	.interactive-chart {
+		box-shadow: 1px 1px 6px var(--greyLowEmp);
+	}
+
 	.axis-label{
 		max-width: 300px;
 		text-align: right;
@@ -333,6 +337,7 @@
 		background-size: cover;
 		background-blend-mode:multiply;
 		background-color: var(--greyHighEmp);
+		box-shadow: 1px 1px 6px var(--greyText);
 	}
 
 	.legend-item-text {
@@ -364,6 +369,7 @@
 		background-blend-mode:multiply;
 		background-color: var(--greyText);
 		color: white;
+		box-shadow: 1px 1px 6px var(--greyHighEmp);
 	}
 
 	div :global(.tt-line) {
