@@ -156,10 +156,12 @@
 		tt = adjustTooltipPos(m);
 		showTooltip = true;
 		createTooltipText(this.attributes);
+
     }
 
     function mouseLeave(event){
         showTooltip = false;
+
     }
 
     function mouseMove(event){
@@ -177,8 +179,7 @@
 	let legendStops = [1e6, 1e7, 1e8, 1e9];
 	let legendLabels = ["1 million people", "10 million", "100 million", "1 billion"];
 </script>
-
-
+<!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
 <div class="interactive-chart">
 	
 	<!-- the chart (all svg elements) -->
@@ -211,7 +212,8 @@
 
 					datax={accessX(d)}
 					datay={accessY(d)}
-					country={accessCountry(d)}/>
+					country={accessCountry(d)}
+					/>
 			{/each}
 		</g>
 		
@@ -272,7 +274,7 @@
 				<circle cx="{legendWidth / 10}" 
 						cy="{(legendHeight / (legendStops.length + 1)) * (i + 1)}" 
 						r="{scaleSize(n)}"
-						opacity=0.5/>
+						fill="white"/>
 
 				<text 	class="legend-item-text"
 						x="{legendWidth / 3}" 
@@ -314,8 +316,7 @@
 	}
 
 	.legend {
-		color: var(--greyMaxEmp);
-		border: 1px solid var(--greyLowEmp);
+		color: white;
 		padding: 15px;
 		display:flex;
 		flex-direction: column;
@@ -325,10 +326,14 @@
 		text-align: left;
 		font-size: 16px;
 		max-width: 175px;
+		background-image: url("./images/paper_texture.png");
+		background-size: cover;
+		background-blend-mode:multiply;
+		background-color: var(--greyHighEmp);
 	}
 
 	.legend-item-text {
-		fill: var(--greyMaxEmp);
+		fill: white;
 	}
 
 	.tooltip {
