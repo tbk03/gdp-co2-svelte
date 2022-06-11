@@ -136,7 +136,7 @@
 
     .tick-text{
         font-family: 'Lato', sans-serif;
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .major-tick-text{

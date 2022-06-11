@@ -137,18 +137,19 @@
 	}
 
 	function createTooltipText(attributes){
-		let line1 = "<p class='country'>" + attributes.country.value + "</p>";
-		let line2 = "<p class='gdp'>$" + format(",")(attributes.datax.value) + "</p>";
-		let line3 = "<p class='co2'>" + format(".3r")(attributes.datay.value) + " tonnes CO<sub>2</sub></p>";
-		tooltipText = line1 + line2 + line3; 
+		let line1 = "<p class='tt-line data-country'>" + attributes["data-country"].value + "</p>";
+		let line2 = "<p class='tt-line'> Each year for each of the <b>" + format(",")(attributes["data-population"].value) + "</b> people: </p>";
+		let line3 = "<p class='tt-line'><b>$" + format(",")(attributes["data-x"].value) + "</b> added to GDP</p>";
+		let line4 = "<p class='tt-line'><b>" + format(".3r")(attributes["data-y"].value) + "</b> tonnes CO<sub>2</sub> emitted</p>";
+		tooltipText = line1 + line2 + line3 + line4; 
 	}
 
 	// to keep tooltips within the bounds of the chart
 	function adjustTooltipPos(mousePos){
 		xRatio = mousePos.x / dms.boundedWidth;
 		yRatio = mousePos.y / dms.boundedHeight;
-		return {x: xRatio > 0.85 ? tt.x = mousePos.x - 150 : tt.x = mousePos.x,
-				y: yRatio > 0.85 ? tt.y = mousePos.y - 150 : tt.y = mousePos.y};
+		return {x: xRatio > 0.70 ? tt.x = mousePos.x - 250 : tt.x = mousePos.x,
+				y: yRatio > 0.80 ? tt.y = mousePos.y - 250 : tt.y = mousePos.y};
 	}
 
 	function mouseOver(event){
@@ -201,7 +202,7 @@
 					cx = {scaleX(accessX(d))}
 					cy = {scaleY(accessY(d))}
 					r = {scaleSize(accessSize(d))}
-					opacity=0.5
+					opacity=0.6
 
 					clip-path = 'url(#axis-cutoff)'
 					
@@ -210,9 +211,10 @@
 					on:focus={mouseOver}
 					on:mousemove={mouseMove}
 
-					datax={accessX(d)}
-					datay={accessY(d)}
-					country={accessCountry(d)}
+					data-x={accessX(d)}
+					data-y={accessY(d)}
+					data-country={accessCountry(d)}
+					data-population={accessSize(d)}
 					/>
 			{/each}
 		</g>
@@ -294,6 +296,7 @@
 	@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 	:root {
+		--greyText: #333333;
         --greyMaxEmp: #666666;
         --greyHighEmp: #737373;
         --greyLowEmp: #BFBFBF;
@@ -311,7 +314,7 @@
 		flex-direction: column;
 		font-family: 'Lato', sans-serif;
         font-size: 20px;
-        color: var(--greyMaxEmp);
+        color: var(--greyText);
         text-anchor: end;
 	}
 
@@ -339,11 +342,11 @@
 	.tooltip {
 		display: flex;
 		flex-direction: column;
-		max-height: 20vh;
-		max-width: 500px;
+		max-height: 50vh;
+		max-width: 200px;
 		border: 1px solid var(--greyLowEmp);
 		font-size: 16px;
-		color: var(--greyMaxEmp);
+		color: var(--greyText);
 		background: rgba(255, 255, 255, 0.85);
 		/* transform: translate(-100%, -200%); */
 		padding: 1px;
@@ -355,12 +358,21 @@
 		padding-right: 10px;
 		padding-top: 5px;
 		padding-bottom: 20px;
-		line-height: 0.15;
+		line-height: 1.25;
+		background-image: url("./images/paper_texture.png");
+		background-size: cover;
+		background-blend-mode:multiply;
+		background-color: var(--greyText);
+		color: white;
+	}
+
+	div :global(.tt-line) {
+		margin: 0.5em;
 	}
 
 	/* styling html within tooltipString  
 	which is created in the script and inserted into the html layer*/
-	 div :global(.country) {
+	 div :global(.data-country) {
 		 font-size: 24px;
 		 font-weight: bold;
 		}

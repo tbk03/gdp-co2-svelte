@@ -82,7 +82,7 @@
         {/if}
         
         <!-- show minor ticks if required and screen is wider than 600px  -->
-        {#if i % 2 != 0 && chartSpecification.dms.width > 600}
+        {#if i % 2 != 0 && chartSpecification.dms.width > 700}
             <line   class="minor-tick"
                     x1={t} 
                     y1={0} 
@@ -147,7 +147,7 @@
 
     .tick-text{
         font-family: 'Lato', sans-serif;
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .major-tick-text{
