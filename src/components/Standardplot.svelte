@@ -276,7 +276,8 @@
 				<circle cx="{legendWidth / 10}" 
 						cy="{(legendHeight / (legendStops.length + 1)) * (i + 1)}" 
 						r="{scaleSize(n)}"
-						fill="white"/>
+						fill="white"
+						opacity=0.8/>
 
 				<text 	class="legend-item-text"
 						x="{legendWidth / 3}" 
@@ -333,9 +334,9 @@
 		text-align: left;
 		font-size: 16px;
 		max-width: 175px;
-		background-image: url("./images/paper_texture.png");
+		background-image: url("./images/postittexture.jpg");
 		background-size: cover;
-		background-blend-mode:multiply;
+		background-blend-mode: color-burn;
 		background-color: var(--greyHighEmp);
 		box-shadow: 1px 1px 6px var(--greyText);
 	}
@@ -364,11 +365,11 @@
 		padding-top: 5px;
 		padding-bottom: 20px;
 		line-height: 1.25;
-		background-image: url("./images/paper_texture.png");
+		background-image: url("./images/postittexture.jpg");
 		background-size: cover;
-		background-blend-mode:multiply;
-		background-color: var(--greyText);
-		color: white;
+		background-blend-mode: hard-light;
+		background-color: var(--greyMaxEmp);
+		color:var(--greyText);
 		box-shadow: 1px 1px 6px var(--greyHighEmp);
 	}
 
