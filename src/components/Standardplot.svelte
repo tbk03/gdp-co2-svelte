@@ -10,6 +10,7 @@
     import { extent } from "d3-array";
 	import { format	} from "d3-format";
 	import { tidy, filter, max, summarize } from '@tidyjs/tidy';
+	import { fade } from 'svelte/transition';
 
     // import components
 	import AxisXCont from "./AxisXCont.svelte";
@@ -168,9 +169,13 @@
     }
 
 	// -------------------------------------------------------------------------------------------
-	// 7. Axis labels
+	// 7. Legend
 	// -------------------------------------------------------------------------------------------
+	export let legendWidth = 175;
+	export let legendHeight = 175;
 
+	let legendStops = [1e6, 1e7, 1e8, 1e9];
+	let legendLabels = ["1 million people", "10 million", "100 million", "1 billion"];
 </script>
 
 
@@ -238,11 +243,52 @@
 		<p style="font-size: 14px;">2011 USD adjusted for inflation</p>
 	</div>
 
+	<!-- y axis label -->
 	<div class="axis-label"
 		style="top:{dms.marginTop - 50}px; left:{dms.marginLeft - 15}px;">
 		<p><b>Carbon emissions per capita</b></p>
 		<p style="font-size: 14px;">Tonnes of CO<sub>2</sub> per year</p>
 	</div>
+
+	{#if !showTooltip}
+	<!-- legend -->
+	<div 	class="legend"
+			style=	"top:{scaleY(20)}px; 
+				left:{scaleX(1.1e5)}px;
+				{move(dms.marginLeft, dms.marginTop)}"
+			transition:fade={{duration:5000}}
+		>
+		
+		
+		<div>
+			The size of the circles shows the population of the countries.
+		</div>
+
+		{#if dms.width > 800}
+		<div>Click for more details</div>
+		<svg class="legend-items"
+			width="{legendWidth}"
+			height="{legendHeight}">
+
+			{#each legendStops as n, i}
+				<circle cx="{legendWidth / 10}" 
+						cy="{(legendHeight / (legendStops.length + 1)) * (i + 1)}" 
+						r="{scaleSize(n)}"
+						opacity=0.5/>
+
+				<text 	class="legend-item-text"
+						x="{legendWidth / 3}" 
+						y="{(legendHeight / (legendStops.length + 1)) * (i + 1)}"
+						dominant-baseline="middle"
+					>
+					{legendLabels[i]}
+				</text>
+			{/each}
+		</svg>
+
+		{/if}
+	</div>
+	{/if}
 
 </div>
 
@@ -256,7 +302,7 @@
         --greyMinEmp: #E5E5E5;
     }
 
-	.tooltip, .interactive-chart .axis-label {
+	.legend, .tooltip, .interactive-chart, .axis-label {
 		position: absolute;
 	}
 
@@ -271,13 +317,32 @@
         text-anchor: end;
 	}
 
+	.legend {
+		color: var(--greyMaxEmp);
+		border: 1px solid var(--greyLowEmp);
+		padding: 15px;
+		display:flex;
+		flex-direction: column;
+		z-index: 15;
+		font-family: 'Lato', sans-serif;
+		border-radius: 7.5px;
+		text-align: left;
+		font-size: 16px;
+		max-width: 175px;
+	}
+
+	.legend-item-text {
+		fill: var(--greyMaxEmp);
+	}
+
 	.tooltip {
 		display: flex;
 		flex-direction: column;
 		max-height: 20vh;
 		max-width: 500px;
-		border: 1px solid #ccc;
+		border: 1px solid var(--greyLowEmp);
 		font-size: 16px;
+		color: var(--greyMaxEmp);
 		background: rgba(255, 255, 255, 0.85);
 		/* transform: translate(-100%, -200%); */
 		padding: 1px;
