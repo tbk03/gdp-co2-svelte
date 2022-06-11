@@ -37,8 +37,9 @@
     /* to center */
 		margin: auto; 
 		display: flex;
-		height: 75vh;
+		height: 55vh;
 		max-height: 800px;
+    min-width:600px;
 
 		/* min-width: 600px; */
 		max-width: 900px;

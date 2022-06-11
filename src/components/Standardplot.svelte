@@ -257,7 +257,7 @@
 
 	<!-- legend -->
 	<div 	class="legend"
-			style=	"top:{scaleY(20)}px; 
+			style=	"top:{scaleY(25)}px; 
 				left:{scaleX(1.1e5)}px;
 				{move(dms.marginLeft, dms.marginTop)}"
 			transition:fade={{duration:5000}}
