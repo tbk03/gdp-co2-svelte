@@ -202,7 +202,8 @@
 					cx = {scaleX(accessX(d))}
 					cy = {scaleY(accessY(d))}
 					r = {scaleSize(accessSize(d))}
-					opacity=0.6
+					opacity=0.7
+					fill="#002DFE"
 
 					clip-path = 'url(#axis-cutoff)'
 					
@@ -300,6 +301,7 @@
 		--greyText: #333333;
         --greyMaxEmp: #666666;
         --greyHighEmp: #737373;
+		--greyMidEmp: #8C8C8C;
         --greyLowEmp: #BFBFBF;
         --greyMinEmp: #E5E5E5;
     }
@@ -309,7 +311,7 @@
 	}
 
 	.interactive-chart {
-		box-shadow: 1px 1px 6px var(--greyLowEmp);
+		box-shadow: 4px 4px 8px var(--greyMaxEmp);
 	}
 
 	.axis-label{
@@ -337,7 +339,7 @@
 		background-image: url("./images/postittexture.jpg");
 		background-size: cover;
 		background-blend-mode: color-burn;
-		background-color: var(--greyHighEmp);
+		background-color: var(--greyMidEmp);
 		box-shadow: 1px 1px 6px var(--greyText);
 	}
 
@@ -368,7 +370,7 @@
 		background-image: url("./images/postittexture.jpg");
 		background-size: cover;
 		background-blend-mode: hard-light;
-		background-color: var(--greyMaxEmp);
+		background-color: var(--greyLowEmp);
 		color:var(--greyText);
 		box-shadow: 1px 1px 6px var(--greyHighEmp);
 	}
