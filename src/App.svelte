@@ -17,7 +17,8 @@
 
     <Standardplot w={chartsDMS.one.width} 
                   h={chartsDMS.one.height}
-                  chartId={'chart1'}/>
+                  chartId={'chart1'}
+                  plotNumber={1}/>
   </div>
 
   <h1>Hello world again!</h1>
@@ -27,7 +28,8 @@
         bind:offsetHeight={chartsDMS.two.height}>
   <Standardplot w={chartsDMS.two.width} h={chartsDMS.two.height}
     maxGDP={10000}
-    chartId={'chart2'}/>
+    chartId={'chart2'}
+    plotNumber={2}/>
   </div>
 </main>
 
@@ -37,7 +39,7 @@
     /* to center */
 		margin: auto; 
 		display: flex;
-		height: 55vh;
+		height: 65vh;
 		max-height: 800px;
     min-width:600px;
 
