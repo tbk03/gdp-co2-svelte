@@ -76,7 +76,7 @@
         background-image: url("./images/postittexture.jpg");
         background-size: cover;
         background-blend-mode: color-burn;
-        background-color: var(--greyMidEmp);
+        background-color: var(--greyMaxEmp);
         box-shadow: 1px 1px 6px var(--greyText);
     }
 

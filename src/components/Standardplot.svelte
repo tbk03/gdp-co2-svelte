@@ -183,6 +183,7 @@
 	export let plotNumber = 1;
 	let showLegend = false;
 	let showSustainable = false;
+	let circleStrokeWidth = 0;
 
 	function setupPlot1() {
 		showLegend = true;
@@ -191,6 +192,7 @@
 	function setupPlot2() {
 		showLegend = false;
 		showSustainable = true;
+		circleStrokeWidth = 2.5;
 	}
 
 	// setup plot based on plot number
@@ -206,6 +208,17 @@
 
 <!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
 <div class="interactive-chart">
+
+	<!-- Background rectangle: Plot 2 -->
+	<!-- +/- 10 is to dodge the axis label -->
+	{#if showSustainable}
+	<div style="width: {dms.boundedWidth}px; 
+				left: {dms.marginLeft}px;
+				top: {dms.marginTop + 10}px;
+				height: {scaleY(2.3) - 10}px;"
+		class="sus-rect"></div>
+	{/if}
+
 	<!-- the chart (all svg elements) -->
 	<svg width={dms.width} height={dms.height}>
 		<!-- axis -->
@@ -216,18 +229,9 @@
 			<AxisYCont {chartSpecification} />
 		</g>
 
-		<!-- Background rectangle: Plot 2 -->
-		<!-- +/- 10 is to dodge the axis label -->
-		{#if showSustainable}
-			<rect width={dms.boundedWidth}
-					x={dms.marginLeft}
-					y={dms.marginTop + 10}
-					height={scaleY(2.3) - 10}
-					fill="#8c8c8c"
-					class="sus-rect"/>
-		{/if}
 
-		<!-- scatter points "#002DFE" -->
+		<!-- scatter points -->
+		<!-- the blue I have been using "#002DFE" -->
 		<g style={move(dms.marginLeft, dms.marginTop)}>
 			{#each data as d}
 				<circle
@@ -236,7 +240,9 @@
 					cy={scaleY(accessY(d))}
 					r={scaleSize(accessSize(d))}
 					opacity="0.7"
-					fill="black"
+					fill="#002DFE"
+					stroke="white"
+					stroke-width={circleStrokeWidth}
 					clip-path="url(#axis-cutoff)"
 					on:mouseover={mouseOver}
 					on:mouseleave={mouseLeave}
@@ -309,9 +315,14 @@
 	}
 
 	.sus-rect{
-		background-image: linear-gradient(red, yellow);
+		z-index: -1;
+		background: url("./images/postittexture.jpg"), 
+					linear-gradient(black, var(--greyMidEmp));
+		background-size: cover;
+		background-blend-mode:darken;
 	}
 
+	.sus-rect,
 	.tooltip,
 	.interactive-chart,
 	.axis-label {
@@ -341,7 +352,6 @@
 		border: 1px solid var(--greyLowEmp);
 		font-size: 16px;
 		color: var(--greyText);
-		background: rgba(255, 255, 255, 0.85);
 		/* transform: translate(-100%, -200%); */
 		padding: 1px;
 		z-index: 15;
