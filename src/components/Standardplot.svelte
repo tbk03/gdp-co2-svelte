@@ -6,7 +6,8 @@
     // import libraries
 
     import { scaleLinear,
-			scaleSqrt } from "d3-scale";
+			scaleSqrt, 
+scaleSymlog} from "d3-scale";
     import { extent } from "d3-array";
 	import { format	} from "d3-format";
 	import { tidy, filter, max, summarize } from '@tidyjs/tidy';
@@ -15,6 +16,7 @@
     // import components
 	import AxisXCont from "./AxisXCont.svelte";
 	import AxisYCont from "./AxisYCont.svelte";
+	import SizeLegend from "./SizeLegend.svelte";
     
     // import scripts
 	import move from "../scripts/move";
@@ -26,7 +28,8 @@
     // 1. Access and parse data
     // ------------------------------------------------------------------------------------------- 
 
-    import dataset from "../data/gdp_co2_2015.json" 
+    import dataset from "../data/gdp_co2_2015.json"; 
+
 
 	let data;
 
@@ -179,6 +182,11 @@
 
 	let legendStops = [1e6, 1e7, 1e8, 1e9];
 	let legendLabels = ["1 million people", "10 million", "100 million", "1 billion"];
+
+	// -------------------------------------------------------------------------------------------
+	// 8. Customising the versions of the charts
+	// -------------------------------------------------------------------------------------------
+
 </script>
 <!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
 <div class="interactive-chart">
@@ -256,42 +264,10 @@
 	</div>
 
 	<!-- legend -->
-	<div 	class="legend"
-			style=	"top:{scaleY(25)}px; 
-				left:{scaleX(1.1e5)}px;
-				{move(dms.marginLeft, dms.marginTop)}"
-			transition:fade={{duration:5000}}
-		>
-		
-		
-		<div>
-			The size of the circles shows the population of the countries.
-		</div>
 
-		{#if dms.width > 800}
-		<svg class="legend-items"
-			width="{legendWidth}"
-			height="{legendHeight}">
-
-			{#each legendStops as n, i}
-				<circle cx="{legendWidth / 10}" 
-						cy="{(legendHeight / (legendStops.length + 1)) * (i + 1)}" 
-						r="{scaleSize(n)}"
-						fill="white"
-						opacity=0.8/>
-
-				<text 	class="legend-item-text"
-						x="{legendWidth / 3}" 
-						y="{(legendHeight / (legendStops.length + 1)) * (i + 1)}"
-						dominant-baseline="middle"
-					>
-					{legendLabels[i]}
-				</text>
-			{/each}
-		</svg>
-
-		{/if}
-	</div>
+	<SizeLegend leftPos={scaleX(1.1e5)} 
+	topPos={scaleY(25)} {scaleSize} width={dms.width}
+	marginAdj={move(dms.marginLeft, dms.marginTop)}/>
 </div>
 
 <style>
@@ -306,7 +282,7 @@
         --greyMinEmp: #E5E5E5;
     }
 
-	.legend, .tooltip, .interactive-chart, .axis-label {
+	.legend-wrapper, .tooltip, .interactive-chart, .axis-label {
 		position: absolute;
 	}
 
@@ -314,6 +290,9 @@
 		box-shadow: 4px 4px 8px var(--greyMaxEmp);
 	}
 
+	.legend-wrapper {
+		display:flex;
+	}
 	.axis-label{
 		max-width: 300px;
 		text-align: right;
@@ -323,28 +302,6 @@
         font-size: 20px;
         color: var(--greyText);
         text-anchor: end;
-	}
-
-	.legend {
-		color: white;
-		padding: 15px;
-		display:flex;
-		flex-direction: column;
-		z-index: 14;
-		font-family: 'Lato', sans-serif;
-		border-radius: 7.5px;
-		text-align: left;
-		font-size: 16px;
-		max-width: 175px;
-		background-image: url("./images/postittexture.jpg");
-		background-size: cover;
-		background-blend-mode: color-burn;
-		background-color: var(--greyMidEmp);
-		box-shadow: 1px 1px 6px var(--greyText);
-	}
-
-	.legend-item-text {
-		fill: white;
 	}
 
 	.tooltip {
