@@ -34,7 +34,6 @@
 </main>
 
 <style>
-
   #chart1, #chart2{
     /* to center */
 		margin: auto; 

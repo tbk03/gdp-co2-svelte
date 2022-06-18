@@ -334,7 +334,9 @@
 	}
 
 	.interactive-chart {
+		z-index: 0;
 		box-shadow: 4px 4px 8px var(--greyMaxEmp);
+		background-color: #FBFBF8;
 	}
 
 	.axis-label {
