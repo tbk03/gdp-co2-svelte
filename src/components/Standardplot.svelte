@@ -183,16 +183,18 @@
 	export let plotNumber = 1;
 	let showLegend = false;
 	let showSustainable = false;
-	let circleStrokeWidth = 0;
+	let colourScale;
+	let basePointColour = "#002DFE";
 
 	function setupPlot1() {
 		showLegend = true;
+		colourScale = (d) => basePointColour;
 	}
 
 	function setupPlot2() {
 		showLegend = false;
 		showSustainable = true;
-		circleStrokeWidth = 2.5;
+		colourScale = (d) => d.is_sustainable ? basePointColour : "white";
 	}
 
 	// setup plot based on plot number
@@ -240,9 +242,7 @@
 					cy={scaleY(accessY(d))}
 					r={scaleSize(accessSize(d))}
 					opacity="0.7"
-					fill="#002DFE"
-					stroke="white"
-					stroke-width={circleStrokeWidth}
+					fill={colourScale(d)}
 					clip-path="url(#axis-cutoff)"
 					on:mouseover={mouseOver}
 					on:mouseleave={mouseLeave}
