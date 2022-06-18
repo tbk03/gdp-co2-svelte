@@ -185,16 +185,20 @@
 	let showSustainable = false;
 	let colourScale;
 	let basePointColour = "#002DFE";
+	let scatterPointHoverClass = "scatter-point-light-bg";
+	
 
 	function setupPlot1() {
 		showLegend = true;
 		colourScale = (d) => basePointColour;
+		scatterPointHoverClass = (d) => "scatter-point-light-bg";
 	}
 
 	function setupPlot2() {
 		showLegend = false;
 		showSustainable = true;
 		colourScale = (d) => d.is_sustainable ? basePointColour : "white";
+		scatterPointHoverClass = (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-dark-bg";
 	}
 
 	// setup plot based on plot number
@@ -237,7 +241,7 @@
 		<g style={move(dms.marginLeft, dms.marginTop)}>
 			{#each data as d}
 				<circle
-					class="scatter-point"
+					class="scatter-point {scatterPointHoverClass(d)}"
 					cx={scaleX(accessX(d))}
 					cy={scaleY(accessY(d))}
 					r={scaleSize(accessSize(d))}
@@ -389,10 +393,17 @@
 	}
 
 	/* neater than using this.setAttribute() in mouse handlers */
-	.scatter-point:hover {
+	.scatter-point-light-bg:hover {
 		fill: white;
 		stroke: black;
 		stroke-width: 1.25;
 		filter: drop-shadow(0 0 0.2rem black);
+	}
+
+	.scatter-point-dark-bg:hover {
+		fill: red;
+		stroke: white;
+		stroke-width: 1.25;
+		filter: drop-shadow(0 0 0.2rem red);
 	}
 </style>
