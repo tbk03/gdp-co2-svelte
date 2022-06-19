@@ -26,7 +26,7 @@
 	// -------------------------------------------------------------------------------------------
 
 	import dataset from "../data/gdp_co2_2015.json";
-import Annotation from "./Annotation.svelte";
+	import Annotation from "./Annotation.svelte";
 
 	let data = dataset;
 
@@ -131,7 +131,7 @@ import Annotation from "./Annotation.svelte";
 		};
 	}
 
-	function createTooltipText(attributes) {
+	function createTooltipTextPlot1(attributes) {
 		let line1 =
 			"<p class='tt-line data-country'>" +
 			attributes["data-country"].value +
@@ -151,6 +151,24 @@ import Annotation from "./Annotation.svelte";
 		tooltipText = line1 + line2 + line3 + line4;
 	}
 
+	function createTooltipTextPlot2(attributes) {
+		let susCO2 = 2.3;
+		let currentCO2 = attributes["data-y"].value;
+		let fallRequired = format(".3r")(currentCO2 - susCO2);
+		let percentFallRequired = format(".2r")(
+			(1 - susCO2 / currentCO2) * 100
+		);
+
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+
+		let line2 = `<p class='tt-line'>To reach a sustainable level emissions would <b>need to fall by ${fallRequired} tonnes CO<sub>2</sub> per capita</b>.</p>`;
+		let line3 = `<p class='tt-line'>That would be <b>a reduction of ${percentFallRequired}%</b>.</p>`;
+		tooltipText = line1 + line2 + line3;
+	}
+
 	// to keep tooltips within the bounds of the chart
 	function adjustTooltipPos(mousePos) {
 		xRatio = mousePos.x / dms.boundedWidth;
@@ -162,10 +180,13 @@ import Annotation from "./Annotation.svelte";
 	}
 
 	function mouseOver(event) {
-		m = getAbsMousePos(event);
-		tt = adjustTooltipPos(m);
-		showTooltip = true;
-		createTooltipText(this.attributes);
+		// to allow tooltips to show only on selected points
+		if (this.attributes["data-showtt"].value == "true") {
+			m = getAbsMousePos(event);
+			tt = adjustTooltipPos(m);
+			showTooltip = true;
+			createTooltipText(this.attributes);
+		}
 	}
 
 	function mouseLeave(event) {
@@ -173,9 +194,12 @@ import Annotation from "./Annotation.svelte";
 	}
 
 	function mouseMove(event) {
-		m = getAbsMousePos(event);
-		tt = adjustTooltipPos(m);
-		showTooltip = true;
+		// to allow tooltips to show only on selected points
+		if (this.attributes["data-showtt"].value == "true") {
+			m = getAbsMousePos(event);
+			tt = adjustTooltipPos(m);
+			showTooltip = true;
+		}
 	}
 
 	// -------------------------------------------------------------------------------------------
@@ -188,20 +212,28 @@ import Annotation from "./Annotation.svelte";
 	let basePointColour = "#002DFE";
 	let scatterPointHoverClass = "scatter-point-light-bg";
 	let showAnnoP2 = false;
-	
+	let createTooltipText;
+	let showTT;
 
 	function setupPlot1() {
 		showLegend = true;
 		colourScale = (d) => basePointColour;
 		scatterPointHoverClass = (d) => "scatter-point-light-bg";
+		createTooltipText = createTooltipTextPlot1;
+		showTT = (d) => true;
 	}
 
 	function setupPlot2() {
 		showLegend = false;
 		showSustainable = true;
-		colourScale = (d) => d.is_sustainable ? basePointColour : "white";
-		scatterPointHoverClass = (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-dark-bg";
+		colourScale = (d) => (d.is_sustainable ? basePointColour : "white");
+		scatterPointHoverClass = (d) =>
+			d.is_sustainable
+				? "scatter-point-no-hover"
+				: "scatter-point-dark-bg";
 		showAnnoP2 = true;
+		createTooltipText = createTooltipTextPlot2;
+		showTT = (d) => (d.is_sustainable ? false : true);
 	}
 
 	// setup plot based on plot number
@@ -217,15 +249,16 @@ import Annotation from "./Annotation.svelte";
 
 <!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
 <div class="interactive-chart">
-
 	<!-- Background rectangle: Plot 2 -->
 	<!-- +/- 10 is to dodge the axis label -->
 	{#if showSustainable}
-	<div style="width: {dms.boundedWidth}px; 
+		<div
+			style="width: {dms.boundedWidth}px; 
 				left: {dms.marginLeft}px;
 				top: {dms.marginTop + 10}px;
 				height: {scaleY(2.3) - 10}px;"
-		class="sus-rect"></div>
+			class="sus-rect"
+		/>
 	{/if}
 
 	<!-- the chart (all svg elements) -->
@@ -237,7 +270,6 @@ import Annotation from "./Annotation.svelte";
 		<g style={move(dms.marginLeft, dms.marginTop)}>
 			<AxisYCont {chartSpecification} />
 		</g>
-
 
 		<!-- scatter points -->
 		<!-- the blue I have been using "#002DFE" -->
@@ -259,6 +291,7 @@ import Annotation from "./Annotation.svelte";
 					data-y={accessY(d)}
 					data-country={accessCountry(d)}
 					data-population={accessSize(d)}
+					data-showTT={showTT(d)}
 				/>
 			{/each}
 		</g>
@@ -311,10 +344,11 @@ import Annotation from "./Annotation.svelte";
 	<!-- Annotation: shown in plot 2 -->
 	{#if showAnnoP2}
 		<Annotation
-		leftPos={scaleX(1.1e5)}
-		topPos={scaleY(25)}
-		marginAdj={move(dms.marginLeft, dms.marginTop)}
-		annotationText="Countries with per capita CO<sub>2</sub> emissions above a sustainable level (2.3 tonnes) are shown as white against the dark background."/>
+			leftPos={scaleX(1.1e5)}
+			topPos={scaleY(25)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="Countries with per capita CO<sub>2</sub> emissions above a sustainable level (2.3 tonnes) are shown as white against the dark background."
+		/>
 	{/if}
 </div>
 
@@ -330,12 +364,12 @@ import Annotation from "./Annotation.svelte";
 		--greyMinEmp: #e5e5e5;
 	}
 
-	.sus-rect{
+	.sus-rect {
 		z-index: -1;
-		background: url("./images/postittexture.jpg"), 
-					linear-gradient(black, var(--greyMidEmp));
+		background: url("./images/postittexture.jpg"),
+			linear-gradient(black, var(--greyMidEmp));
 		background-size: cover;
-		background-blend-mode:darken;
+		background-blend-mode: darken;
 	}
 
 	.sus-rect,
@@ -348,7 +382,7 @@ import Annotation from "./Annotation.svelte";
 	.interactive-chart {
 		z-index: 0;
 		box-shadow: 4px 4px 8px var(--greyMaxEmp);
-		background-color: #FBFBF8;
+		background-color: #fbfbf8;
 	}
 
 	.axis-label {
