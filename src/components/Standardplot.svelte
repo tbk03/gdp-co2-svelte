@@ -26,6 +26,7 @@
 	// -------------------------------------------------------------------------------------------
 
 	import dataset from "../data/gdp_co2_2015.json";
+import Annotation from "./Annotation.svelte";
 
 	let data = dataset;
 
@@ -186,6 +187,7 @@
 	let colourScale;
 	let basePointColour = "#002DFE";
 	let scatterPointHoverClass = "scatter-point-light-bg";
+	let showAnnoP2 = false;
 	
 
 	function setupPlot1() {
@@ -199,6 +201,7 @@
 		showSustainable = true;
 		colourScale = (d) => d.is_sustainable ? basePointColour : "white";
 		scatterPointHoverClass = (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-dark-bg";
+		showAnnoP2 = true;
 	}
 
 	// setup plot based on plot number
@@ -303,6 +306,15 @@
 			width={dms.width}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 		/>
+	{/if}
+
+	<!-- Annotation: shown in plot 2 -->
+	{#if showAnnoP2}
+		<Annotation
+		leftPos={scaleX(1.1e5)}
+		topPos={scaleY(25)}
+		marginAdj={move(dms.marginLeft, dms.marginTop)}
+		annotationText="Countries with per capita CO<sub>2</sub> emissions above a sustainable level (2.3 tonnes) are shown as white against the dark background."/>
 	{/if}
 </div>
 
