@@ -383,6 +383,8 @@
 		z-index: 0;
 		box-shadow: 4px 4px 8px var(--greyMaxEmp);
 		background-color: #fbfbf8;
+		background-image: url("./images/background-texture.jpg");
+		background-blend-mode: lighten ;
 	}
 
 	.axis-label {
