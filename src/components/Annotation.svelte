@@ -46,7 +46,4 @@
         box-shadow: 1px 1px 6px var(--greyText);
     }
 
-    .legend-item-text {
-        fill: white;
-    }
 </style>
