@@ -38,7 +38,7 @@
         border-radius: 7.5px;
         text-align: left;
         font-size: 16px;
-        max-width: 175px;
+        max-width: 150px;
         background-image: url("./images/postittexture.jpg");
         background-size: cover;
         background-blend-mode: color-burn;

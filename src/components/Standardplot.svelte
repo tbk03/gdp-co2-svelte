@@ -118,6 +118,7 @@
 	let showTooltip = false;
 	let xRatio;
 	let yRatio;
+	let susCO2 = 2.3;
 
 	// (0, 0) is the top, left corner of the chart-container div in App.svelte
 	function getAbsMousePos(event) {
@@ -152,7 +153,6 @@
 	}
 
 	function createTooltipTextPlot2(attributes) {
-		let susCO2 = 2.3;
 		let currentCO2 = attributes["data-y"].value;
 		let fallRequired = format(".3r")(currentCO2 - susCO2);
 		let percentFallRequired = format(".2r")(
@@ -166,6 +166,23 @@
 
 		let line2 = `<p class='tt-line'>To reach a sustainable level emissions would <b>need to fall by ${fallRequired} tonnes CO<sub>2</sub> per capita</b>.</p>`;
 		let line3 = `<p class='tt-line'>That would be <b>a reduction of ${percentFallRequired}%</b>.</p>`;
+		tooltipText = line1 + line2 + line3;
+	}
+
+	function createTooltipTextPlot3(attributes) {
+		let currentCO2 = attributes["data-y"].value;
+		let couldRiseBy = format(".2r")(susCO2 - currentCO2);
+		let percentRisePos = format(".2r")(
+			((susCO2 - currentCO2) / currentCO2) * 100
+		);
+
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+
+		let line2 = `<p class='tt-line'>Before reaching a maximum sustainable level emissions could <b>rise by ${couldRiseBy} tonnes CO<sub>2</sub> per capita</b>.</p>`;
+		let line3 = `<p class='tt-line'>That would be <b>a rise of ${percentRisePos}%</b>.</p>`;
 		tooltipText = line1 + line2 + line3;
 	}
 
@@ -212,21 +229,21 @@
 	let basePointColour = "#002DFE";
 	let scatterPointHoverClass = "scatter-point-light-bg";
 	let showAnnoP2 = false;
+	let showAnnoP3 = false;
 	let createTooltipText;
 	let showTT;
 
 	function setupPlot1() {
 		showLegend = true;
-		colourScale = (d) => basePointColour;
+		colourScale = (d) => "black";
 		scatterPointHoverClass = (d) => "scatter-point-light-bg";
 		createTooltipText = createTooltipTextPlot1;
 		showTT = (d) => true;
 	}
 
 	function setupPlot2() {
-		showLegend = false;
 		showSustainable = true;
-		colourScale = (d) => (d.is_sustainable ? basePointColour : "white");
+		colourScale = (d) => (d.is_sustainable ? "black" : "white");
 		scatterPointHoverClass = (d) =>
 			d.is_sustainable
 				? "scatter-point-no-hover"
@@ -236,6 +253,20 @@
 		showTT = (d) => (d.is_sustainable ? false : true);
 	}
 
+	function setupPlot3() {
+		data = tidy(dataset, filter((d) => d.gdp_per_capita <= 20000));
+		data = tidy(dataset, filter((d) => accessY(d) <= 3.5));
+		showSustainable = true;
+		colourScale = (d) => (d.is_sustainable ? "black" : "white");
+		scatterPointHoverClass = (d) =>
+			d.is_sustainable
+				? "scatter-point-light-bg"
+				: "scatter-point-no-hover";
+		showAnnoP3 = true;
+		createTooltipText = createTooltipTextPlot3;
+		showTT = (d) => (d.is_sustainable ? true : false);
+	}
+
 	// setup plot based on plot number
 	switch (plotNumber) {
 		case 1:
@@ -243,6 +274,9 @@
 			break;
 		case 2:
 			setupPlot2();
+			break;
+		case 3:
+			setupPlot3();
 			break;
 	}
 </script>
@@ -305,9 +339,6 @@
 	<!-- the tooltip (html elements) -->
 	{#if showTooltip}
 		<div class="tooltip" style="top:{tt.y}px; left:{tt.x}px;">
-			<!-- <slot detail={evt.detail.text}></slot> -->
-			<!-- <p> {@html `<b>x: </b> ${evt.detail.data.x}`}</p>
-		<p> {@html `<b>y: </b> ${evt.detail.data.y}`}</p> -->
 			{@html tooltipText}
 		</div>
 	{/if}
@@ -349,6 +380,29 @@
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Countries with per capita CO<sub>2</sub> emissions above a sustainable level (2.3 tonnes) are shown as white against the dark background."
 		/>
+
+		<Annotation
+			leftPos={scaleX(1.1e5)}
+			topPos={scaleY(12.5)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="Hover over the white points for more details."
+		/>
+	{/if}
+
+	<!-- Annotation: shown in plot 3 -->
+	{#if showAnnoP3}
+		<Annotation
+			leftPos={scaleX(800)}
+			topPos={scaleY(3)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="Hover over the black points below for more details."
+		/>
+
+		<Annotation
+		leftPos={scaleX(1.5e4)}
+			topPos={scaleY(1.9)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="<b>Uruguay</b> has the highest GDP per capita of any country with sustainable carbon emissions (i.e. emissions below 2.3 tonnes CO<sub>2</sub> per capita)."/>
 	{/if}
 </div>
 
@@ -451,9 +505,9 @@
 	}
 
 	.scatter-point-dark-bg:hover {
-		fill: red;
+		fill: black;
 		stroke: white;
 		stroke-width: 1.25;
-		filter: drop-shadow(0 0 0.2rem red);
+		filter: drop-shadow(0 0 0.2rem black);
 	}
 </style>

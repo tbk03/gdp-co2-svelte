@@ -3,7 +3,8 @@
 
   $: chartsDMS = {
     one: {width: 0, height: 0},
-    two: {width: 0, height: 0}
+    two: {width: 0, height: 0},
+    three: {width: 0, height: 0}
   };
 </script>
 
@@ -31,10 +32,21 @@
     chartId={'chart2'}
     plotNumber={2}/>
   </div>
+
+  <h1>Hello world again!</h1>
+
+  <div  class='chart-container' id='chart3'
+        bind:offsetWidth={chartsDMS.three.width}
+        bind:offsetHeight={chartsDMS.three.height}>
+  <Standardplot w={chartsDMS.three.width} h={chartsDMS.three.height}
+    chartId={'chart3'}
+    plotNumber={3}/>
+  </div>
+
 </main>
 
 <style>
-  #chart1, #chart2{
+  #chart1, #chart2, #chart3{
     /* to center */
 		margin: auto; 
 		display: flex;
