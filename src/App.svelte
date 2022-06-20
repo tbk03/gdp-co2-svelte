@@ -4,7 +4,8 @@
   $: chartsDMS = {
     one: {width: 0, height: 0},
     two: {width: 0, height: 0},
-    three: {width: 0, height: 0}
+    three: {width: 0, height: 0},
+    four: {width: 0, height: 0}
   };
 </script>
 
@@ -43,10 +44,20 @@
     plotNumber={3}/>
   </div>
 
+  <h1>Hello world again!</h1>
+
+  <div  class='chart-container' id='chart4'
+        bind:offsetWidth={chartsDMS.four.width}
+        bind:offsetHeight={chartsDMS.four.height}>
+  <Standardplot w={chartsDMS.four.width} h={chartsDMS.four.height}
+    chartId={'chart4'}
+    plotNumber={4}/>
+  </div>
+
 </main>
 
 <style>
-  #chart1, #chart2, #chart3{
+  #chart1, #chart2, #chart3, #chart4{
     /* to center */
 		margin: auto; 
 		display: flex;

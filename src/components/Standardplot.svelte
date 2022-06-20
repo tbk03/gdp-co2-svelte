@@ -7,7 +7,7 @@
 	import { scaleLinear, scaleSqrt, scaleSymlog } from "d3-scale";
 	import { extent } from "d3-array";
 	import { format } from "d3-format";
-	import { tidy, filter, max, summarize } from "@tidyjs/tidy";
+	import { tidy, filter, max, summarize, arrange } from "@tidyjs/tidy";
 	import { fade } from "svelte/transition";
 
 	// import components
@@ -287,6 +287,22 @@
 		showTT = (d) => (d.is_sustainable ? true : false);
 	}
 
+	function setupPlot4() {
+
+		// reorder to plot the top 20 producers on top of other countries
+		data = tidy(data, arrange(['top20_producer']));
+		
+		// customise tooltips based on the data
+		colourScale = (d) => d.top20_producer ? "black" : "#bfbfbf";
+
+		// customise tooltips based on the data
+		scatterPointHoverClass = (d) => d.top20_producer ? 
+						"scatter-point-light-bg" :
+						"scatter-point-no-hover";
+		createTooltipText = createTooltipTextPlot1;
+		showTT = (d) => d.top20_producer ? true : false;
+	}
+
 	// setup plot based on plot number
 	switch (plotNumber) {
 		case 1:
@@ -297,6 +313,9 @@
 			break;
 		case 3:
 			setupPlot3();
+			break;
+		case 4:
+			setupPlot4();
 			break;
 	}
 </script>
@@ -315,6 +334,7 @@
 		/>
 	{/if}
 
+	  
 	<!-- the chart (all svg elements) -->
 	<svg width={dms.width} height={dms.height}>
 		<!-- axis -->
