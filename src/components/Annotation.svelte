@@ -3,12 +3,17 @@
     export let leftPos;
     export let marginAdj;
     export let annotationText;
+    export let theme = "dark";
+
+    // allow selection of annotation theme
+    let annotationClass;
+    theme == "dark" ? annotationClass = "dark-theme" : annotationClass = "light-theme";
 
 </script>
 
 <!-- annotation -->
 <div
-    class="annotation"
+    class="annotation {annotationClass}"
     style="top:{topPos}px; left:{leftPos}px; {marginAdj}"
 >
     <div>{@html annotationText}</div>
@@ -29,7 +34,6 @@
 
     .annotation {
         position:absolute;
-        color: white;
         padding: 15px;
         display: flex;
         flex-direction: column;
@@ -41,9 +45,19 @@
         max-width: 150px;
         background-image: url("./images/postittexture.jpg");
         background-size: cover;
-        background-blend-mode: color-burn;
-        background-color: var(--greyMaxEmp);
         box-shadow: 1px 1px 6px var(--greyText);
+    }
+
+    .dark-theme {
+        color: white;
+        background-color: var(--greyMaxEmp);
+        background-blend-mode: color-burn;
+    }
+
+    .light-theme {
+        color: var(--greyText);
+        background-color: var(--greyMinEmp);
+        background-blend-mode: color;
     }
 
 </style>

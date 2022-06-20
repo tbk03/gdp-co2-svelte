@@ -396,6 +396,7 @@
 			topPos={scaleY(3)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Hover over the black points below for more details."
+			theme="light"
 		/>
 
 		<Annotation
