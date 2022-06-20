@@ -234,35 +234,55 @@
 	let showTT;
 
 	function setupPlot1() {
+		// show elements specific to the chart
 		showLegend = true;
+
+		// customise tooltips based on the data
 		colourScale = (d) => "black";
+
+		// customise tooltips based on the data
 		scatterPointHoverClass = (d) => "scatter-point-light-bg";
 		createTooltipText = createTooltipTextPlot1;
 		showTT = (d) => true;
 	}
 
 	function setupPlot2() {
-		showSustainable = true;
+
+		// show elements specific to the chart
+		showSustainable = true; // black background rectangle
+		showAnnoP2 = true;
+
+		// conditional colouring of scatter points based on the data
 		colourScale = (d) => (d.is_sustainable ? "black" : "white");
+		
+		// customise tooltips based on the data
 		scatterPointHoverClass = (d) =>
 			d.is_sustainable
 				? "scatter-point-no-hover"
 				: "scatter-point-dark-bg";
-		showAnnoP2 = true;
 		createTooltipText = createTooltipTextPlot2;
 		showTT = (d) => (d.is_sustainable ? false : true);
 	}
 
 	function setupPlot3() {
+		// filter down data to focus on countries with sustainable C02 emissions
 		data = tidy(dataset, filter((d) => d.gdp_per_capita <= 20000));
 		data = tidy(dataset, filter((d) => accessY(d) <= 3.5));
-		showSustainable = true;
+		
+		// show elements specific to the chart
+		showSustainable = true; // black background rectangle
+		showAnnoP3 = true;
+
+		// conditional colouring of scatter points based on the data
 		colourScale = (d) => (d.is_sustainable ? "black" : "white");
+
+		// customise tooltips so that:
+		// * only countries with sustainable emission have tooltips;
+		// * and, tooltips work with the background colour.
 		scatterPointHoverClass = (d) =>
 			d.is_sustainable
 				? "scatter-point-light-bg"
 				: "scatter-point-no-hover";
-		showAnnoP3 = true;
 		createTooltipText = createTooltipTextPlot3;
 		showTT = (d) => (d.is_sustainable ? true : false);
 	}
@@ -283,7 +303,7 @@
 
 <!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
 <div class="interactive-chart">
-	<!-- Background rectangle: Plot 2 -->
+	<!-- Background rectangle: Plots 2 and 3 -->
 	<!-- +/- 10 is to dodge the axis label -->
 	{#if showSustainable}
 		<div
@@ -379,6 +399,7 @@
 			topPos={scaleY(25)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Countries with per capita CO<sub>2</sub> emissions above a sustainable level (2.3 tonnes) are shown as white against the dark background."
+			theme="light"
 		/>
 
 		<Annotation
@@ -386,6 +407,7 @@
 			topPos={scaleY(12.5)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Hover over the white points for more details."
+			theme="light"
 		/>
 	{/if}
 
