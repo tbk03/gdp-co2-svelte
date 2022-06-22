@@ -7,7 +7,7 @@
 	import { scaleLinear, scaleSqrt, scaleSymlog } from "d3-scale";
 	import { extent } from "d3-array";
 	import { format } from "d3-format";
-	import { tidy, filter, max, summarize, arrange } from "@tidyjs/tidy";
+	import { tidy, filter, max, summarize, arrange, desc } from "@tidyjs/tidy";
 	import { fade } from "svelte/transition";
 
 	// import components
@@ -28,7 +28,11 @@
 	import dataset from "../data/gdp_co2_2015.json";
 	import Annotation from "./Annotation.svelte";
 
-	let data = dataset;
+	// order so smaller circles appear near the front
+	let data = tidy(
+		dataset,
+		arrange([desc("population_historical_estimates")])
+	);
 
 	// get the maximum gdp per capital as the default
 	// export let maxGDP = tidy(dataset,
@@ -243,6 +247,7 @@
 	let scatterPointHoverClass = "scatter-point-light-bg";
 	let showAnnoP2 = false;
 	let showAnnoP3 = false;
+	let showAnnoP4 = false;
 	let createTooltipText;
 	let showTT;
 
@@ -260,14 +265,13 @@
 	}
 
 	function setupPlot2() {
-
 		// show elements specific to the chart
 		showSustainable = true; // black background rectangle
 		showAnnoP2 = true;
 
 		// conditional colouring of scatter points based on the data
 		colourScale = (d) => (d.is_sustainable ? "black" : "white");
-		
+
 		// customise tooltips based on the data
 		scatterPointHoverClass = (d) =>
 			d.is_sustainable
@@ -279,9 +283,15 @@
 
 	function setupPlot3() {
 		// filter down data to focus on countries with sustainable C02 emissions
-		data = tidy(dataset, filter((d) => d.gdp_per_capita <= 20000));
-		data = tidy(dataset, filter((d) => accessY(d) <= 3.5));
-		
+		data = tidy(
+			dataset,
+			filter((d) => d.gdp_per_capita <= 20000)
+		);
+		data = tidy(
+			dataset,
+			filter((d) => accessY(d) <= 3.5)
+		);
+
 		// show elements specific to the chart
 		showSustainable = true; // black background rectangle
 		showAnnoP3 = true;
@@ -301,19 +311,25 @@
 	}
 
 	function setupPlot4() {
-
 		// reorder to plot the top 20 producers on top of other countries
-		data = tidy(data, arrange(['top20_producer']));
-		
-		// customise tooltips based on the data
-		colourScale = (d) => d.top20_producer ? "black" : "#bfbfbf";
+		data = tidy(
+			data,
+			arrange(["top20_producer", desc("population_historical_estimates")])
+		);
+
+		// show elements specific to the chart
+		showAnnoP4 = true;
 
 		// customise tooltips based on the data
-		scatterPointHoverClass = (d) => d.top20_producer ? 
-						"scatter-point-light-bg" :
-						"scatter-point-no-hover";
+		colourScale = (d) => (d.top20_producer ? "black" : "#bfbfbf");
+
+		// customise tooltips based on the data
+		scatterPointHoverClass = (d) =>
+			d.top20_producer
+				? "scatter-point-light-bg"
+				: "scatter-point-no-hover";
 		createTooltipText = createTooltipTextPlot4;
-		showTT = (d) => d.top20_producer ? true : false;
+		showTT = (d) => (d.top20_producer ? true : false);
 	}
 
 	// setup plot based on plot number
@@ -347,7 +363,6 @@
 		/>
 	{/if}
 
-	  
 	<!-- the chart (all svg elements) -->
 	<svg width={dms.width} height={dms.height}>
 		<!-- axis -->
@@ -456,10 +471,30 @@
 		/>
 
 		<Annotation
-		leftPos={scaleX(1.5e4)}
+			leftPos={scaleX(1.5e4)}
 			topPos={scaleY(1.9)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
-			annotationText="<b>Uruguay</b> has the highest GDP per capita of any country with sustainable carbon emissions (i.e. emissions below 2.3 tonnes CO<sub>2</sub> per capita)."/>
+			annotationText="<b>Uruguay</b> has the highest GDP per capita of any country with sustainable carbon emissions (i.e. emissions below 2.3 tonnes CO<sub>2</sub> per capita)."
+		/>
+	{/if}
+
+	<!-- Annotation: shown in plot 4 -->
+	{#if showAnnoP4}
+		<Annotation
+			leftPos={scaleX(1.1e5)}
+			topPos={scaleY(30)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="The 20 countries with the highest total fossil fuel production (coal, gas and oil combined) in 2015 are shown in black. Hover over the black circles for more details. "
+			theme="oil"
+		/>
+
+		<Annotation
+			leftPos={scaleX(0.9e5)}
+			topPos={scaleY(12)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="<b>Norway</b> is an outlier amongst the major fossil fuel producing countries. It has high GDP per capita and relatively low carbon emissions per capita."
+			theme="oil"
+		/>
 	{/if}
 </div>
 
@@ -495,7 +530,7 @@
 		box-shadow: 4px 4px 8px var(--greyMaxEmp);
 		background-color: #fbfbf8;
 		background-image: url("./images/background-texture.jpg");
-		background-blend-mode: lighten ;
+		background-blend-mode: lighten;
 	}
 
 	.axis-label {
