@@ -186,6 +186,19 @@
 		tooltipText = line1 + line2 + line3;
 	}
 
+	function createTooltipTextPlot4(attributes) {
+		let total_ff_prod = format(".4r")(attributes["data-ff-prod"].value);
+
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+
+		let line2 = `<p class='tt-line'>In 2015 produced a total of ${total_ff_prod} TWh of fossil fuels (combined coal, gas and oil).</p>`;
+		// let line3 = `<p class='tt-line'>That would be <b>a rise of ${percentRisePos}%</b>.</p>`;
+		tooltipText = line1 + line2;
+	}
+
 	// to keep tooltips within the bounds of the chart
 	function adjustTooltipPos(mousePos) {
 		xRatio = mousePos.x / dms.boundedWidth;
@@ -299,7 +312,7 @@
 		scatterPointHoverClass = (d) => d.top20_producer ? 
 						"scatter-point-light-bg" :
 						"scatter-point-no-hover";
-		createTooltipText = createTooltipTextPlot1;
+		createTooltipText = createTooltipTextPlot4;
 		showTT = (d) => d.top20_producer ? true : false;
 	}
 
@@ -366,6 +379,7 @@
 					data-country={accessCountry(d)}
 					data-population={accessSize(d)}
 					data-showTT={showTT(d)}
+					data-ff-prod={d.total_ff_prod}
 				/>
 			{/each}
 		</g>
