@@ -7,12 +7,22 @@
     three: {width: 0, height: 0},
     four: {width: 0, height: 0}
   };
+
+  let plotNum = 1;
+  let handleClickB1 = () => plotNum = 1;
+  let handleClickB2 = () => plotNum = 2;
+  let handleClickB3 = () => plotNum = 3;
+  let handleClickB4 = () => plotNum = 4;
 </script>
+
 
 <main>
 
   <h1>Hello world!</h1>
-
+  <button on:click={handleClickB1}>plot 1</button>
+  <button on:click={handleClickB2}>plot 2</button>
+  <button on:click={handleClickB3}>plot 3</button>
+  <button on:click={handleClickB4}>plot 4</button>
   <div  class='chart-container' id='chart1'
         bind:offsetWidth={chartsDMS.one.width}
         bind:offsetHeight={chartsDMS.one.height}>
@@ -20,7 +30,7 @@
     <Standardplot w={chartsDMS.one.width} 
                   h={chartsDMS.one.height}
                   chartId={'chart1'}
-                  plotNumber={1}/>
+                  plotNumber={plotNum}/>
   </div>
 
   <h1>Hello world again!</h1>

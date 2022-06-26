@@ -85,8 +85,8 @@
 	// 4. Create scales
 	// -------------------------------------------------------------------------------------------
 
-	$: extentsX = expandScale(extent(data, accessX), 0, 0.05);
-	$: extentsY = expandScale(extent(data, accessY), 0, 0.05);
+	let extentsX = expandScale(extent(data, accessX), 0, 0.05);
+	let extentsY = expandScale(extent(data, accessY), 0, 0.05);
 
 	$: scaleX = scaleLinear().domain(extentsX).range([0, dms.boundedWidth]);
 
@@ -240,20 +240,30 @@
 	// 8. Customising the versions of the charts
 	// -------------------------------------------------------------------------------------------
 	export let plotNumber = 1;
-	let showLegend = false;
-	let showSustainable = false;
+	$: currentPlotNumber = plotNumber;
+
+	// let showLegend = false;
+	// let showSustainable = false;
 	let colourScale;
 	let basePointColour = "#002DFE";
 	let scatterPointHoverClass = "scatter-point-light-bg";
-	let showAnnoP2 = false;
-	let showAnnoP3 = false;
-	let showAnnoP4 = false;
+	// let showAnnoP2 = false;
+	// let showAnnoP3 = false;
+	// let showAnnoP4 = false;
 	let createTooltipText;
 	let showTT;
 
+	let plotElements = [false, false, false, false];
+
+	let showPlotElements = function(n){
+		plotElements = plotElements.map((d, i) => n == (i + 1) ? true : false);
+	}
+
 	function setupPlot1() {
-		// show elements specific to the chart
-		showLegend = true;
+		// show/hide elements specific to the chart
+		// showLegend = true;
+		// data = dataset;
+		showPlotElements(1);
 
 		// customise tooltips based on the data
 		colourScale = (d) => "black";
@@ -266,8 +276,9 @@
 
 	function setupPlot2() {
 		// show elements specific to the chart
-		showSustainable = true; // black background rectangle
-		showAnnoP2 = true;
+		// showSustainable = true; // black background rectangle
+		// showAnnoP2 = true;
+		showPlotElements(2);
 
 		// conditional colouring of scatter points based on the data
 		colourScale = (d) => (d.is_sustainable ? "black" : "white");
@@ -283,18 +294,34 @@
 
 	function setupPlot3() {
 		// filter down data to focus on countries with sustainable C02 emissions
-		data = tidy(
-			dataset,
-			filter((d) => d.gdp_per_capita <= 20000)
-		);
-		data = tidy(
-			dataset,
-			filter((d) => accessY(d) <= 3.5)
-		);
+		// data = tidy(
+		// 	dataset,
+		// 	filter((d) => accessX(d) <= 20000)
+		// );
+		// data = tidy(
+		// 	data,
+		// 	filter((d) => accessY(d) <= 3.5)
+		// );
+
+		extentsX = [0, 21000];
+		extentsY = [0, 3.5];
+		scaleX = scaleLinear().domain(extentsX).range([0, dms.boundedWidth]);
+		scaleY = scaleLinear().domain(extentsY).range([dms.boundedHeight, 0]);
+
+		scales = { x: scaleX, y: scaleY, size: scaleSize };
+
+		chartSpecification = {
+			scales: scales,
+			data: data,
+			accessors: accessors,
+			dms: dms,
+		};
+
 
 		// show elements specific to the chart
-		showSustainable = true; // black background rectangle
-		showAnnoP3 = true;
+		// showSustainable = true; // black background rectangle
+		// showAnnoP3 = true;
+		showPlotElements(3);
 
 		// conditional colouring of scatter points based on the data
 		colourScale = (d) => (d.is_sustainable ? "black" : "white");
@@ -313,12 +340,13 @@
 	function setupPlot4() {
 		// reorder to plot the top 20 producers on top of other countries
 		data = tidy(
-			data,
+			dataset,
 			arrange(["top20_producer", desc("population_historical_estimates")])
 		);
 
 		// show elements specific to the chart
-		showAnnoP4 = true;
+		// showAnnoP4 = true;
+		showPlotElements(4);
 
 		// customise tooltips based on the data
 		colourScale = (d) => (d.top20_producer ? "black" : "#bfbfbf");
@@ -333,7 +361,7 @@
 	}
 
 	// setup plot based on plot number
-	switch (plotNumber) {
+	$: switch (currentPlotNumber) {
 		case 1:
 			setupPlot1();
 			break;
@@ -347,13 +375,15 @@
 			setupPlot4();
 			break;
 	}
+
+$: console.log(data);
 </script>
 
 <!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
 <div class="interactive-chart">
 	<!-- Background rectangle: Plots 2 and 3 -->
 	<!-- +/- 10 is to dodge the axis label -->
-	{#if showSustainable}
+	{#if plotElements[1] || plotElements[2]}
 		<div
 			style="width: {dms.boundedWidth}px; 
 				left: {dms.marginLeft}px;
@@ -431,7 +461,7 @@
 	</div>
 
 	<!-- Size Legend: shown in plot 1 -->
-	{#if showLegend}
+	{#if plotElements[0]}
 		<SizeLegend
 			leftPos={scaleX(1.1e5)}
 			topPos={scaleY(25)}
@@ -442,7 +472,7 @@
 	{/if}
 
 	<!-- Annotation: shown in plot 2 -->
-	{#if showAnnoP2}
+	{#if plotElements[1]}
 		<Annotation
 			leftPos={scaleX(1.1e5)}
 			topPos={scaleY(25)}
@@ -461,7 +491,7 @@
 	{/if}
 
 	<!-- Annotation: shown in plot 3 -->
-	{#if showAnnoP3}
+	{#if plotElements[2]}
 		<Annotation
 			leftPos={scaleX(800)}
 			topPos={scaleY(3)}
@@ -479,7 +509,7 @@
 	{/if}
 
 	<!-- Annotation: shown in plot 4 -->
-	{#if showAnnoP4}
+	{#if plotElements[3]}
 		<Annotation
 			leftPos={scaleX(1.1e5)}
 			topPos={scaleY(30)}
