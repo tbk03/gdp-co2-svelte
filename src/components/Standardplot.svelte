@@ -9,6 +9,7 @@
 	import { format } from "d3-format";
 	import { tidy, filter, max, summarize, arrange, desc } from "@tidyjs/tidy";
 	import { fade } from "svelte/transition";
+	import { tweened } from "svelte/motion";
 
 	// import components
 	import AxisXCont from "./AxisXCont.svelte";
@@ -294,17 +295,19 @@
 
 	function setupPlot3() {
 		// filter down data to focus on countries with sustainable C02 emissions
-		// data = tidy(
-		// 	dataset,
-		// 	filter((d) => accessX(d) <= 20000)
-		// );
-		// data = tidy(
-		// 	data,
-		// 	filter((d) => accessY(d) <= 3.5)
-		// );
 
-		extentsX = [0, 21000];
-		extentsY = [0, 3.5];
+
+		data = tidy(
+			dataset,
+			filter((d) => accessX(d) <= 20000)
+		);
+		data = tidy(
+			data,
+			filter((d) => accessY(d) <= 3.5)
+		);
+
+		extentsX = expandScale(extent(data, accessX), 0, 0.05);
+		extentsY = expandScale(extent(data, accessY), 0, 0.05);
 		scaleX = scaleLinear().domain(extentsX).range([0, dms.boundedWidth]);
 		scaleY = scaleLinear().domain(extentsY).range([dms.boundedHeight, 0]);
 
