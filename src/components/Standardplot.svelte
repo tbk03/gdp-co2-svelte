@@ -9,7 +9,7 @@
 	import { format } from "d3-format";
 	import { tidy, filter, max, summarize, arrange, desc } from "@tidyjs/tidy";
 	import { fade } from "svelte/transition";
-	import { tweened } from "svelte/motion";
+
 
 	// import components
 	import AxisXCont from "./AxisXCont.svelte";
@@ -243,6 +243,8 @@
 	export let plotNumber = 1;
 	$: currentPlotNumber = plotNumber;
 
+	let showAxisDetail = false;
+
 	// let showLegend = false;
 	// let showSustainable = false;
 	let colourScale;
@@ -265,6 +267,7 @@
 		// showLegend = true;
 		// data = dataset;
 		showPlotElements(1);
+		showAxisDetail = true;
 
 		// customise tooltips based on the data
 		colourScale = (d) => "black";
@@ -313,12 +316,22 @@
 
 		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-		chartSpecification = {
-			scales: scales,
-			data: data,
-			accessors: accessors,
-			dms: dms,
-		};
+
+		// points = points.map(d => ({ ...d, birthrate: d.year > 2000 ? d.birthrate : 0 }))
+		// const timeout = setTimeout(() => {
+		// 	points = points.filter(d => d.year > 2000)
+		// }, 200)
+		showAxisDetail = false;
+		const timeout = setTimeout(
+			() => {
+				chartSpecification = {
+					scales: scales,
+					data: data,
+					accessors: accessors,
+					dms: dms,
+					}
+				showAxisDetail = true;
+				}, 2000);
 
 
 		// show elements specific to the chart
@@ -354,12 +367,12 @@
 
 		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-		chartSpecification = {
+		const timeout = setTimeout(() => {chartSpecification = {
 			scales: scales,
 			data: data,
 			accessors: accessors,
 			dms: dms,
-		};
+		}}, 2000);
 
 		// show elements specific to the chart
 		// showAnnoP4 = true;
@@ -407,6 +420,8 @@ $: console.log(data);
 				top: {dms.marginTop + 10}px;
 				height: {scaleY(2.3) - 10}px;"
 			class="sus-rect"
+			in:fade="{{duration: 3000}}"
+			out:fade="{{duration: 2000}}"
 		/>
 	{/if}
 
@@ -414,7 +429,7 @@ $: console.log(data);
 	<svg width={dms.width} height={dms.height}>
 		<!-- axis -->
 		<g style={move(dms.marginLeft, dms.height - dms.marginBottom)}>
-			<AxisXCont {chartSpecification} />
+			<AxisXCont {chartSpecification} {showAxisDetail}/>
 		</g>
 		<g style={move(dms.marginLeft, dms.marginTop)}>
 			<AxisYCont {chartSpecification} />
@@ -442,6 +457,9 @@ $: console.log(data);
 					data-population={accessSize(d)}
 					data-showTT={showTT(d)}
 					data-ff-prod={d.total_ff_prod}
+
+					in:fade="{{duration: 5000}}"
+					out:fade="{{duration: 3000}}"
 				/>
 			{/each}
 		</g>
@@ -563,7 +581,7 @@ $: console.log(data);
 			linear-gradient(black, var(--greyMidEmp));
 		background-size: cover;
 		background-blend-mode: darken;
-		transition: all 10s;
+		transition: all 3s;
 	}
 
 	.sus-rect,

@@ -3,8 +3,12 @@
  -->
 
 <script>
+
+    import { fade } from "svelte/transition";
+
     // export props
     export let chartSpecification;
+    export let showAxisDetail = true;
     // export let xAxisLabelOffeset = 60;
 
     export let axisFormatting = {
@@ -23,6 +27,8 @@
     let tickValues;
     let scaleTickValues;
     let scaleMax;
+    let fadeInTime = 4000;
+    let fadeOutTime = 1000;
 
     // access tick values (domain)
    $: tickValues = chartSpecification.scales.x.ticks();
@@ -54,22 +60,25 @@
         <!-- alternate between major and minor tick lines -->
 
         <!-- show all non zero major ticks -->
-        {#if i % 2 == 0 && tickValues[i] != 0}
+        {#if i % 2 == 0 && tickValues[i] != 0 && showAxisDetail}
 
             <!-- axis ticks -->
             <line   class="major-tick tick"
                     x1={t} 
                     y1={0} 
                     x2={t} 
-                    y2={axisFormatting.tickMajorLen}   />
+                    y2={axisFormatting.tickMajorLen}   
+                    in:fade="{{ duration: 4000 }}"/>
             
             <!-- axis labels -->
             <text   class="major-tick-text tick-text"
                     x = {t}
                     y = {axisFormatting.textMajorOffset}
-                    text-anchor="middle">
+                    text-anchor="middle"
+                    in:fade="{{ duration: 4000 }}">
                     <!-- the tick label itself -->
-                    {formattedTickValues[i]}  </text>
+                    {formattedTickValues[i]}  
+                    </text>
             
             <!-- grid lines within plot -->
             {#if grid.majorGrid}
@@ -77,22 +86,27 @@
                         x1 = {t}
                         y1 = 0
                         x2 = {t}
-                        y2 = {-chartSpecification.dms.boundedHeight}></line>
+                        y2 = {-chartSpecification.dms.boundedHeight}
+                        in:fade="{{ duration: 4000 }}"
+                        out:fade="{{ duration: 1000 }}"></line>
             {/if}
         {/if}
         
         <!-- show minor ticks if required and screen is wider than 600px  -->
-        {#if i % 2 != 0 && chartSpecification.dms.width > 700}
+        {#if i % 2 != 0 && chartSpecification.dms.width > 700 && showAxisDetail}
             <line   class="minor-tick"
                     x1={t} 
                     y1={0} 
                     x2={t} 
-                    y2={axisFormatting.tickMinorLen }   />
+                    y2={axisFormatting.tickMinorLen }
+                    in:fade="{{ duration: 4000 }}"/>
             
             <text   class="minor-tick-text tick-text"
                     x = {t}
                     y = {axisFormatting.textMinorOffset}
-                    text-anchor="middle">
+                    text-anchor="middle"
+                    in:fade="{{ duration: 4000 }}"
+                    out:fade="{{ duration: 1000 }}">
                     <!-- the tick label itself -->
                     {formattedTickValues[i]}  </text>
             
@@ -102,7 +116,9 @@
                         x1 = {t}
                         y1 = 0
                         x2 = {t}
-                        y2 = {-chartSpecification.dms.boundedHeight}></line>
+                        y2 = {-chartSpecification.dms.boundedHeight}
+                        in:fade="{{ duration: 4000 }}"
+                        out:fade="{{ duration: 1000 }}"></line>
             {/if}
         
         {/if}

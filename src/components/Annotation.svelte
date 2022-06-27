@@ -4,6 +4,7 @@
     export let marginAdj;
     export let annotationText;
     export let theme = "dark";
+    
 
     // allow selection of annotation theme
     let annotationClass;
