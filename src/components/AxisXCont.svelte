@@ -68,14 +68,15 @@
                     y1={0} 
                     x2={t} 
                     y2={axisFormatting.tickMajorLen}   
-                    in:fade="{{ duration: 4000 }}"/>
+                    />
             
             <!-- axis labels -->
             <text   class="major-tick-text tick-text"
                     x = {t}
                     y = {axisFormatting.textMajorOffset}
                     text-anchor="middle"
-                    in:fade="{{ duration: 4000 }}">
+                    in:fade="{{ duration: fadeInTime }}"
+                    out:fade="{{ duration: fadeOutTime }}">
                     <!-- the tick label itself -->
                     {formattedTickValues[i]}  
                     </text>
@@ -87,8 +88,8 @@
                         y1 = 0
                         x2 = {t}
                         y2 = {-chartSpecification.dms.boundedHeight}
-                        in:fade="{{ duration: 4000 }}"
-                        out:fade="{{ duration: 1000 }}"></line>
+                        in:fade="{{ duration: fadeInTime }}"
+                        ></line>
             {/if}
         {/if}
         
@@ -99,14 +100,14 @@
                     y1={0} 
                     x2={t} 
                     y2={axisFormatting.tickMinorLen }
-                    in:fade="{{ duration: 4000 }}"/>
+                    in:fade="{{ duration: fadeInTime }}"/>
             
             <text   class="minor-tick-text tick-text"
                     x = {t}
                     y = {axisFormatting.textMinorOffset}
                     text-anchor="middle"
-                    in:fade="{{ duration: 4000 }}"
-                    out:fade="{{ duration: 1000 }}">
+                    in:fade="{{ duration: fadeInTime }}"
+                    out:fade="{{ duration: fadeOutTime }}">
                     <!-- the tick label itself -->
                     {formattedTickValues[i]}  </text>
             
@@ -117,8 +118,8 @@
                         y1 = 0
                         x2 = {t}
                         y2 = {-chartSpecification.dms.boundedHeight}
-                        in:fade="{{ duration: 4000 }}"
-                        out:fade="{{ duration: 1000 }}"></line>
+                        in:fade="{{ duration: fadeInTime }}"
+                        out:fade="{{ duration: fadeOutTime }}"></line>
             {/if}
         
         {/if}

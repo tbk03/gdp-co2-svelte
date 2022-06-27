@@ -1,4 +1,6 @@
 <script>
+    import { fade } from "svelte/transition";
+
     export let topPos;
     export let leftPos;
     export let marginAdj;
@@ -28,6 +30,8 @@
 <div
     class="annotation {annotationClass}"
     style="top:{topPos}px; left:{leftPos}px; {marginAdj}"
+    in:fade="{{ duration: 5000 }}"
+    out:fade="{{ duration: 1500 }}"
 >
     <div>{@html annotationText}</div>
 

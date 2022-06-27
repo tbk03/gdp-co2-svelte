@@ -9,6 +9,7 @@
 	import { format } from "d3-format";
 	import { tidy, filter, max, summarize, arrange, desc } from "@tidyjs/tidy";
 	import { fade } from "svelte/transition";
+	import { cubicInOut } from 'svelte/easing';
 
 
 	// import components
@@ -250,6 +251,7 @@
 	let colourScale;
 	let basePointColour = "#002DFE";
 	let scatterPointHoverClass = "scatter-point-light-bg";
+	let scatterAnnimateClass = "scatter-point";
 	// let showAnnoP2 = false;
 	// let showAnnoP3 = false;
 	// let showAnnoP4 = false;
@@ -282,6 +284,7 @@
 		// show elements specific to the chart
 		// showSustainable = true; // black background rectangle
 		// showAnnoP2 = true;
+		scatterAnnimateClass = "scatter-point-animated";
 		showPlotElements(2);
 
 		// conditional colouring of scatter points based on the data
@@ -367,12 +370,17 @@
 
 		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-		const timeout = setTimeout(() => {chartSpecification = {
-			scales: scales,
-			data: data,
-			accessors: accessors,
-			dms: dms,
-		}}, 2000);
+		showAxisDetail = false;
+		const timeout = setTimeout(
+			() => {
+				chartSpecification = {
+					scales: scales,
+					data: data,
+					accessors: accessors,
+					dms: dms,
+					}
+				showAxisDetail = true;
+				}, 2000);
 
 		// show elements specific to the chart
 		// showAnnoP4 = true;
@@ -440,7 +448,7 @@ $: console.log(data);
 		<g style={move(dms.marginLeft, dms.marginTop)}>
 			{#each data as d}
 				<circle
-					class="scatter-point {scatterPointHoverClass(d)}"
+					class="{scatterAnnimateClass} {scatterPointHoverClass(d)}"
 					cx={scaleX(accessX(d))}
 					cy={scaleY(accessY(d))}
 					r={scaleSize(accessSize(d))}
@@ -458,8 +466,10 @@ $: console.log(data);
 					data-showTT={showTT(d)}
 					data-ff-prod={d.total_ff_prod}
 
-					in:fade="{{duration: 5000}}"
-					out:fade="{{duration: 3000}}"
+					in:fade="{{duration: 5000,
+					easing: cubicInOut}}"
+					out:fade="{{duration: 500,
+					easing: cubicInOut}}"
 				/>
 			{/each}
 		</g>
@@ -649,6 +659,11 @@ $: console.log(data);
 	}
 
 	.scatter-point {
+		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease;
+		/* -webkit-mask-image: url(paper_texture.png);
+        mask-image: url(paper_texture.png); */
+	}
+	.scatter-point-animated {
 		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease, cx 5s, cy 5s;
 		/* -webkit-mask-image: url(paper_texture.png);
         mask-image: url(paper_texture.png); */
