@@ -209,8 +209,8 @@
 		xRatio = mousePos.x / dms.boundedWidth;
 		yRatio = mousePos.y / dms.boundedHeight;
 		return {
-			x: xRatio > 0.7 ? (tt.x = mousePos.x - 250) : (tt.x = mousePos.x),
-			y: yRatio > 0.8 ? (tt.y = mousePos.y - 250) : (tt.y = mousePos.y),
+			x: xRatio > 0.7 ? (tt.x = mousePos.x - 310) : (tt.x = mousePos.x),
+			y: yRatio > 0.8 ? (tt.y = mousePos.y - 310) : (tt.y = mousePos.y),
 		};
 	}
 
@@ -346,6 +346,20 @@
 			dataset,
 			arrange(["top20_producer", desc("population_historical_estimates")])
 		);
+
+		extentsX = expandScale(extent(data, accessX), 0, 0.05);
+		extentsY = expandScale(extent(data, accessY), 0, 0.05);
+		scaleX = scaleLinear().domain(extentsX).range([0, dms.boundedWidth]);
+		scaleY = scaleLinear().domain(extentsY).range([dms.boundedHeight, 0]);
+
+		scales = { x: scaleX, y: scaleY, size: scaleSize };
+
+		chartSpecification = {
+			scales: scales,
+			data: data,
+			accessors: accessors,
+			dms: dms,
+		};
 
 		// show elements specific to the chart
 		// showAnnoP4 = true;
@@ -549,6 +563,7 @@ $: console.log(data);
 			linear-gradient(black, var(--greyMidEmp));
 		background-size: cover;
 		background-blend-mode: darken;
+		transition: all 10s;
 	}
 
 	.sus-rect,
@@ -616,7 +631,7 @@ $: console.log(data);
 	}
 
 	.scatter-point {
-		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease;
+		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease, cx 5s, cy 5s;
 		/* -webkit-mask-image: url(paper_texture.png);
         mask-image: url(paper_texture.png); */
 	}
