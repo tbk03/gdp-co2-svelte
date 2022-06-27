@@ -265,9 +265,23 @@
 	}
 
 	function setupPlot1() {
+		// start points in bottom left corner of graph
+		scatterAnnimateClass = "scatter-point";
+		data = dataset.map(d => {
+			return{...d, 
+					annual_co2_emissions_per_capita : 0,
+					gdp_per_capita : 0,
+					population_historical_estimates : 1
+		}});
+
+		// need to wait before sending points to actual positions
+		const timeout = setTimeout(
+			() => {
+					scatterAnnimateClass = "scatter-point-animated";
+					data = dataset;
+				}, 10)
+		
 		// show/hide elements specific to the chart
-		// showLegend = true;
-		// data = dataset;
 		showPlotElements(1);
 		showAxisDetail = true;
 
@@ -278,7 +292,8 @@
 		scatterPointHoverClass = (d) => "scatter-point-light-bg";
 		createTooltipText = createTooltipTextPlot1;
 		showTT = (d) => true;
-	}
+
+		}
 
 	function setupPlot2() {
 		// show elements specific to the chart
@@ -301,8 +316,6 @@
 
 	function setupPlot3() {
 		// filter down data to focus on countries with sustainable C02 emissions
-
-
 		data = tidy(
 			dataset,
 			filter((d) => accessX(d) <= 20000)

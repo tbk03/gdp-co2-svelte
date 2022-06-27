@@ -28,7 +28,7 @@
     let scaleTickValues;
     let scaleMax;
     let fadeInTime = 4000;
-    let fadeOutTime = 1000;
+    let fadeOutTime = 500;
 
     // access tick values (domain)
    $: tickValues = chartSpecification.scales.x.ticks();
@@ -55,12 +55,15 @@
             x2={scaleMax} 
             y2={0}/>
 
+    {#if showAxisDetail}      
+    <g  in:fade="{{ duration: fadeInTime }}"
+        out:fade="{{ duration: fadeOutTime }}">
     <!-- axis ticks -->
     {#each scaleTickValues as t, i}
         <!-- alternate between major and minor tick lines -->
 
         <!-- show all non zero major ticks -->
-        {#if i % 2 == 0 && tickValues[i] != 0 && showAxisDetail}
+        {#if i % 2 == 0 && tickValues[i] != 0}
 
             <!-- axis ticks -->
             <line   class="major-tick tick"
@@ -74,9 +77,7 @@
             <text   class="major-tick-text tick-text"
                     x = {t}
                     y = {axisFormatting.textMajorOffset}
-                    text-anchor="middle"
-                    in:fade="{{ duration: fadeInTime }}"
-                    out:fade="{{ duration: fadeOutTime }}">
+                    text-anchor="middle">
                     <!-- the tick label itself -->
                     {formattedTickValues[i]}  
                     </text>
@@ -88,26 +89,23 @@
                         y1 = 0
                         x2 = {t}
                         y2 = {-chartSpecification.dms.boundedHeight}
-                        in:fade="{{ duration: fadeInTime }}"
                         ></line>
             {/if}
         {/if}
         
         <!-- show minor ticks if required and screen is wider than 600px  -->
-        {#if i % 2 != 0 && chartSpecification.dms.width > 700 && showAxisDetail}
+        {#if i % 2 != 0 && chartSpecification.dms.width > 700}
             <line   class="minor-tick"
                     x1={t} 
                     y1={0} 
                     x2={t} 
-                    y2={axisFormatting.tickMinorLen }
-                    in:fade="{{ duration: fadeInTime }}"/>
+                    y2={axisFormatting.tickMinorLen }/>
             
             <text   class="minor-tick-text tick-text"
                     x = {t}
                     y = {axisFormatting.textMinorOffset}
                     text-anchor="middle"
-                    in:fade="{{ duration: fadeInTime }}"
-                    out:fade="{{ duration: fadeOutTime }}">
+                    >
                     <!-- the tick label itself -->
                     {formattedTickValues[i]}  </text>
             
@@ -117,9 +115,7 @@
                         x1 = {t}
                         y1 = 0
                         x2 = {t}
-                        y2 = {-chartSpecification.dms.boundedHeight}
-                        in:fade="{{ duration: fadeInTime }}"
-                        out:fade="{{ duration: fadeOutTime }}"></line>
+                        y2 = {-chartSpecification.dms.boundedHeight}></line>
             {/if}
         
         {/if}
@@ -132,6 +128,9 @@
         y={xAxisLabelOffeset}
         class="axis-label"
         >GDP per capita</text> -->
+
+    </g>
+    {/if}
 </g>
 
 <style>

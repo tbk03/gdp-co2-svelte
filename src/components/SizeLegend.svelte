@@ -1,4 +1,6 @@
 <script>
+    import { fade } from "svelte/transition";
+
     export let legendWidth = 175;
     export let legendHeight = 175;
     export let scaleSize;
@@ -22,6 +24,8 @@
 <div
     class="legend"
     style="top:{topPos}px; left:{leftPos}px; {marginAdj}"
+    in:fade="{{ duration: 5000 }}"
+    out:fade="{{ duration: 1500 }}"
 >
     <div>The size of the circles shows the population of the countries.</div>
 
