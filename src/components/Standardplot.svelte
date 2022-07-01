@@ -8,8 +8,7 @@
 	import { extent } from "d3-array";
 	import { tidy, filter, max, summarize, arrange, desc } from "@tidyjs/tidy";
 	import { fade } from "svelte/transition";
-	import { cubicInOut } from 'svelte/easing';
-
+	import { cubicInOut } from "svelte/easing";
 
 	// import components
 	import AxisXCont from "./AxisXCont.svelte";
@@ -28,33 +27,14 @@
 
 	import dataset from "../data/gdp_co2_2015.json";
 	import Annotation from "./Annotation.svelte";
-import Tooltip from "./Tooltip.svelte";
-import ScatterPlot from "./ScatterPlot.svelte";
+	import Tooltip from "./Tooltip.svelte";
+	import ScatterPlot from "./ScatterPlot.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
 		dataset,
 		arrange([desc("population_historical_estimates")])
 	);
-
-	// get the maximum gdp per capital as the default
-	// export let maxGDP = tidy(dataset,
-	// 						summarize({gdp_per_capita: max('gdp_per_capita')})
-	// 						)[0].gdp_per_capita; // get result as single number
-	// 											// rather than array of objects
-
-	// data = tidy(dataset, filter((d) => d.gdp_per_capita <= maxGDP));
-
-	// alternative approach using csv in public folder but required ansyncronous processing
-	// the import is more straight forward
-	// onMount(async () => {
-	// 	// await csv("./data/gdp_co2_2015.csv")
-	//     //     .then((d) => data = d);
-
-	//     const res = await fetch("./data/gdp_co2_2015.json");
-	//     data = await res.json();
-	//     console.log(data);
-	// })
 
 	// -------------------------------------------------------------------------------------------
 	// 2. Create accessor functions
@@ -105,8 +85,12 @@ import ScatterPlot from "./ScatterPlot.svelte";
 
 	$: scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-	let accessors = { 	x: accessX, y: accessY, 
-						size: accessSize, country: accessCountry };
+	let accessors = {
+		x: accessX,
+		y: accessY,
+		size: accessSize,
+		country: accessCountry,
+	};
 
 	$: chartSpecification = {
 		scales: scales,
@@ -116,35 +100,13 @@ import ScatterPlot from "./ScatterPlot.svelte";
 	};
 
 	// -------------------------------------------------------------------------------------------
-	// 6. Add tooltips
+	// 6. Hangle tooltip messages from ScatterPlot component
 	// -------------------------------------------------------------------------------------------
 	let ttEvent, scatterAttributes;
 	let showTooltip = false;
 	export let chartId;
 
-	// function mouseOver(event) {
-	// 	if (this.attributes["data-showtt"].value == "true") {
-	// 		ttEvent = event;
-	// 		showTooltip = true;
-	// 		scatterAttributes = this.attributes;
-	// 	}
-	// 	console.log(event);
-	// }
-
-	// function mouseLeave(event) {
-	// 	showTooltip = false;
-	// }
-
-	// function mouseMove(event) {
-	// 	if (this.attributes["data-showtt"].value == "true") {
-	// 		ttEvent = event;
-	// 		showTooltip = true;
-	// 		scatterAttributes = this.attributes;
-	// 	}
-	// }
-
-	function handleScatterMsg(msg){
-
+	function handleScatterMsg(msg) {
 		ttEvent = msg.detail.event;
 		showTooltip = msg.detail.showTT;
 		scatterAttributes = msg.detail.attributes;
@@ -170,24 +132,24 @@ import ScatterPlot from "./ScatterPlot.svelte";
 	let createTooltipText;
 	let showTT;
 
-
 	function setupPlot1() {
 		// start points in bottom left corner of graph
 		scatterAnnimateClass = "scatter-point";
-		data = dataset.map(d => {
-			return{...d, 
-					annual_co2_emissions_per_capita : 0,
-					gdp_per_capita : 0,
-					population_historical_estimates : 1
-		}});
+		data = dataset.map((d) => {
+			return {
+				...d,
+				annual_co2_emissions_per_capita: 0,
+				gdp_per_capita: 0,
+				population_historical_estimates: 1,
+			};
+		});
 
 		// need to wait before sending points to actual positions
-		const timeout = setTimeout(
-			() => {
-					scatterAnnimateClass = "scatter-point-animated";
-					data = dataset;
-				}, 10)
-		
+		const timeout = setTimeout(() => {
+			scatterAnnimateClass = "scatter-point-animated";
+			data = dataset;
+		}, 10);
+
 		// show/hide elements specific to the chart
 		showAxisDetail = true;
 
@@ -198,8 +160,7 @@ import ScatterPlot from "./ScatterPlot.svelte";
 		scatterPointHoverClass = (d) => "scatter-point-light-bg";
 		// createTooltipText = createTooltipTextPlot1;
 		showTT = (d) => true;
-
-		}
+	}
 
 	function setupPlot2() {
 		// show elements specific to the chart
@@ -234,23 +195,20 @@ import ScatterPlot from "./ScatterPlot.svelte";
 
 		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-
 		// points = points.map(d => ({ ...d, birthrate: d.year > 2000 ? d.birthrate : 0 }))
 		// const timeout = setTimeout(() => {
 		// 	points = points.filter(d => d.year > 2000)
 		// }, 200)
 		showAxisDetail = false;
-		const timeout = setTimeout(
-			() => {
-				chartSpecification = {
-					scales: scales,
-					data: data,
-					accessors: accessors,
-					dms: dms,
-					}
-				showAxisDetail = true;
-				}, 2000);
-
+		const timeout = setTimeout(() => {
+			chartSpecification = {
+				scales: scales,
+				data: data,
+				accessors: accessors,
+				dms: dms,
+			};
+			showAxisDetail = true;
+		}, 2000);
 
 		// show elements specific to the chart
 		// showSustainable = true; // black background rectangle
@@ -285,16 +243,15 @@ import ScatterPlot from "./ScatterPlot.svelte";
 		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
 		showAxisDetail = false;
-		const timeout = setTimeout(
-			() => {
-				chartSpecification = {
-					scales: scales,
-					data: data,
-					accessors: accessors,
-					dms: dms,
-					}
-				showAxisDetail = true;
-				}, 2000);
+		const timeout = setTimeout(() => {
+			chartSpecification = {
+				scales: scales,
+				data: data,
+				accessors: accessors,
+				dms: dms,
+			};
+			showAxisDetail = true;
+		}, 2000);
 
 		// show elements specific to the chart
 
@@ -327,7 +284,6 @@ import ScatterPlot from "./ScatterPlot.svelte";
 	}
 </script>
 
-<!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
 <div class="interactive-chart">
 	<!-- Background rectangle: Plots 2 and 3 -->
 	<!-- +/- 10 is to dodge the axis label -->
@@ -338,8 +294,8 @@ import ScatterPlot from "./ScatterPlot.svelte";
 				top: {dms.marginTop + 10}px;
 				height: {scaleY(2.3) - 10}px;"
 			class="sus-rect"
-			in:fade="{{duration: 3000}}"
-			out:fade="{{duration: 2000}}"
+			in:fade={{ duration: 3000 }}
+			out:fade={{ duration: 2000 }}
 		/>
 	{/if}
 
@@ -347,7 +303,7 @@ import ScatterPlot from "./ScatterPlot.svelte";
 	<svg width={dms.width} height={dms.height}>
 		<!-- axis -->
 		<g style={move(dms.marginLeft, dms.height - dms.marginBottom)}>
-			<AxisXCont {chartSpecification} {showAxisDetail}/>
+			<AxisXCont {chartSpecification} {showAxisDetail} />
 		</g>
 		<g style={move(dms.marginLeft, dms.marginTop)}>
 			<AxisYCont {chartSpecification} />
@@ -355,13 +311,15 @@ import ScatterPlot from "./ScatterPlot.svelte";
 
 		<!-- scatter points -->
 		<g style={move(dms.marginLeft, dms.marginTop)}>
-			<ScatterPlot 	cs={chartSpecification} 
-							clipPath="url(#axis-cutoff)"
-							{scatterAnnimateClass}
-							{scatterPointHoverClass}
-							on:message = {handleScatterMsg}
-							{colourScale}
-							{showTT}/>
+			<ScatterPlot
+				cs={chartSpecification}
+				clipPath="url(#axis-cutoff)"
+				{scatterAnnimateClass}
+				{scatterPointHoverClass}
+				on:message={handleScatterMsg}
+				{colourScale}
+				{showTT}
+			/>
 		</g>
 
 		<!-- clip circles falling outside the axis -->
@@ -372,13 +330,21 @@ import ScatterPlot from "./ScatterPlot.svelte";
 
 	<!-- the tooltip (html elements) -->
 	{#if showTooltip}
-		<Tooltip event={ttEvent} {chartId} {currentPlotNumber} {dms} {scatterAttributes}/>
+		<Tooltip
+			event={ttEvent}
+			{chartId}
+			{currentPlotNumber}
+			{dms}
+			{scatterAttributes}
+		/>
 	{/if}
 
 	<!-- x axis label -->
+	<!-- axis label -->
 	<div
 		class="axis-label"
-		style="top:{dms.height - 70}px; right:{dms.marginRight}px;"
+		style="top:{chartSpecification.dms.height -
+			70}px; right:{chartSpecification.dms.marginRight}px;"
 	>
 		<p><b>GDP per capita</b></p>
 		<p style="font-size: 14px;">2011 USD adjusted for inflation</p>
@@ -507,8 +473,6 @@ import ScatterPlot from "./ScatterPlot.svelte";
 		text-anchor: end;
 	}
 
-	
-
 	div :global(.tt-line) {
 		margin: 0.5em;
 	}
@@ -519,6 +483,4 @@ import ScatterPlot from "./ScatterPlot.svelte";
 		font-size: 24px;
 		font-weight: bold;
 	}
-
-	
 </style>

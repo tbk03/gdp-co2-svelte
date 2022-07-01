@@ -55,68 +55,69 @@
             x2={scaleMax} 
             y2={0}/>
 
+
     {#if showAxisDetail}      
-    <g  in:fade="{{ duration: fadeInTime }}"
-        out:fade="{{ duration: fadeOutTime }}">
-    <!-- axis ticks -->
-    {#each scaleTickValues as t, i}
-        <!-- alternate between major and minor tick lines -->
+        <g  in:fade="{{ duration: fadeInTime }}"
+            out:fade="{{ duration: fadeOutTime }}">
+        <!-- axis ticks -->
+        {#each scaleTickValues as t, i}
+            <!-- alternate between major and minor tick lines -->
 
-        <!-- show all non zero major ticks -->
-        {#if i % 2 == 0 && tickValues[i] != 0}
+            <!-- show all non zero major ticks -->
+            {#if i % 2 == 0 && tickValues[i] != 0}
 
-            <!-- axis ticks -->
-            <line   class="major-tick tick"
-                    x1={t} 
-                    y1={0} 
-                    x2={t} 
-                    y2={axisFormatting.tickMajorLen}   
-                    />
-            
-            <!-- axis labels -->
-            <text   class="major-tick-text tick-text"
-                    x = {t}
-                    y = {axisFormatting.textMajorOffset}
-                    text-anchor="middle">
-                    <!-- the tick label itself -->
-                    {formattedTickValues[i]}  
-                    </text>
-            
-            <!-- grid lines within plot -->
-            {#if grid.majorGrid}
-                <line   class="major-grid"
-                        x1 = {t}
-                        y1 = 0
-                        x2 = {t}
-                        y2 = {-chartSpecification.dms.boundedHeight}
-                        ></line>
+                <!-- axis ticks -->
+                <line   class="major-tick tick"
+                        x1={t} 
+                        y1={0} 
+                        x2={t} 
+                        y2={axisFormatting.tickMajorLen}   
+                        />
+                
+                <!-- axis labels -->
+                <text   class="major-tick-text tick-text"
+                        x = {t}
+                        y = {axisFormatting.textMajorOffset}
+                        text-anchor="middle">
+                        <!-- the tick label itself -->
+                        {formattedTickValues[i]}  
+                        </text>
+                
+                <!-- grid lines within plot -->
+                {#if grid.majorGrid}
+                    <line   class="major-grid"
+                            x1 = {t}
+                            y1 = 0
+                            x2 = {t}
+                            y2 = {-chartSpecification.dms.boundedHeight}
+                            ></line>
+                {/if}
             {/if}
-        {/if}
-        
-        <!-- show minor ticks if required and screen is wider than 600px  -->
-        {#if i % 2 != 0 && chartSpecification.dms.width > 700}
-            <line   class="minor-tick"
-                    x1={t} 
-                    y1={0} 
-                    x2={t} 
-                    y2={axisFormatting.tickMinorLen }/>
             
-            <text   class="minor-tick-text tick-text"
-                    x = {t}
-                    y = {axisFormatting.textMinorOffset}
-                    text-anchor="middle"
-                    >
-                    <!-- the tick label itself -->
-                    {formattedTickValues[i]}  </text>
-            
-            <!-- grid lines within plot -->
-            {#if grid.minorGrid}
-                <line   class="minor-grid"
-                        x1 = {t}
-                        y1 = 0
-                        x2 = {t}
-                        y2 = {-chartSpecification.dms.boundedHeight}></line>
-            {/if}
+            <!-- show minor ticks if required and screen is wider than 600px  -->
+            {#if i % 2 != 0 && chartSpecification.dms.width > 700}
+                <line   class="minor-tick"
+                        x1={t} 
+                        y1={0} 
+                        x2={t} 
+                        y2={axisFormatting.tickMinorLen }/>
+                
+                <text   class="minor-tick-text tick-text"
+                        x = {t}
+                        y = {axisFormatting.textMinorOffset}
+                        text-anchor="middle"
+                        >
+                        <!-- the tick label itself -->
+                        {formattedTickValues[i]}  </text>
+                
+                <!-- grid lines within plot -->
+                {#if grid.minorGrid}
+                    <line   class="minor-grid"
+                            x1 = {t}
+                            y1 = 0
+                            x2 = {t}
+                            y2 = {-chartSpecification.dms.boundedHeight}></line>
+                {/if}
         
         {/if}
 
@@ -184,13 +185,5 @@
     .minor-grid{
         stroke: var(--greyMinEmp);
         stroke-width: 0.5;
-    }
-
-    .axis-label{
-        font-family: 'Lato', sans-serif;
-        font-size: 18px;
-        fill: var(--greyMaxEmp);
-        font-weight: 600;
-        text-anchor: end;
     }
 </style>
