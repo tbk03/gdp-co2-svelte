@@ -6,7 +6,6 @@
 
 	import { scaleLinear, scaleSqrt, scaleSymlog } from "d3-scale";
 	import { extent } from "d3-array";
-	import { format } from "d3-format";
 	import { tidy, filter, max, summarize, arrange, desc } from "@tidyjs/tidy";
 	import { fade } from "svelte/transition";
 	import { cubicInOut } from 'svelte/easing';
@@ -117,112 +116,15 @@ import Tooltip from "./Tooltip.svelte";
 	// -------------------------------------------------------------------------------------------
 	// 6. Add tooltips
 	// -------------------------------------------------------------------------------------------
-
-	export let chartId; // need to identify the appropriate parent div
-	let m = { x: 0, y: 0 }; // holds current mouse position
-	let tt = { x: 0, y: 0 }; // hold tooltip top left position which is based on mouse
-	let tooltipText = "";
+	let ttEvent, scatterAttributes;
 	let showTooltip = false;
-	let xRatio;
-	let yRatio;
-	let susCO2 = 2.3;
-
-	// (0, 0) is the top, left corner of the chart-container div in App.svelte
-	function getAbsMousePos(event) {
-		let chartBounds = document
-			.getElementById(chartId)
-			.getBoundingClientRect();
-
-		return {
-			x: event.clientX - chartBounds.x,
-			y: event.clientY - chartBounds.y,
-		};
-	}
-
-	function createTooltipTextPlot1(attributes) {
-		let line1 =
-			"<p class='tt-line data-country'>" +
-			attributes["data-country"].value +
-			"</p>";
-		let line2 =
-			"<p class='tt-line'> Each year for each of the <b>" +
-			format(",")(attributes["data-population"].value) +
-			"</b> people: </p>";
-		let line3 =
-			"<p class='tt-line'><b>$" +
-			format(",")(attributes["data-x"].value) +
-			"</b> added to GDP</p>";
-		let line4 =
-			"<p class='tt-line'><b>" +
-			format(".3r")(attributes["data-y"].value) +
-			"</b> tonnes CO<sub>2</sub> emitted</p>";
-		tooltipText = line1 + line2 + line3 + line4;
-	}
-
-	function createTooltipTextPlot2(attributes) {
-		let currentCO2 = attributes["data-y"].value;
-		let fallRequired = format(".3r")(currentCO2 - susCO2);
-		let percentFallRequired = format(".2r")(
-			(1 - susCO2 / currentCO2) * 100
-		);
-
-		let line1 =
-			"<p class='tt-line data-country'>" +
-			attributes["data-country"].value +
-			"</p>";
-
-		let line2 = `<p class='tt-line'>To reach a sustainable level emissions would <b>need to fall by ${fallRequired} tonnes CO<sub>2</sub> per capita</b>.</p>`;
-		let line3 = `<p class='tt-line'>That would be <b>a reduction of ${percentFallRequired}%</b>.</p>`;
-		tooltipText = line1 + line2 + line3;
-	}
-
-	function createTooltipTextPlot3(attributes) {
-		let currentCO2 = attributes["data-y"].value;
-		let couldRiseBy = format(".2r")(susCO2 - currentCO2);
-		let percentRisePos = format(".2r")(
-			((susCO2 - currentCO2) / currentCO2) * 100
-		);
-
-		let line1 =
-			"<p class='tt-line data-country'>" +
-			attributes["data-country"].value +
-			"</p>";
-
-		let line2 = `<p class='tt-line'>Before reaching a maximum sustainable level emissions could <b>rise by ${couldRiseBy} tonnes CO<sub>2</sub> per capita</b>.</p>`;
-		let line3 = `<p class='tt-line'>That would be <b>a rise of ${percentRisePos}%</b>.</p>`;
-		tooltipText = line1 + line2 + line3;
-	}
-
-	function createTooltipTextPlot4(attributes) {
-		let total_ff_prod = format(".4r")(attributes["data-ff-prod"].value);
-
-		let line1 =
-			"<p class='tt-line data-country'>" +
-			attributes["data-country"].value +
-			"</p>";
-
-		let line2 = `<p class='tt-line'>In 2015 produced a total of ${total_ff_prod} TWh of fossil fuels (combined coal, gas and oil).</p>`;
-		// let line3 = `<p class='tt-line'>That would be <b>a rise of ${percentRisePos}%</b>.</p>`;
-		tooltipText = line1 + line2;
-	}
-
-	// to keep tooltips within the bounds of the chart
-	function adjustTooltipPos(mousePos) {
-		xRatio = mousePos.x / dms.boundedWidth;
-		yRatio = mousePos.y / dms.boundedHeight;
-		return {
-			x: xRatio > 0.7 ? (tt.x = mousePos.x - 310) : (tt.x = mousePos.x),
-			y: yRatio > 0.8 ? (tt.y = mousePos.y - 310) : (tt.y = mousePos.y),
-		};
-	}
+	export let chartId;
 
 	function mouseOver(event) {
-		// to allow tooltips to show only on selected points
 		if (this.attributes["data-showtt"].value == "true") {
-			m = getAbsMousePos(event);
-			tt = adjustTooltipPos(m);
+			ttEvent = event;
 			showTooltip = true;
-			createTooltipText(this.attributes);
+			scatterAttributes = this.attributes;
 		}
 	}
 
@@ -231,11 +133,10 @@ import Tooltip from "./Tooltip.svelte";
 	}
 
 	function mouseMove(event) {
-		// to allow tooltips to show only on selected points
 		if (this.attributes["data-showtt"].value == "true") {
-			m = getAbsMousePos(event);
-			tt = adjustTooltipPos(m);
+			ttEvent = event;
 			showTooltip = true;
+			scatterAttributes = this.attributes;
 		}
 	}
 
@@ -291,7 +192,7 @@ import Tooltip from "./Tooltip.svelte";
 
 		// customise tooltips based on the data
 		scatterPointHoverClass = (d) => "scatter-point-light-bg";
-		createTooltipText = createTooltipTextPlot1;
+		// createTooltipText = createTooltipTextPlot1;
 		showTT = (d) => true;
 
 		}
@@ -311,7 +212,7 @@ import Tooltip from "./Tooltip.svelte";
 			d.is_sustainable
 				? "scatter-point-no-hover"
 				: "scatter-point-dark-bg";
-		createTooltipText = createTooltipTextPlot2;
+		// createTooltipText = createTooltipTextPlot2;
 		showTT = (d) => (d.is_sustainable ? false : true);
 	}
 
@@ -366,7 +267,7 @@ import Tooltip from "./Tooltip.svelte";
 			d.is_sustainable
 				? "scatter-point-light-bg"
 				: "scatter-point-no-hover";
-		createTooltipText = createTooltipTextPlot3;
+		// createTooltipText = createTooltipTextPlot3;
 		showTT = (d) => (d.is_sustainable ? true : false);
 	}
 
@@ -408,7 +309,7 @@ import Tooltip from "./Tooltip.svelte";
 			d.top20_producer
 				? "scatter-point-light-bg"
 				: "scatter-point-no-hover";
-		createTooltipText = createTooltipTextPlot4;
+		// createTooltipText = createTooltipTextPlot4;
 		showTT = (d) => (d.top20_producer ? true : false);
 	}
 
@@ -427,8 +328,6 @@ import Tooltip from "./Tooltip.svelte";
 			setupPlot4();
 			break;
 	}
-
-$: console.log(data);
 </script>
 
 <!-- <img x="0" y="0" src="./images/paper_texture.png"> -->
@@ -496,7 +395,7 @@ $: console.log(data);
 
 	<!-- the tooltip (html elements) -->
 	{#if showTooltip}
-		<Tooltip {tooltipText} x= {tt.x} y={tt.y}/>
+		<Tooltip event={ttEvent} {chartId} {currentPlotNumber} {dms} {scatterAttributes}/>
 	{/if}
 
 	<!-- x axis label -->

@@ -1,9 +1,139 @@
 <script>
-    export let tooltipText, x, y;
+    // -------------------------------------------------------------------------------------------
+	// 0. Setup - imports and variable declarations
+	// -------------------------------------------------------------------------------------------
+	// import libraries
+    import { format } from "d3-format";
+
+    // variable declarations
+    export let event, currentPlotNumber, dms, scatterAttributes;
+    export let chartId; // needed to identify the appropriate parent div
+
+	let m = { x: 0, y: 0 }; // holds current mouse position
+	let tt = { x: 0, y: 0 }; // hold tooltip top left position which is based on mouse
+	let tooltipText = "";
+	let xRatio, yRatio;
+	let susCO2 = 2.3;
+
+    // -------------------------------------------------------------------------------------------
+	// 1. Functions calculating tooltip positions
+ 	// -------------------------------------------------------------------------------------------
+
+	// (0, 0) is the top, left corner of the chart-container div in App.svelte
+	function getAbsMousePos(event) {
+		let chartBounds = document
+			.getElementById(chartId)
+			.getBoundingClientRect();
+
+		return {
+			x: event.clientX - chartBounds.x,
+			y: event.clientY - chartBounds.y,
+		};
+	}
+
+    // to keep tooltips within the bounds of the chart
+	function adjustTooltipPos(mousePos) {
+		xRatio = mousePos.x / dms.boundedWidth;
+		yRatio = mousePos.y / dms.boundedHeight;
+		return {
+			x: xRatio > 0.7 ? (tt.x = mousePos.x - 250) : (tt.x = mousePos.x),
+			y: yRatio > 0.8 ? (tt.y = mousePos.y - 250) : (tt.y = mousePos.y),
+		};
+	}
+
+    // -------------------------------------------------------------------------------------------
+	// 2. Functions for creating tooltip text
+ 	// -------------------------------------------------------------------------------------------
+
+	function createTooltipTextPlot1(attributes) {
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+		let line2 =
+			"<p class='tt-line'> Each year for each of the <b>" +
+			format(",")(attributes["data-population"].value) +
+			"</b> people: </p>";
+		let line3 =
+			"<p class='tt-line'><b>$" +
+			format(",")(attributes["data-x"].value) +
+			"</b> added to GDP</p>";
+		let line4 =
+			"<p class='tt-line'><b>" +
+			format(".3r")(attributes["data-y"].value) +
+			"</b> tonnes CO<sub>2</sub> emitted</p>";
+		tooltipText = line1 + line2 + line3 + line4;
+	}
+
+	function createTooltipTextPlot2(attributes) {
+
+		let currentCO2 = attributes["data-y"].value;
+		let fallRequired = format(".3r")(currentCO2 - susCO2);
+		let percentFallRequired = format(".2r")(
+			(1 - susCO2 / currentCO2) * 100
+		);
+
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+
+		let line2 = `<p class='tt-line'>To reach a sustainable level emissions would <b>need to fall by ${fallRequired} tonnes CO<sub>2</sub> per capita</b>.</p>`;
+		let line3 = `<p class='tt-line'>That would be <b>a reduction of ${percentFallRequired}%</b>.</p>`;
+		tooltipText = line1 + line2 + line3;
+	}
+
+	function createTooltipTextPlot3(attributes) {
+		let currentCO2 = attributes["data-y"].value;
+		let couldRiseBy = format(".2r")(susCO2 - currentCO2);
+		let percentRisePos = format(".2r")(
+			((susCO2 - currentCO2) / currentCO2) * 100
+		);
+
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+
+		let line2 = `<p class='tt-line'>Before reaching a maximum sustainable level emissions could <b>rise by ${couldRiseBy} tonnes CO<sub>2</sub> per capita</b>.</p>`;
+		let line3 = `<p class='tt-line'>That would be <b>a rise of ${percentRisePos}%</b>.</p>`;
+		tooltipText = line1 + line2 + line3;
+	}
+
+	function createTooltipTextPlot4(attributes) {
+		let total_ff_prod = format(".4r")(attributes["data-ff-prod"].value);
+
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+
+		let line2 = `<p class='tt-line'>In 2015 produced a total of ${total_ff_prod} TWh of fossil fuels (combined coal, gas and oil).</p>`;
+		// let line3 = `<p class='tt-line'>That would be <b>a rise of ${percentRisePos}%</b>.</p>`;
+		tooltipText = line1 + line2;
+	}
+
+    // -------------------------------------------------------------------------------------------
+	// 3. Update tooltip based on plot number and mouse position
+ 	// -------------------------------------------------------------------------------------------
+
+    let tooltipGen = [  createTooltipTextPlot1, 
+                        createTooltipTextPlot2, 
+                        createTooltipTextPlot3, 
+                        createTooltipTextPlot4  ];
+
+    $: {
+            m = getAbsMousePos(event);
+            tt = adjustTooltipPos(m);
+            tooltipGen[currentPlotNumber - 1](scatterAttributes);
+        }
+
+
+
 </script>
 
 
-<div class="tooltip" style="top:{y}px; left:{x}px;">
+<div class="tooltip" style="top:{tt.y}px; left:{tt.x}px;">
     {@html tooltipText}
 </div>
 
