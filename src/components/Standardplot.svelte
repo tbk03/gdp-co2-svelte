@@ -29,6 +29,7 @@
 
 	import dataset from "../data/gdp_co2_2015.json";
 	import Annotation from "./Annotation.svelte";
+import Tooltip from "./Tooltip.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
@@ -495,9 +496,7 @@ $: console.log(data);
 
 	<!-- the tooltip (html elements) -->
 	{#if showTooltip}
-		<div class="tooltip" style="top:{tt.y}px; left:{tt.x}px;">
-			{@html tooltipText}
-		</div>
+		<Tooltip {tooltipText} x= {tt.x} y={tt.y}/>
 	{/if}
 
 	<!-- x axis label -->
