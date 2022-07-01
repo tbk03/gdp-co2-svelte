@@ -160,11 +160,6 @@ import Tooltip from "./Tooltip.svelte";
 	let createTooltipText;
 	let showTT;
 
-	let plotElements = [false, false, false, false];
-
-	let showPlotElements = function(n){
-		plotElements = plotElements.map((d, i) => n == (i + 1) ? true : false);
-	}
 
 	function setupPlot1() {
 		// start points in bottom left corner of graph
@@ -184,7 +179,6 @@ import Tooltip from "./Tooltip.svelte";
 				}, 10)
 		
 		// show/hide elements specific to the chart
-		showPlotElements(1);
 		showAxisDetail = true;
 
 		// customise tooltips based on the data
@@ -202,7 +196,6 @@ import Tooltip from "./Tooltip.svelte";
 		// showSustainable = true; // black background rectangle
 		// showAnnoP2 = true;
 		scatterAnnimateClass = "scatter-point-animated";
-		showPlotElements(2);
 
 		// conditional colouring of scatter points based on the data
 		colourScale = (d) => (d.is_sustainable ? "black" : "white");
@@ -220,10 +213,7 @@ import Tooltip from "./Tooltip.svelte";
 		// filter down data to focus on countries with sustainable C02 emissions
 		data = tidy(
 			dataset,
-			filter((d) => accessX(d) <= 20000)
-		);
-		data = tidy(
-			data,
+			filter((d) => accessX(d) <= 20000),
 			filter((d) => accessY(d) <= 3.5)
 		);
 
@@ -255,7 +245,6 @@ import Tooltip from "./Tooltip.svelte";
 		// show elements specific to the chart
 		// showSustainable = true; // black background rectangle
 		// showAnnoP3 = true;
-		showPlotElements(3);
 
 		// conditional colouring of scatter points based on the data
 		colourScale = (d) => (d.is_sustainable ? "black" : "white");
@@ -298,8 +287,6 @@ import Tooltip from "./Tooltip.svelte";
 				}, 2000);
 
 		// show elements specific to the chart
-		// showAnnoP4 = true;
-		showPlotElements(4);
 
 		// customise tooltips based on the data
 		colourScale = (d) => (d.top20_producer ? "black" : "#bfbfbf");
@@ -334,7 +321,7 @@ import Tooltip from "./Tooltip.svelte";
 <div class="interactive-chart">
 	<!-- Background rectangle: Plots 2 and 3 -->
 	<!-- +/- 10 is to dodge the axis label -->
-	{#if plotElements[1] || plotElements[2]}
+	{#if currentPlotNumber == 2 || currentPlotNumber == 3}
 		<div
 			style="width: {dms.boundedWidth}px; 
 				left: {dms.marginLeft}px;
@@ -357,7 +344,6 @@ import Tooltip from "./Tooltip.svelte";
 		</g>
 
 		<!-- scatter points -->
-		<!-- the blue I have been using "#002DFE" -->
 		<g style={move(dms.marginLeft, dms.marginTop)}>
 			{#each data as d}
 				<circle
@@ -417,7 +403,7 @@ import Tooltip from "./Tooltip.svelte";
 	</div>
 
 	<!-- Size Legend: shown in plot 1 -->
-	{#if plotElements[0]}
+	{#if currentPlotNumber == 1}
 		<SizeLegend
 			leftPos={scaleX(1.1e5)}
 			topPos={scaleY(25)}
@@ -428,7 +414,7 @@ import Tooltip from "./Tooltip.svelte";
 	{/if}
 
 	<!-- Annotation: shown in plot 2 -->
-	{#if plotElements[1]}
+	{#if currentPlotNumber == 2}
 		<Annotation
 			leftPos={scaleX(1.1e5)}
 			topPos={scaleY(25)}
@@ -447,7 +433,7 @@ import Tooltip from "./Tooltip.svelte";
 	{/if}
 
 	<!-- Annotation: shown in plot 3 -->
-	{#if plotElements[2]}
+	{#if currentPlotNumber == 3}
 		<Annotation
 			leftPos={scaleX(800)}
 			topPos={scaleY(3)}
@@ -465,7 +451,7 @@ import Tooltip from "./Tooltip.svelte";
 	{/if}
 
 	<!-- Annotation: shown in plot 4 -->
-	{#if plotElements[3]}
+	{#if currentPlotNumber == 4}
 		<Annotation
 			leftPos={scaleX(1.1e5)}
 			topPos={scaleY(30)}
