@@ -340,7 +340,6 @@
 	{/if}
 
 	<!-- x axis label -->
-	<!-- axis label -->
 	<div
 		class="axis-label"
 		style="top:{chartSpecification.dms.height -
