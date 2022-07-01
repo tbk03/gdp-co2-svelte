@@ -54,8 +54,9 @@
         data-showTT={showTT(d)}
 
         in:fade="{{duration: 5000,
-        easing: cubicInOut}}"
-        out:fade="{{duration: 500,
+        easing: cubicInOut,
+        delay: 1000}}"
+        out:fade="{{duration: 1000,
         easing: cubicInOut}}"
 
         on:mouseover={mouseOver}
