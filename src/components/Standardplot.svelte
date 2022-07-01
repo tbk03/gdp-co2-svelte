@@ -29,6 +29,7 @@
 	import dataset from "../data/gdp_co2_2015.json";
 	import Annotation from "./Annotation.svelte";
 import Tooltip from "./Tooltip.svelte";
+import ScatterPlot from "./ScatterPlot.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
@@ -104,7 +105,8 @@ import Tooltip from "./Tooltip.svelte";
 
 	$: scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-	let accessors = { x: accessX, y: accessY, size: accessSize };
+	let accessors = { 	x: accessX, y: accessY, 
+						size: accessSize, country: accessCountry };
 
 	$: chartSpecification = {
 		scales: scales,
@@ -120,24 +122,32 @@ import Tooltip from "./Tooltip.svelte";
 	let showTooltip = false;
 	export let chartId;
 
-	function mouseOver(event) {
-		if (this.attributes["data-showtt"].value == "true") {
-			ttEvent = event;
-			showTooltip = true;
-			scatterAttributes = this.attributes;
-		}
-	}
+	// function mouseOver(event) {
+	// 	if (this.attributes["data-showtt"].value == "true") {
+	// 		ttEvent = event;
+	// 		showTooltip = true;
+	// 		scatterAttributes = this.attributes;
+	// 	}
+	// 	console.log(event);
+	// }
 
-	function mouseLeave(event) {
-		showTooltip = false;
-	}
+	// function mouseLeave(event) {
+	// 	showTooltip = false;
+	// }
 
-	function mouseMove(event) {
-		if (this.attributes["data-showtt"].value == "true") {
-			ttEvent = event;
-			showTooltip = true;
-			scatterAttributes = this.attributes;
-		}
+	// function mouseMove(event) {
+	// 	if (this.attributes["data-showtt"].value == "true") {
+	// 		ttEvent = event;
+	// 		showTooltip = true;
+	// 		scatterAttributes = this.attributes;
+	// 	}
+	// }
+
+	function handleScatterMsg(msg){
+
+		ttEvent = msg.detail.event;
+		showTooltip = msg.detail.showTT;
+		scatterAttributes = msg.detail.attributes;
 	}
 
 	// -------------------------------------------------------------------------------------------
@@ -345,32 +355,13 @@ import Tooltip from "./Tooltip.svelte";
 
 		<!-- scatter points -->
 		<g style={move(dms.marginLeft, dms.marginTop)}>
-			{#each data as d}
-				<circle
-					class="{scatterAnnimateClass} {scatterPointHoverClass(d)}"
-					cx={scaleX(accessX(d))}
-					cy={scaleY(accessY(d))}
-					r={scaleSize(accessSize(d))}
-					opacity="0.7"
-					fill={colourScale(d)}
-					clip-path="url(#axis-cutoff)"
-					on:mouseover={mouseOver}
-					on:mouseleave={mouseLeave}
-					on:focus={mouseOver}
-					on:mousemove={mouseMove}
-					data-x={accessX(d)}
-					data-y={accessY(d)}
-					data-country={accessCountry(d)}
-					data-population={accessSize(d)}
-					data-showTT={showTT(d)}
-					data-ff-prod={d.total_ff_prod}
-
-					in:fade="{{duration: 5000,
-					easing: cubicInOut}}"
-					out:fade="{{duration: 500,
-					easing: cubicInOut}}"
-				/>
-			{/each}
+			<ScatterPlot 	cs={chartSpecification} 
+							clipPath="url(#axis-cutoff)"
+							{scatterAnnimateClass}
+							{scatterPointHoverClass}
+							on:message = {handleScatterMsg}
+							{colourScale}
+							{showTT}/>
 		</g>
 
 		<!-- clip circles falling outside the axis -->
@@ -492,7 +483,6 @@ import Tooltip from "./Tooltip.svelte";
 	}
 
 	.sus-rect,
-	.tooltip,
 	.interactive-chart,
 	.axis-label {
 		position: absolute;
@@ -517,32 +507,7 @@ import Tooltip from "./Tooltip.svelte";
 		text-anchor: end;
 	}
 
-	.tooltip {
-		display: flex;
-		flex-direction: column;
-		max-height: 50vh;
-		max-width: 200px;
-		border: 1px solid var(--greyLowEmp);
-		font-size: 16px;
-		color: var(--greyText);
-		/* transform: translate(-100%, -200%); */
-		padding: 1px;
-		z-index: 15;
-		font-family: "Lato", sans-serif;
-		border-radius: 7.5px;
-		text-align: left;
-		padding-left: 10px;
-		padding-right: 10px;
-		padding-top: 5px;
-		padding-bottom: 20px;
-		line-height: 1.25;
-		background-image: url("./images/postittexture.jpg");
-		background-size: cover;
-		background-blend-mode: hard-light;
-		background-color: var(--greyLowEmp);
-		color: var(--greyText);
-		box-shadow: 1px 1px 6px var(--greyHighEmp);
-	}
+	
 
 	div :global(.tt-line) {
 		margin: 0.5em;
@@ -555,29 +520,5 @@ import Tooltip from "./Tooltip.svelte";
 		font-weight: bold;
 	}
 
-	.scatter-point {
-		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease;
-		/* -webkit-mask-image: url(paper_texture.png);
-        mask-image: url(paper_texture.png); */
-	}
-	.scatter-point-animated {
-		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease, cx 5s, cy 5s;
-		/* -webkit-mask-image: url(paper_texture.png);
-        mask-image: url(paper_texture.png); */
-	}
-
-	/* neater than using this.setAttribute() in mouse handlers */
-	.scatter-point-light-bg:hover {
-		fill: white;
-		stroke: black;
-		stroke-width: 1.25;
-		filter: drop-shadow(0 0 0.2rem black);
-	}
-
-	.scatter-point-dark-bg:hover {
-		fill: black;
-		stroke: white;
-		stroke-width: 1.25;
-		filter: drop-shadow(0 0 0.2rem black);
-	}
+	
 </style>
