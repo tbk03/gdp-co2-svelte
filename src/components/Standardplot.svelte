@@ -120,64 +120,52 @@
 
 	let showAxisDetail = false;
 
-	// let showLegend = false;
-	// let showSustainable = false;
-	let colourScale;
-	let basePointColour = "#002DFE";
-	let scatterPointHoverClass = "scatter-point-light-bg";
-	let scatterAnnimateClass = "scatter-point";
-	// let showAnnoP2 = false;
-	// let showAnnoP3 = false;
-	// let showAnnoP4 = false;
-	let createTooltipText;
-	let showTT;
+
+	let scatterParameters = [
+		{plotNum: 1, 	colourScale: (d) => "black",
+						scatterAnnimateClass: "scatter-point",
+						showTT: (d) => true,
+						scatterPointHoverClass: (d) => "scatter-point-light-bg"}, 
+
+		{plotNum: 2, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
+						scatterAnnimateClass: "scatter-point-animated",
+						showTT: (d) => (d.is_sustainable ? false : true),
+						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-no-hover" : "scatter-point-dark-bg"},
+
+		{plotNum: 3, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
+						scatterAnnimateClass: "scatter-point-animated",
+						showTT: (d) => (d.is_sustainable ? true : false),
+						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-no-hover"},
+
+		{plotNum: 4, 	colourScale: (d) => (d.top20_producer ? "black" : "#bfbfbf"),
+						scatterAnnimateClass: "scatter-point-animated",
+						showTT: (d) => (d.top20_producer ? true : false),
+						scatterPointHoverClass: (d) => d.top20_producer ? "scatter-point-light-bg" : "scatter-point-no-hover"}
+	]
 
 	function setupPlot1() {
-		// start points in bottom left corner of graph
-		scatterAnnimateClass = "scatter-point";
-		data = dataset.map((d) => {
-			return {
-				...d,
-				annual_co2_emissions_per_capita: 0,
-				gdp_per_capita: 0,
-				population_historical_estimates: 1,
-			};
-		});
+		
+		// data = dataset.map((d) => {
+		// 	return {
+		// 		...d,
+		// 		annual_co2_emissions_per_capita: 0,
+		// 		gdp_per_capita: 0,
+		// 		population_historical_estimates: 1,
+		// 	};
+		// });
 
 		// need to wait before sending points to actual positions
-		const timeout = setTimeout(() => {
-			scatterAnnimateClass = "scatter-point-animated";
-			data = dataset;
-		}, 10);
+		// const timeout = setTimeout(() => {
+		// 	scatterAnnimateClass = "scatter-point-animated";
+		// 	data = dataset;
+		// }, 10);
 
 		// show/hide elements specific to the chart
 		showAxisDetail = true;
-
-		// customise tooltips based on the data
-		colourScale = (d) => "black";
-
-		// customise tooltips based on the data
-		scatterPointHoverClass = (d) => "scatter-point-light-bg";
-		// createTooltipText = createTooltipTextPlot1;
-		showTT = (d) => true;
 	}
 
 	function setupPlot2() {
-		// show elements specific to the chart
-		// showSustainable = true; // black background rectangle
-		// showAnnoP2 = true;
-		scatterAnnimateClass = "scatter-point-animated";
 
-		// conditional colouring of scatter points based on the data
-		colourScale = (d) => (d.is_sustainable ? "black" : "white");
-
-		// customise tooltips based on the data
-		scatterPointHoverClass = (d) =>
-			d.is_sustainable
-				? "scatter-point-no-hover"
-				: "scatter-point-dark-bg";
-		// createTooltipText = createTooltipTextPlot2;
-		showTT = (d) => (d.is_sustainable ? false : true);
 	}
 
 	function setupPlot3() {
@@ -195,10 +183,6 @@
 
 		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-		// points = points.map(d => ({ ...d, birthrate: d.year > 2000 ? d.birthrate : 0 }))
-		// const timeout = setTimeout(() => {
-		// 	points = points.filter(d => d.year > 2000)
-		// }, 200)
 		showAxisDetail = false;
 		const timeout = setTimeout(() => {
 			chartSpecification = {
@@ -209,23 +193,7 @@
 			};
 			showAxisDetail = true;
 		}, 2000);
-
-		// show elements specific to the chart
-		// showSustainable = true; // black background rectangle
-		// showAnnoP3 = true;
-
-		// conditional colouring of scatter points based on the data
-		colourScale = (d) => (d.is_sustainable ? "black" : "white");
-
-		// customise tooltips so that:
-		// * only countries with sustainable emission have tooltips;
-		// * and, tooltips work with the background colour.
-		scatterPointHoverClass = (d) =>
-			d.is_sustainable
-				? "scatter-point-light-bg"
-				: "scatter-point-no-hover";
-		// createTooltipText = createTooltipTextPlot3;
-		showTT = (d) => (d.is_sustainable ? true : false);
+	
 	}
 
 	function setupPlot4() {
@@ -252,19 +220,6 @@
 			};
 			showAxisDetail = true;
 		}, 2000);
-
-		// show elements specific to the chart
-
-		// customise tooltips based on the data
-		colourScale = (d) => (d.top20_producer ? "black" : "#bfbfbf");
-
-		// customise tooltips based on the data
-		scatterPointHoverClass = (d) =>
-			d.top20_producer
-				? "scatter-point-light-bg"
-				: "scatter-point-no-hover";
-		// createTooltipText = createTooltipTextPlot4;
-		showTT = (d) => (d.top20_producer ? true : false);
 	}
 
 	// setup plot based on plot number
@@ -314,11 +269,11 @@
 			<ScatterPlot
 				cs={chartSpecification}
 				clipPath="url(#axis-cutoff)"
-				{scatterAnnimateClass}
-				{scatterPointHoverClass}
+				scatterAnnimateClass={scatterParameters[currentPlotNumber - 1].scatterAnnimateClass}
+				scatterPointHoverClass={scatterParameters[currentPlotNumber - 1].scatterPointHoverClass}
 				on:message={handleScatterMsg}
-				{colourScale}
-				{showTT}
+				colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
+				showTT={scatterParameters[currentPlotNumber - 1].showTT}
 			/>
 		</g>
 
