@@ -30,6 +30,7 @@
 	import Tooltip from "./Tooltip.svelte";
 	import ScatterPlot from "./ScatterPlot.svelte";
 import Arrow from "./Arrow.svelte";
+import AnnotationPlainText from "./AnnotationPlainText.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
@@ -280,6 +281,15 @@ import Arrow from "./Arrow.svelte";
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
 				opacity=0.9/>
 		{/if}
+
+		{#if currentPlotNumber == 3}
+			<Arrow 	start={{x:scaleX(19200),y:scaleY(1.55)}} 
+				end={{x:scaleX(19200),y:scaleY(1.85)}} 
+				colour="#333333"
+				strokeWidth=3
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				opacity=0.9/>
+		{/if}
 	</svg>
 
 	<!-- the tooltip (html elements) -->
@@ -325,21 +335,20 @@ import Arrow from "./Arrow.svelte";
 
 	<!-- Annotation: shown in plot 2 -->
 	{#if currentPlotNumber == 2}
-		<Annotation
-			leftPos={scaleX(1.1e5)}
-			topPos={scaleY(25)}
-			marginAdj={move(dms.marginLeft, dms.marginTop)}
-			annotationText="Countries with per capita CO<sub>2</sub> emissions above a sustainable level (2.3 tonnes) are shown as white against the dark background."
-			theme="light"
-		/>
 
 		<Annotation
 			leftPos={scaleX(1.1e5)}
-			topPos={scaleY(12.5)}
+			topPos={scaleY(25.5)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
-			annotationText="Hover over the white points for more details."
-			theme="light"
+			annotationText="Hover over the white points to see how much emissions would need to fall."
+			theme="dark"
 		/>
+
+		<AnnotationPlainText
+			leftPos={scaleX(1.02e5)}
+			topPos={scaleY(10)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			text="Emissions of more than around 2.3 tonnes of CO<sub>2</sub> per capita are unlikely to be sustainable."/>
 	{/if}
 
 	<!-- Background rectangle: Plots 2 and 3 -->
@@ -363,12 +372,12 @@ import Arrow from "./Arrow.svelte";
 			topPos={scaleY(3)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Hover over the black points below for more details."
-			theme="light"
+			theme="dark"
 		/>
 
 		<Annotation
 			leftPos={scaleX(1.5e4)}
-			topPos={scaleY(1.9)}
+			topPos={scaleY(1.5)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="<b>Uruguay</b> has the highest GDP per capita of any country with sustainable carbon emissions (i.e. emissions below 2.3 tonnes CO<sub>2</sub> per capita)."
 		/>
