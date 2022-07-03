@@ -241,22 +241,11 @@ import Arrow from "./Arrow.svelte";
 </script>
 
 <div class="interactive-chart">
-	<!-- Background rectangle: Plots 2 and 3 -->
-	<!-- +/- 10 is to dodge the axis label -->
-	{#if currentPlotNumber == 2 || currentPlotNumber == 3}
-		<div
-			style="width: {dms.boundedWidth}px; 
-				left: {dms.marginLeft}px;
-				top: {dms.marginTop + 10}px;
-				height: {scaleY(2.3) - 10}px;"
-			class="sus-rect"
-			in:fade={{ duration: 3000 }}
-			out:fade={{ duration: 2000 }}
-		/>
-	{/if}
+
 
 	<!-- the chart (all svg elements) -->
-	<svg width={dms.width} height={dms.height}>
+	<svg 	width={dms.width} height={dms.height}
+			style="z-index: 10;">
 		<!-- axis -->
 		<g style={move(dms.marginLeft, dms.height - dms.marginBottom)}>
 			<AxisXCont {chartSpecification} {showAxisDetail} />
@@ -282,6 +271,15 @@ import Arrow from "./Arrow.svelte";
 		<clipPath id="axis-cutoff">
 			<rect width={dms.boundedWidth} height={dms.boundedHeight} />
 		</clipPath>
+
+		{#if currentPlotNumber == 2}
+			<Arrow 	start={{x:scaleX(1e5),y:scaleY(2.3)}} 
+				end={{x:scaleX(1e5),y:scaleY(10)}} 
+				colour="white"
+				strokeWidth=4
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				opacity=0.9/>
+		{/if}
 	</svg>
 
 	<!-- the tooltip (html elements) -->
@@ -342,12 +340,20 @@ import Arrow from "./Arrow.svelte";
 			annotationText="Hover over the white points for more details."
 			theme="light"
 		/>
+	{/if}
 
-		<Arrow 	start={{x:scaleX(1e5),y:scaleY(2.3)}} 
-				end={{x:scaleX(1e5),y:scaleY(10)}} 
-				colour="white"
-				strokeWidth=4
-				marginAdj={move(dms.marginLeft, dms.marginTop)}/>
+	<!-- Background rectangle: Plots 2 and 3 -->
+	<!-- +/- 10 is to dodge the axis label -->
+	{#if currentPlotNumber == 2 || currentPlotNumber == 3}
+		<div
+			style="width: {dms.boundedWidth}px; 
+				left: {dms.marginLeft}px;
+				top: {dms.marginTop + 10}px;
+				height: {scaleY(2.3) - 10}px;"
+			class="sus-rect"
+			in:fade={{ duration: 3000 }}
+			out:fade={{ duration: 2000 }}
+		/>
 	{/if}
 
 	<!-- Annotation: shown in plot 3 -->

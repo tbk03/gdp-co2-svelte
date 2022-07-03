@@ -70,6 +70,7 @@
 <style>
     .scatter-point {
 		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease;
+        z-index: 20;
 		/* -webkit-mask-image: url(paper_texture.png);
         mask-image: url(paper_texture.png); */
 	}
