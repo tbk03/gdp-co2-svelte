@@ -29,6 +29,7 @@
 	import Annotation from "./Annotation.svelte";
 	import Tooltip from "./Tooltip.svelte";
 	import ScatterPlot from "./ScatterPlot.svelte";
+import Arrow from "./Arrow.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
@@ -341,6 +342,12 @@
 			annotationText="Hover over the white points for more details."
 			theme="light"
 		/>
+
+		<Arrow 	start={{x:scaleX(1e5),y:scaleY(2.3)}} 
+				end={{x:scaleX(1e5),y:scaleY(10)}} 
+				colour="white"
+				strokeWidth=4
+				marginAdj={move(dms.marginLeft, dms.marginTop)}/>
 	{/if}
 
 	<!-- Annotation: shown in plot 3 -->
