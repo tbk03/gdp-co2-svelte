@@ -290,6 +290,16 @@ import AnnotationPlainText from "./AnnotationPlainText.svelte";
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
 				opacity=0.9/>
 		{/if}
+
+		{#if currentPlotNumber == 4}
+			<Arrow 	
+				start={{x:scaleX(90000),y:scaleY(8.8)}} 
+				end={{x:scaleX(86000),y:scaleY(8.8)}} 
+				colour="#333333"
+				strokeWidth=2.8
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				opacity=0.9/>
+		{/if}
 	</svg>
 
 	<!-- the tooltip (html elements) -->

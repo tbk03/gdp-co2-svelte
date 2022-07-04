@@ -1,4 +1,6 @@
 <script>
+    import { fade } from "svelte/transition";
+
     export let start, end, colour, strokeWidth, opacity;
     export let marginAdj;
 
@@ -9,7 +11,9 @@
     
 </script>
 
-<g class="arrow" style="top:0px; left:0px;{marginAdj}">
+<g class="arrow" style="top:0px; left:0px;{marginAdj}"
+    in:fade="{{ delay: 5000, duration: 2500 }}"
+    out:fade="{{ duration: 1500 }}">
 
         <defs>
             <!-- arrowhead marker definition -->
