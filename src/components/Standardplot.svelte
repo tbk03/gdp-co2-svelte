@@ -31,6 +31,7 @@
 	import ScatterPlot from "./ScatterPlot.svelte";
 import Arrow from "./Arrow.svelte";
 import AnnotationPlainText from "./AnnotationPlainText.svelte";
+import AxisLabel from "./AxisLabel.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
@@ -314,23 +315,14 @@ import AnnotationPlainText from "./AnnotationPlainText.svelte";
 	{/if}
 
 	<!-- x axis label -->
-	<div
-		class="axis-label"
-		style="top:{chartSpecification.dms.height -
-			70}px; right:{chartSpecification.dms.marginRight}px;"
-	>
-		<p><b>GDP per capita</b></p>
-		<p style="font-size: 14px;">2011 USD adjusted for inflation</p>
-	</div>
+	<AxisLabel {dms} axis='x'
+	title="GDP per capita"
+	units="2011 USD adjusted for inflation"/>
 
 	<!-- y axis label -->
-	<div
-		class="axis-label"
-		style="top:{dms.marginTop - 50}px; left:{dms.marginLeft - 15}px;"
-	>
-		<p><b>Carbon emissions per capita</b></p>
-		<p style="font-size: 14px;">Tonnes of CO<sub>2</sub> per year</p>
-	</div>
+	<AxisLabel {dms} axis='y'
+	title="Carbon emissions per capita"
+	units="Tonnes of CO<sub>2</sub> per year"/>
 
 	<!-- Size Legend: shown in plot 1 -->
 	{#if currentPlotNumber == 1}
@@ -435,8 +427,7 @@ import AnnotationPlainText from "./AnnotationPlainText.svelte";
 	}
 
 	.sus-rect,
-	.interactive-chart,
-	.axis-label {
+	.interactive-chart {
 		position: absolute;
 	}
 
@@ -448,16 +439,6 @@ import AnnotationPlainText from "./AnnotationPlainText.svelte";
 		background-blend-mode: lighten;
 	}
 
-	.axis-label {
-		max-width: 300px;
-		text-align: right;
-		line-height: 20%;
-		flex-direction: column;
-		font-family: "Lato", sans-serif;
-		font-size: 20px;
-		color: var(--greyText);
-		text-anchor: end;
-	}
 
 	div :global(.tt-line) {
 		margin: 0.5em;
