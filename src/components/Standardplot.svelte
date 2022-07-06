@@ -306,6 +306,16 @@ import AxisLabel from "./AxisLabel.svelte";
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
 				opacity=0.9/>
 		{/if}
+
+		{#if currentPlotNumber == 5}
+			<Arrow 	
+				start={{x:scaleX(90000),y:scaleY(17)}} 
+				end={{x:scaleX(57000),y:scaleY(17)}} 
+				colour="#333333"
+				strokeWidth=2.8
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				opacity=0.9/>
+		{/if}
 	</svg>
 
 	<!-- the tooltip (html elements) -->
@@ -406,6 +416,24 @@ import AxisLabel from "./AxisLabel.svelte";
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="<b>Norway</b> is an outlier amongst the major fossil fuel producing countries. It has high GDP per capita and relatively low carbon emissions per capita."
 			theme="oil"
+		/>
+	{/if}
+
+	{#if currentPlotNumber == 5}
+		<Annotation
+			leftPos={scaleX(0.9e5)}
+			topPos={scaleY(25)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="The <b>United States</b> is the only one of the top 20 fossil fuel producing countries to have decoupled economic growth from CO<sub>2</sub> emissions."
+			theme="oil"
+		/>
+
+		<Annotation
+			leftPos={scaleX(0.9e5)}
+			topPos={scaleY(12)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="Hover over the black points to see how GDP growth and CO<sub>2</sub> emissions have been decoupled."
+			theme="dark"
 		/>
 	{/if}
 </div>
