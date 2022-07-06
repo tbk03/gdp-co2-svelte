@@ -143,7 +143,12 @@ import AxisLabel from "./AxisLabel.svelte";
 		{plotNum: 4, 	colourScale: (d) => (d.top20_producer ? "black" : "#bfbfbf"),
 						scatterAnnimateClass: "scatter-point-animated",
 						showTT: (d) => (d.top20_producer ? true : false),
-						scatterPointHoverClass: (d) => d.top20_producer ? "scatter-point-light-bg" : "scatter-point-no-hover"}
+						scatterPointHoverClass: (d) => d.top20_producer ? "scatter-point-light-bg" : "scatter-point-no-hover"},
+		
+		{plotNum: 5, 	colourScale: (d) => (d.is_decoupling ? "black" : "#bfbfbf"),
+						scatterAnnimateClass: "scatter-point",
+						showTT: (d) => d.is_decoupling ? true : false,
+						scatterPointHoverClass: (d) => d.is_decoupling ? "scatter-point-light-bg" : "scatter-point-no-hover"}
 	]
 
 	function setupPlot1() {

@@ -52,6 +52,8 @@
         data-showtt="true"
         data-ff-prod={d.total_ff_prod}
         data-showTT={showTT(d)}
+        data-change-in-CO2={d.change_in_co2}
+        data-change-in-gdp={d.change_in_gdp}
 
         in:fade="{{duration: 5000,
         easing: cubicInOut,

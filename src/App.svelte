@@ -16,6 +16,7 @@
   let handleClickB2 = () => plotNum = 2;
   let handleClickB3 = () => plotNum = 3;
   let handleClickB4 = () => plotNum = 4;
+  let handleClickB5 = () => plotNum = 5;
 </script>
 
 
@@ -26,6 +27,7 @@
   <button on:click={handleClickB2}>plot 2</button>
   <button on:click={handleClickB3}>plot 3</button>
   <button on:click={handleClickB4}>plot 4</button>
+  <button on:click={handleClickB5}>plot 5</button>
   <div  class='chart-container' id='chart1'
         bind:offsetWidth={w}
         bind:offsetHeight={h}>

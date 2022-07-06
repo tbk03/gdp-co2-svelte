@@ -113,6 +113,20 @@
 		tooltipText = line1 + line2;
 	}
 
+	function createTooltipTextPlot5(attributes) {
+
+		let change_in_co2 = Math.abs(attributes["data-change-in-co2"].value);
+		let change_in_gdp = attributes["data-change-in-gdp"].value;
+		
+
+		let line1 =
+			"<p class='tt-line data-country'>" +
+			attributes["data-country"].value +
+			"</p>";
+
+		let line2 = `<p class='tt-line'>Between 2000 and 2014 GDP rose by <b>${change_in_gdp}%</b> and CO<sub>2</sub> emissions fell by <b>${change_in_co2}%</b>.</p>`;
+		tooltipText = line1 + line2;
+	}
     // -------------------------------------------------------------------------------------------
 	// 3. Update tooltip based on plot number and mouse position
  	// -------------------------------------------------------------------------------------------
@@ -120,7 +134,8 @@
     let tooltipGen = [  createTooltipTextPlot1, 
                         createTooltipTextPlot2, 
                         createTooltipTextPlot3, 
-                        createTooltipTextPlot4  ];
+                        createTooltipTextPlot4,
+						createTooltipTextPlot5  ];
 
     $: {
             m = getAbsMousePos(event);
