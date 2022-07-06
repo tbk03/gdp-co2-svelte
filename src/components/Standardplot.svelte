@@ -51,8 +51,8 @@ import AxisLabel from "./AxisLabel.svelte";
 	// -------------------------------------------------------------------------------------------
 	// 3. Define chart structure
 	// -------------------------------------------------------------------------------------------
-	export let w = 600; // bound to offsetWidth
-	export let h = 600; // bound to offsetHeight
+	export let w; // bound to offsetWidth
+	export let h; // bound to offsetHeight
 	let dms = {};
 
 	$: dms = {
@@ -315,12 +315,12 @@ import AxisLabel from "./AxisLabel.svelte";
 	{/if}
 
 	<!-- x axis label -->
-	<AxisLabel {dms} axis='x'
+	<AxisLabel {chartSpecification} axis='x'
 	title="GDP per capita"
 	units="2011 USD adjusted for inflation"/>
 
 	<!-- y axis label -->
-	<AxisLabel {dms} axis='y'
+	<AxisLabel {chartSpecification} axis='y'
 	title="Carbon emissions per capita"
 	units="Tonnes of CO<sub>2</sub> per year"/>
 

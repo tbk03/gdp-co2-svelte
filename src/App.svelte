@@ -1,12 +1,15 @@
 <script>
   import Standardplot from "./components/Standardplot.svelte";
 
-  $: chartsDMS = {
-    one: {width: 0, height: 0},
-    two: {width: 0, height: 0},
-    three: {width: 0, height: 0},
-    four: {width: 0, height: 0}
-  };
+  // $: chartsDMS = {
+  //   one: {width: 0, height: 0},
+  //   two: {width: 0, height: 0},
+  //   three: {width: 0, height: 0},
+  //   four: {width: 0, height: 0}
+  // };
+
+  $: w = 0;
+  $: h = 0;
 
   let plotNum = 1;
   let handleClickB1 = () => plotNum = 1;
@@ -24,18 +27,17 @@
   <button on:click={handleClickB3}>plot 3</button>
   <button on:click={handleClickB4}>plot 4</button>
   <div  class='chart-container' id='chart1'
-        bind:offsetWidth={chartsDMS.one.width}
-        bind:offsetHeight={chartsDMS.one.height}>
+        bind:offsetWidth={w}
+        bind:offsetHeight={h}>
 
-    <Standardplot w={chartsDMS.one.width} 
-                  h={chartsDMS.one.height}
+    <Standardplot {w} {h}
                   chartId={'chart1'}
                   plotNumber={plotNum}/>
   </div>
 
   <h1>Hello world again!</h1>
 
-  <div  class='chart-container' id='chart2'
+  <!-- <div  class='chart-container' id='chart2'
         bind:offsetWidth={chartsDMS.two.width}
         bind:offsetHeight={chartsDMS.two.height}>
   <Standardplot w={chartsDMS.two.width} h={chartsDMS.two.height}
@@ -62,7 +64,7 @@
   <Standardplot w={chartsDMS.four.width} h={chartsDMS.four.height}
     chartId={'chart4'}
     plotNumber={4}/>
-  </div>
+  </div> -->
 
 </main>
 

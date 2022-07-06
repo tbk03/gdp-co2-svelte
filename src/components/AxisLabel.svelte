@@ -1,11 +1,11 @@
 <script>
-    export let dms;
+    export let chartSpecification;
     export let title, units, axis;
 
-    let xAxisPos = `top:${dms.height - 70}px; right:${dms.marginRight}px;`;
-    let yAxisPos = `top:${dms.marginTop - 50}px; left:${dms.marginLeft - 15}px;`;
+    $: xAxisPos = `top:${chartSpecification.dms.height - 70}px; right:${chartSpecification.dms.marginRight}px;`;
+    $: yAxisPos = `top:${chartSpecification.dms.marginTop - 50}px; left:${chartSpecification.dms.marginLeft - 15}px;`;
 
-    let axisPos = axis == 'x' ? xAxisPos : yAxisPos;
+    $: axisPos = axis == 'x' ? xAxisPos : yAxisPos;
 </script>
 
 <div
