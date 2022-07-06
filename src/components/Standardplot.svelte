@@ -253,7 +253,7 @@ import AxisLabel from "./AxisLabel.svelte";
 			<AxisXCont {chartSpecification} {showAxisDetail} />
 		</g>
 		<g style={move(dms.marginLeft, dms.marginTop)}>
-			<AxisYCont {chartSpecification} />
+			<AxisYCont {chartSpecification} {showAxisDetail}/>
 		</g>
 
 		<!-- scatter points -->
