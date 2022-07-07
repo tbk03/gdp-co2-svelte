@@ -2,14 +2,14 @@
     https://layercake.graphics/components/Line-D3.svelte 
 
     Line animation from: https://dev.to/learners/line-chart-with-svelte-and-d3-3086 -->
-    
+
 <script>
     import { line, curveLinear } from "d3-shape";
 
     export let cs, marginAdj, data, clipPath;
     export let stroke = "#ab00d6";
 
-    let path = line()
+    $: path = line()
         .x((d) => cs.scales.x(cs.accessors.x(d)))
         .y((d) => cs.scales.y(cs.accessors.y(d)))
         .curve(curveLinear);
