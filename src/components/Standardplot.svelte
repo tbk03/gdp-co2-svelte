@@ -26,13 +26,16 @@
 	// -------------------------------------------------------------------------------------------
 
 	import dataset from "../data/gdp_co2_2015.json";
+	import lm_data_developing from "../data/lm_developing.json"
+	import lm_data_developed from "../data/lm_developed.json"
+
 	import Annotation from "./Annotation.svelte";
 	import Tooltip from "./Tooltip.svelte";
 	import ScatterPlot from "./ScatterPlot.svelte";
-import Arrow from "./Arrow.svelte";
-import AnnotationPlainText from "./AnnotationPlainText.svelte";
-import AxisLabel from "./AxisLabel.svelte";
-import Line from "./Line.svelte";
+	import Arrow from "./Arrow.svelte";
+	import AnnotationPlainText from "./AnnotationPlainText.svelte";
+	import AxisLabel from "./AxisLabel.svelte";
+	import Line from "./Line.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
@@ -330,7 +333,16 @@ import Line from "./Line.svelte";
 
 		{#if currentPlotNumber == 6}
 			<Line 	cs={chartSpecification}
-					marginAdj={move(dms.marginLeft, dms.marginTop)}/>
+					marginAdj={move(dms.marginLeft, dms.marginTop)}
+					data={lm_data_developing}
+					clipPath="url(#axis-cutoff)"/>
+		{/if}
+
+		{#if currentPlotNumber == 7}
+			<Line 	cs={chartSpecification}
+					marginAdj={move(dms.marginLeft, dms.marginTop)}
+					data={lm_data_developed}
+					clipPath="url(#axis-cutoff)"/>
 		{/if}
 	</svg>
 
