@@ -32,6 +32,7 @@
 import Arrow from "./Arrow.svelte";
 import AnnotationPlainText from "./AnnotationPlainText.svelte";
 import AxisLabel from "./AxisLabel.svelte";
+import Line from "./Line.svelte";
 
 	// order so smaller circles appear near the front
 	let data = tidy(
@@ -325,6 +326,11 @@ import AxisLabel from "./AxisLabel.svelte";
 				strokeWidth=2.8
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
 				opacity=0.9/>
+		{/if}
+
+		{#if currentPlotNumber == 6}
+			<Line 	cs={chartSpecification}
+					marginAdj={move(dms.marginLeft, dms.marginTop)}/>
 		{/if}
 	</svg>
 
