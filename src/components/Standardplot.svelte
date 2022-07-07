@@ -148,7 +148,17 @@ import AxisLabel from "./AxisLabel.svelte";
 		{plotNum: 5, 	colourScale: (d) => (d.is_decoupling ? "black" : "#bfbfbf"),
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => d.is_decoupling ? true : false,
-						scatterPointHoverClass: (d) => d.is_decoupling ? "scatter-point-light-bg" : "scatter-point-no-hover"}
+						scatterPointHoverClass: (d) => d.is_decoupling ? "scatter-point-light-bg" : "scatter-point-no-hover"},
+		
+		{plotNum: 6, 	colourScale: (d) => accessX(d) > 25000 ? "#bfbfbf" : "black",
+						scatterAnnimateClass: "scatter-point",
+						showTT: (d) => true,
+						scatterPointHoverClass: (d) => "scatter-point-light-bg"},
+		
+		{plotNum: 7, 	colourScale: (d) => accessX(d) > 25000 && d.actual_greater_than_pred ? "black" : "#bfbfbf",
+						scatterAnnimateClass: "scatter-point",
+						showTT: (d) => true,
+						scatterPointHoverClass: (d) => "scatter-point-light-bg"}
 	]
 
 	function setupPlot1() {
