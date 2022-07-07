@@ -2,6 +2,7 @@
     https://layercake.graphics/components/Line-D3.svelte 
 
     Line animation from: https://dev.to/learners/line-chart-with-svelte-and-d3-3086 -->
+    
 <script>
     import { line, curveLinear } from "d3-shape";
 
