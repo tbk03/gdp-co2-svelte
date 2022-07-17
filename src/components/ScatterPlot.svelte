@@ -4,16 +4,19 @@
     import { createEventDispatcher } from "svelte";
 
 
-    export let cs, clipPath, scatterAnnimateClass, scatterPointHoverClass, colourScale, showTT;
-    console.log("In ScatterPlot", cs);
+    export let cs, clipPath, scatterAnnimateClass, scatterPointHoverClass, colourScale, showTT, scatterLayerSelector;
+    console.log("In ScatterPlot", scatterLayerSelector);
 
     const dispatch = createEventDispatcher();
+
+    // https://www.fabiofranchino.com/log/bring-to-front-and-restore-an-svg-element-with-d3/
 
     let mouseOver = function(event){
         if (this.attributes["data-showtt"].value == "true") {
             dispatch('message', {   event: event,
                                     attributes: this.attributes,
                                     showTT: true});
+            this.parentNode.appendChild(this);
         }
     }
 
@@ -35,7 +38,7 @@
 
 {#each cs.data as d}
     <circle
-        class="{scatterAnnimateClass} {scatterPointHoverClass(d)}"
+        class="{scatterAnnimateClass} {scatterPointHoverClass(d)} {scatterLayerSelector(d)}"
 
         cx={cs.scales.x(cs.accessors.x(d))}
         cy={cs.scales.y(cs.accessors.y(d))}
@@ -65,16 +68,20 @@
         on:mouseleave={mouseLeave}
         on:focus={mouseOver}
         on:mousemove={mouseMove}
+        on:click={function(){
+            this.parentNode.appendChild(this)
+          }}
     />
-
 {/each}
+
+<use href=".layer1" />
 
 <style>
     .scatter-point {
 		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease;
-        z-index: 20;
 		/* -webkit-mask-image: url(paper_texture.png);
         mask-image: url(paper_texture.png); */
+        z-index: 20;
 	}
 	.scatter-point-animated {
 		transition: fill 1s ease, stroke-width 1s ease, stroke 1s ease, cx 5s, cy 5s;
@@ -96,4 +103,5 @@
 		stroke-width: 1.25;
 		filter: drop-shadow(0 0 0.2rem black);
 	}
+
 </style>

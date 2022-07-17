@@ -192,14 +192,14 @@
 
 	function setupPlot3() {
 		// filter down data to focus on countries with sustainable C02 emissions
-		data = tidy(
-			dataset,
-			filter((d) => accessX(d) <= 20000),
-			filter((d) => accessY(d) <= 3.5)
-		);
+		// data = tidy(
+		// 	dataset,
+		// 	filter((d) => accessX(d) <= 20000),
+		// 	filter((d) => accessY(d) <= 3.5)
+		// );
 
-		extentsX = expandScale(extent(data, accessX), 0, 0.05);
-		extentsY = expandScale(extent(data, accessY), 0, 0.05);
+		extentsX = expandScale([0, 20000], 0, 0.05);
+		extentsY = expandScale([0, 3.5], 0, 0.05);
 		scaleX = scaleLinear().domain(extentsX).range([0, dms.boundedWidth]);
 		scaleY = scaleLinear().domain(extentsY).range([dms.boundedHeight, 0]);
 
@@ -220,10 +220,10 @@
 
 	function setupPlot4() {
 		// reorder to plot the top 20 producers on top of other countries
-		data = tidy(
-			dataset,
-			arrange(["top20_producer", desc("population_historical_estimates")])
-		);
+		// data = tidy(
+		// 	dataset,
+		// 	arrange(["top20_producer", desc("population_historical_estimates")])
+		// );
 
 		extentsX = expandScale(extent(data, accessX), 0, 0.05);
 		extentsY = expandScale(extent(data, accessY), 0, 0.05);
@@ -241,6 +241,7 @@
 				dms: dms,
 			};
 			showAxisDetail = true;
+
 		}, 2000);
 	}
 
@@ -285,6 +286,7 @@
 				on:message={handleScatterMsg}
 				colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
 				showTT={scatterParameters[currentPlotNumber - 1].showTT}
+				scatterLayerSelector={(d) => d.top20_producer ? "layer1" : "layer0"}
 			/>
 		</g>
 
@@ -485,6 +487,7 @@
 		background-size: cover;
 		background-blend-mode: darken;
 		transition: all 3s;
+		transition-delay: 2s;
 	}
 
 	.sus-rect,
