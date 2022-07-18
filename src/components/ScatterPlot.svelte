@@ -61,7 +61,7 @@
             data-change-in-CO2={d.change_in_co2}
             data-change-in-gdp={d.change_in_gdp}
 
-            in:fade="{{duration: 5000,
+            in:fade="{{duration: 2000,
             easing: cubicInOut,
             delay: 1000}}"
             out:fade="{{duration: 1000,
@@ -78,38 +78,37 @@
 <!-- emphasis layer -->
 {#each cs.data as d}
     {#if scatterLayerSelector(d) == "layer1"}
-    <circle
-        class="{scatterAnnimateClass} {scatterPointHoverClass(d)}"
+        <circle
+            class="{scatterAnnimateClass} {scatterPointHoverClass(d)}"
 
-        cx={cs.scales.x(cs.accessors.x(d))}
-        cy={cs.scales.y(cs.accessors.y(d))}
-        r={cs.scales.size(cs.accessors.size(d))}
-        fill={colourScale(d)}
-        opacity="0.7"
+            cx={cs.scales.x(cs.accessors.x(d))}
+            cy={cs.scales.y(cs.accessors.y(d))}
+            r={cs.scales.size(cs.accessors.size(d))}
+            fill={colourScale(d)}
+            opacity="0.7"
 
-        clip-path={clipPath}
-        
-        data-x={cs.accessors.x(d)}
-        data-y={cs.accessors.y(d)}
-        data-country={cs.accessors.country(d)}
-        data-population={cs.accessors.size(d)}
-        data-showtt="true"
-        data-ff-prod={d.total_ff_prod}
-        data-showTT={showTT(d)}
-        data-change-in-CO2={d.change_in_co2}
-        data-change-in-gdp={d.change_in_gdp}
+            clip-path={clipPath}
+            
+            data-x={cs.accessors.x(d)}
+            data-y={cs.accessors.y(d)}
+            data-country={cs.accessors.country(d)}
+            data-population={cs.accessors.size(d)}
+            data-showtt="true"
+            data-ff-prod={d.total_ff_prod}
+            data-showTT={showTT(d)}
+            data-change-in-CO2={d.change_in_co2}
+            data-change-in-gdp={d.change_in_gdp}
 
-        in:fade="{{duration: 5000,
-        easing: cubicInOut,
-        delay: 1000}}"
-        out:fade="{{duration: 1000,
-        easing: cubicInOut}}"
+            in:fade="{{duration: 2000,
+            easing: cubicInOut}}"
+            out:fade="{{duration: 1000,
+            easing: cubicInOut}}"
 
-        on:mouseover={mouseOver}
-        on:mouseleave={mouseLeave}
-        on:focus={mouseOver}
-        on:mousemove={mouseMove}
-    />
+            on:mouseover={mouseOver}
+            on:mouseleave={mouseLeave}
+            on:focus={mouseOver}
+            on:mousemove={mouseMove}
+        />
     {/if}
 {/each}
 

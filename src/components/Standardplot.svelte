@@ -132,126 +132,84 @@
 		{plotNum: 1, 	colourScale: (d) => "black",
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => true,
-						scatterPointHoverClass: (d) => "scatter-point-light-bg"}, 
+						scatterPointHoverClass: (d) => "scatter-point-light-bg",
+						scatterLayerSelector: (d) => "layer0"}, 
 
 		{plotNum: 2, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
 						scatterAnnimateClass: "scatter-point-animated",
 						showTT: (d) => (d.is_sustainable ? false : true),
-						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-no-hover" : "scatter-point-dark-bg"},
+						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-no-hover" : "scatter-point-dark-bg",
+						scatterLayerSelector: (d) => "layer0"},
 
 		{plotNum: 3, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
 						scatterAnnimateClass: "scatter-point-animated",
 						showTT: (d) => (d.is_sustainable ? true : false),
-						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-no-hover"},
+						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-no-hover",
+						scatterLayerSelector: (d) => "layer0"},
 
 		{plotNum: 4, 	colourScale: (d) => (d.top20_producer ? "black" : "#bfbfbf"),
 						scatterAnnimateClass: "scatter-point-animated",
 						showTT: (d) => (d.top20_producer ? true : false),
-						scatterPointHoverClass: (d) => d.top20_producer ? "scatter-point-light-bg" : "scatter-point-no-hover"},
+						scatterPointHoverClass: (d) => d.top20_producer ? "scatter-point-light-bg" : "scatter-point-no-hover",
+						scatterLayerSelector: (d) => d.top20_producer ? "layer1" : "layer0"},
 		
 		{plotNum: 5, 	colourScale: (d) => (d.is_decoupling ? "black" : "#bfbfbf"),
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => d.is_decoupling ? true : false,
-						scatterPointHoverClass: (d) => d.is_decoupling ? "scatter-point-light-bg" : "scatter-point-no-hover"},
+						scatterPointHoverClass: (d) => d.is_decoupling ? "scatter-point-light-bg" : "scatter-point-no-hover",
+						scatterLayerSelector: (d) => d.is_decoupling ? "layer1" : "layer0"},
 		
 		{plotNum: 6, 	colourScale: (d) => accessX(d) > 25000 ? "#bfbfbf" : "black",
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => true,
-						scatterPointHoverClass: (d) => "scatter-point-light-bg"},
+						scatterPointHoverClass: (d) => "scatter-point-light-bg",
+						scatterLayerSelector: (d) => d.actual_greater_than_pred ? "layer1" : "layer0"},
 		
 		{plotNum: 7, 	colourScale: (d) => accessX(d) > 25000 && d.actual_greater_than_pred ? "black" : "#bfbfbf",
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => true,
-						scatterPointHoverClass: (d) => "scatter-point-light-bg"}
+						scatterPointHoverClass: (d) => "scatter-point-light-bg",
+						scatterLayerSelector: (d) => d.actual_greater_than_pred ? "layer1" : "layer0"}
 	]
 
-	function setupPlot1() {
+	
+	function updateAxis(extentsX, extentsY){
 		
-		// data = dataset.map((d) => {
-		// 	return {
-		// 		...d,
-		// 		annual_co2_emissions_per_capita: 0,
-		// 		gdp_per_capita: 0,
-		// 		population_historical_estimates: 1,
-		// 	};
-		// });
+		let extX = expandScale(extentsX, 0, 0.05);
+		let extY = expandScale(extentsY, 0, 0.05);
+		scaleX = scaleLinear().domain(extX).range([0, dms.boundedWidth]);
+		scaleY = scaleLinear().domain(extY).range([dms.boundedHeight, 0]);
 
-		// need to wait before sending points to actual positions
-		// const timeout = setTimeout(() => {
-		// 	scatterAnnimateClass = "scatter-point-animated";
-		// 	data = dataset;
-		// }, 10);
+		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-		// show/hide elements specific to the chart
+		showAxisDetail = false;
+		const timeout = setTimeout(() => {
+			chartSpecification = {
+				scales: scales,
+				data: data,
+				accessors: accessors,
+				dms: dms,
+			};
+			showAxisDetail = true;
+		}, 2000);
+	}
+
+	function setupPlot1() {
 		showAxisDetail = true;
 	}
 
-	function setupPlot2() {
-
-	}
-
 	function setupPlot3() {
-		// filter down data to focus on countries with sustainable C02 emissions
-		// data = tidy(
-		// 	dataset,
-		// 	filter((d) => accessX(d) <= 20000),
-		// 	filter((d) => accessY(d) <= 3.5)
-		// );
-
-		extentsX = expandScale([0, 20000], 0, 0.05);
-		extentsY = expandScale([0, 3.5], 0, 0.05);
-		scaleX = scaleLinear().domain(extentsX).range([0, dms.boundedWidth]);
-		scaleY = scaleLinear().domain(extentsY).range([dms.boundedHeight, 0]);
-
-		scales = { x: scaleX, y: scaleY, size: scaleSize };
-
-		showAxisDetail = false;
-		const timeout = setTimeout(() => {
-			chartSpecification = {
-				scales: scales,
-				data: data,
-				accessors: accessors,
-				dms: dms,
-			};
-			showAxisDetail = true;
-		}, 2000);
-	
+		updateAxis(extentsX = [0, 20000], extentsY =[0, 3.5]);	
 	}
 
 	function setupPlot4() {
-		// reorder to plot the top 20 producers on top of other countries
-		// data = tidy(
-		// 	dataset,
-		// 	arrange(["top20_producer", desc("population_historical_estimates")])
-		// );
-
-		extentsX = expandScale(extent(data, accessX), 0, 0.05);
-		extentsY = expandScale(extent(data, accessY), 0, 0.05);
-		scaleX = scaleLinear().domain(extentsX).range([0, dms.boundedWidth]);
-		scaleY = scaleLinear().domain(extentsY).range([dms.boundedHeight, 0]);
-
-		scales = { x: scaleX, y: scaleY, size: scaleSize };
-
-		showAxisDetail = false;
-		const timeout = setTimeout(() => {
-			chartSpecification = {
-				scales: scales,
-				data: data,
-				accessors: accessors,
-				dms: dms,
-			};
-			showAxisDetail = true;
-
-		}, 2000);
+		updateAxis(extentsX = extent(data, accessX), extentsY = extent(data, accessY));	
 	}
 
 	// setup plot based on plot number
 	$: switch (currentPlotNumber) {
 		case 1:
 			setupPlot1();
-			break;
-		case 2:
-			setupPlot2();
 			break;
 		case 3:
 			setupPlot3();
@@ -286,7 +244,7 @@
 				on:message={handleScatterMsg}
 				colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
 				showTT={scatterParameters[currentPlotNumber - 1].showTT}
-				scatterLayerSelector={(d) => d.top20_producer ? "layer1" : "layer0"}
+				scatterLayerSelector={scatterParameters[currentPlotNumber - 1].scatterLayerSelector}
 			/>
 		</g>
 
