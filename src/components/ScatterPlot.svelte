@@ -61,10 +61,11 @@
             data-change-in-CO2={d.change_in_co2}
             data-change-in-gdp={d.change_in_gdp}
 
-            in:fade="{{duration: 2000,
+            in:fade="{{duration: 1000,
             easing: cubicInOut,
             delay: 1000}}"
             out:fade="{{duration: 1000,
+                delay: 2000,
             easing: cubicInOut}}"
 
             on:mouseover={mouseOver}
@@ -99,7 +100,7 @@
             data-change-in-CO2={d.change_in_co2}
             data-change-in-gdp={d.change_in_gdp}
 
-            in:fade="{{duration: 2000,
+            in:fade="{{duration: 1000,
             easing: cubicInOut}}"
             out:fade="{{duration: 1000,
             easing: cubicInOut}}"
