@@ -133,43 +133,43 @@
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => true,
 						scatterPointHoverClass: (d) => "scatter-point-light-bg",
-						scatterLayerSelector: (d) => "layer0"}, 
+						dataFilter: null}, 
 
 		{plotNum: 2, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
 						scatterAnnimateClass: "scatter-point-animated",
 						showTT: (d) => (d.is_sustainable ? false : true),
 						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-no-hover" : "scatter-point-dark-bg",
-						scatterLayerSelector: (d) => "layer0"},
+						dataFilter: null},
 
 		{plotNum: 3, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
 						scatterAnnimateClass: "scatter-point-animated",
 						showTT: (d) => (d.is_sustainable ? true : false),
 						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-no-hover",
-						scatterLayerSelector: (d) => "layer0"},
+						dataFilter: null},
 
 		{plotNum: 4, 	colourScale: (d) => (d.top20_producer ? "black" : "#bfbfbf"),
 						scatterAnnimateClass: "scatter-point-animated",
 						showTT: (d) => (d.top20_producer ? true : false),
 						scatterPointHoverClass: (d) => d.top20_producer ? "scatter-point-light-bg" : "scatter-point-no-hover",
-						scatterLayerSelector: (d) => d.top20_producer ? "layer1" : "layer0"},
+						dataFilter: (d) => d.top20_producer},
 		
 		{plotNum: 5, 	colourScale: (d) => (d.is_decoupling ? "black" : "#bfbfbf"),
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => d.is_decoupling ? true : false,
 						scatterPointHoverClass: (d) => d.is_decoupling ? "scatter-point-light-bg" : "scatter-point-no-hover",
-						scatterLayerSelector: (d) => d.is_decoupling ? "layer1" : "layer0"},
+						dataFilter: (d) => d.is_decoupling},
 		
 		{plotNum: 6, 	colourScale: (d) => accessX(d) > 25000 ? "#bfbfbf" : "black",
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => true,
 						scatterPointHoverClass: (d) => "scatter-point-light-bg",
-						scatterLayerSelector: (d) => d.actual_greater_than_pred ? "layer1" : "layer0"},
+						dataFilter: null},
 		
 		{plotNum: 7, 	colourScale: (d) => accessX(d) > 25000 && d.actual_greater_than_pred ? "black" : "#bfbfbf",
 						scatterAnnimateClass: "scatter-point",
 						showTT: (d) => true,
 						scatterPointHoverClass: (d) => "scatter-point-light-bg",
-						scatterLayerSelector: (d) => d.actual_greater_than_pred ? "layer1" : "layer0"}
+						dataFilter: null}
 	]
 
 	
@@ -236,6 +236,7 @@
 
 		<!-- scatter points -->
 		<g style={move(dms.marginLeft, dms.marginTop)}>
+			<!-- main scatter plot -->
 			<ScatterPlot
 				cs={chartSpecification}
 				clipPath="url(#axis-cutoff)"
@@ -244,8 +245,38 @@
 				on:message={handleScatterMsg}
 				colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
 				showTT={scatterParameters[currentPlotNumber - 1].showTT}
-				scatterLayerSelector={scatterParameters[currentPlotNumber - 1].scatterLayerSelector}
+				dataFilter={null}
+				animationTimes={{inTime: 1000, inDelay: 1000, outTime: 10, outDelay: 2000}}
 			/>
+
+			<!-- emphasis layers -->
+			{#if currentPlotNumber == 4}
+				<ScatterPlot
+					cs={chartSpecification}
+					clipPath="url(#axis-cutoff)"
+					scatterAnnimateClass={scatterParameters[currentPlotNumber - 1].scatterAnnimateClass}
+					scatterPointHoverClass={scatterParameters[currentPlotNumber - 1].scatterPointHoverClass}
+					on:message={handleScatterMsg}
+					colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
+					showTT={scatterParameters[currentPlotNumber - 1].showTT}
+					dataFilter={scatterParameters[currentPlotNumber - 1].dataFilter}
+					animationTimes={{inTime: 1000, inDelay: 0, outTime: 10, outDelay: 0}}
+				/>
+			{/if}
+
+			{#if currentPlotNumber == 5}
+				<ScatterPlot
+					cs={chartSpecification}
+					clipPath="url(#axis-cutoff)"
+					scatterAnnimateClass={scatterParameters[currentPlotNumber - 1].scatterAnnimateClass}
+					scatterPointHoverClass={scatterParameters[currentPlotNumber - 1].scatterPointHoverClass}
+					on:message={handleScatterMsg}
+					colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
+					showTT={scatterParameters[currentPlotNumber - 1].showTT}
+					dataFilter={scatterParameters[currentPlotNumber - 1].dataFilter}
+					animationTimes={{inTime: 1000, inDelay: 0, outTime: 10, outDelay: 0}}
+				/>
+			{/if}
 		</g>
 
 		<!-- clip circles falling outside the axis -->
