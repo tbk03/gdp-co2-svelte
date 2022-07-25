@@ -187,10 +187,10 @@
 
 		{
 			plotNum: 6,
-			colourScale: (d) => (accessX(d) > 25000 ? "#bfbfbf" : "black"),
+			colourScale: (d) => (accessX(d) > 25000 ? "#bfbfbf" : "#979797"),
 			scatterAnnimateClass: "scatter-point-animated",
 			showTT: (d) => true,
-			scatterPointHoverClass: (d) => "scatter-point-light-bg",
+			scatterPointHoverClass: (d) => "scatter-point-no-hover",
 			dataFilter: null,
 		},
 
@@ -202,7 +202,7 @@
 					: "#bfbfbf",
 			scatterAnnimateClass: "scatter-point-animated",
 			showTT: (d) => true,
-			scatterPointHoverClass: (d) => "scatter-point-light-bg",
+			scatterPointHoverClass: (d) => d.actual_greater_than_pred ? "scatter-point-light-bg" : "scatter-point-no-hover",
 			dataFilter: null,
 		},
 	];
@@ -245,15 +245,19 @@
 	function setupPlot6() {
 		showModelFit = false;
 		showAxisDetail = true;
-		updateAxis((extentsX = [0, 30500]), (extentsY = [0, 20]), true);
-		const timeout = setTimeout(() => showModelFit = true, 4000);
+		updateAxis((extentsX = [0, 35000]), (extentsY = [0, 20]), true);
+		const timeout = setTimeout(() => (showModelFit = true), 4000);
 	}
 
 	function setupPlot7() {
 		showModelFit = false;
 		showAxisDetail = true;
-		updateAxis((extentsX = expandScale(extent(data, accessX), 0, 0.05)), (extentsY = expandScale(extent(data, accessY), 0, 0.05)), true);
-		const timeout = setTimeout(() => showModelFit = true, 4000);
+		updateAxis(
+			(extentsX = expandScale(extent(data, accessX), 0, 0.05)),
+			(extentsY = expandScale(extent(data, accessY), 0, 0.05)),
+			true
+		);
+		const timeout = setTimeout(() => (showModelFit = true), 4000);
 	}
 
 	// setup plot based on plot number
@@ -414,12 +418,35 @@
 			/>
 		{/if}
 
+		{#if currentPlotNumber == 6}
+			<Arrow
+				start={{ x: scaleX(20000), y: scaleY(10) }}
+				end={{ x: scaleX(20000), y: scaleY(5.8) }}
+				colour="#333333"
+				strokeWidth="2.8"
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				opacity="0.9"
+			/>
+		{/if}
+
 		{#if currentPlotNumber == 6 && showModelFit}
 			<Line
 				cs={chartSpecification}
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
 				data={lm_data_developing}
 				clipPath="url(#axis-cutoff)"
+				stroke="black"
+			/>
+		{/if}
+
+		{#if currentPlotNumber == 7}
+			<Arrow
+				start={{ x: scaleX(100000), y: scaleY(30) }}
+				end={{ x: scaleX(76000), y: scaleY(30) }}
+				colour="#333333"
+				strokeWidth="2.8"
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				opacity="0.9"
 			/>
 		{/if}
 
@@ -429,6 +456,7 @@
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
 				data={lm_data_developed}
 				clipPath="url(#axis-cutoff)"
+				stroke="black"
 			/>
 		{/if}
 	</svg>
@@ -555,6 +583,34 @@
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Hover over the black points to see how GDP growth and CO<sub>2</sub> emissions have been decoupled."
 			theme="dark"
+		/>
+	{/if}
+
+	{#if currentPlotNumber == 6}
+		<Annotation
+			leftPos={scaleX(15000)}
+			topPos={scaleY(15)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="The line shows an approximate trajectory of the typical country with a developing economy (GDP per capita less than $25,000)."
+			theme="dark"
+		/>
+	{/if}
+
+	{#if currentPlotNumber == 7}
+		<Annotation
+			leftPos={scaleX(100000)}
+			topPos={scaleY(39)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="The line shows an approximate trajectory of a country continuing on the path of a typical developing economy (GDP per capita less than $25,000), after it's economy had become developed. This can thought of as a theoretical worst case."
+			theme="dark"
+		/>
+
+		<Annotation
+			leftPos={scaleX(100000)}
+			topPos={scaleY(20)}
+			marginAdj={move(dms.marginLeft, dms.marginTop)}
+			annotationText="Hover over the black points to see which countries are doing worse (in terms of carbon emission per capita) than the theoretical worst case trajectory."
+			theme="light"
 		/>
 	{/if}
 </div>
