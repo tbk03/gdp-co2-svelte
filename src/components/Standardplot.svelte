@@ -26,8 +26,8 @@
 	// -------------------------------------------------------------------------------------------
 
 	import dataset from "../data/gdp_co2_2015.json";
-	import lm_data_developing from "../data/lm_developing.json"
-	import lm_data_developed from "../data/lm_developed.json"
+	import lm_data_developing from "../data/lm_developing.json";
+	import lm_data_developed from "../data/lm_developed.json";
 
 	import Annotation from "./Annotation.svelte";
 	import Tooltip from "./Tooltip.svelte";
@@ -127,54 +127,87 @@
 
 	let showAxisDetail = false;
 
-
 	let scatterParameters = [
-		{plotNum: 1, 	colourScale: (d) => "black",
-						scatterAnnimateClass: "scatter-point",
-						showTT: (d) => true,
-						scatterPointHoverClass: (d) => "scatter-point-light-bg",
-						dataFilter: null}, 
+		{
+			plotNum: 1,
+			colourScale: (d) => "black",
+			scatterAnnimateClass: "scatter-point",
+			showTT: (d) => true,
+			scatterPointHoverClass: (d) => "scatter-point-light-bg",
+			dataFilter: null,
+		},
 
-		{plotNum: 2, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
-						scatterAnnimateClass: "scatter-point-animated",
-						showTT: (d) => (d.is_sustainable ? false : true),
-						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-no-hover" : "scatter-point-dark-bg",
-						dataFilter: null},
+		{
+			plotNum: 2,
+			colourScale: (d) => (d.is_sustainable ? "black" : "white"),
+			scatterAnnimateClass: "scatter-point",
+			showTT: (d) => (d.is_sustainable ? false : true),
+			scatterPointHoverClass: (d) =>
+				d.is_sustainable
+					? "scatter-point-no-hover"
+					: "scatter-point-dark-bg",
+			dataFilter: null,
+		},
 
-		{plotNum: 3, 	colourScale: (d) => (d.is_sustainable ? "black" : "white"),
-						scatterAnnimateClass: "scatter-point-animated",
-						showTT: (d) => (d.is_sustainable ? true : false),
-						scatterPointHoverClass: (d) => d.is_sustainable ? "scatter-point-light-bg" : "scatter-point-no-hover",
-						dataFilter: null},
+		{
+			plotNum: 3,
+			colourScale: (d) => (d.is_sustainable ? "black" : "white"),
+			scatterAnnimateClass: "scatter-point",
+			showTT: (d) => (d.is_sustainable ? true : false),
+			scatterPointHoverClass: (d) =>
+				d.is_sustainable
+					? "scatter-point-light-bg"
+					: "scatter-point-no-hover",
+			dataFilter: null,
+		},
 
-		{plotNum: 4, 	colourScale: (d) => (d.top20_producer ? "black" : "#bfbfbf"),
-						scatterAnnimateClass: "scatter-point-animated",
-						showTT: (d) => (d.top20_producer ? true : false),
-						scatterPointHoverClass: (d) => d.top20_producer ? "scatter-point-light-bg" : "scatter-point-no-hover",
-						dataFilter: (d) => d.top20_producer},
-		
-		{plotNum: 5, 	colourScale: (d) => (d.is_decoupling ? "black" : "#bfbfbf"),
-						scatterAnnimateClass: "scatter-point",
-						showTT: (d) => d.is_decoupling ? true : false,
-						scatterPointHoverClass: (d) => d.is_decoupling ? "scatter-point-light-bg" : "scatter-point-no-hover",
-						dataFilter: (d) => d.is_decoupling},
-		
-		{plotNum: 6, 	colourScale: (d) => accessX(d) > 25000 ? "#bfbfbf" : "black",
-						scatterAnnimateClass: "scatter-point",
-						showTT: (d) => true,
-						scatterPointHoverClass: (d) => "scatter-point-light-bg",
-						dataFilter: null},
-		
-		{plotNum: 7, 	colourScale: (d) => accessX(d) > 25000 && d.actual_greater_than_pred ? "black" : "#bfbfbf",
-						scatterAnnimateClass: "scatter-point",
-						showTT: (d) => true,
-						scatterPointHoverClass: (d) => "scatter-point-light-bg",
-						dataFilter: null}
-	]
+		{
+			plotNum: 4,
+			colourScale: (d) => (d.top20_producer ? "black" : "#bfbfbf"),
+			scatterAnnimateClass: "scatter-point",
+			showTT: (d) => (d.top20_producer ? true : false),
+			scatterPointHoverClass: (d) =>
+				d.top20_producer
+					? "scatter-point-light-bg"
+					: "scatter-point-no-hover",
+			dataFilter: (d) => d.top20_producer,
+		},
 
-	
-	function updateAxis(extentsX, extentsY){
-		
+		{
+			plotNum: 5,
+			colourScale: (d) => (d.is_decoupling ? "black" : "#bfbfbf"),
+			scatterAnnimateClass: "scatter-point",
+			showTT: (d) => (d.is_decoupling ? true : false),
+			scatterPointHoverClass: (d) =>
+				d.is_decoupling
+					? "scatter-point-light-bg"
+					: "scatter-point-no-hover",
+			dataFilter: (d) => d.is_decoupling,
+		},
+
+		{
+			plotNum: 6,
+			colourScale: (d) => (accessX(d) > 25000 ? "#bfbfbf" : "black"),
+			scatterAnnimateClass: "scatter-point-animated",
+			showTT: (d) => true,
+			scatterPointHoverClass: (d) => "scatter-point-light-bg",
+			dataFilter: null,
+		},
+
+		{
+			plotNum: 7,
+			colourScale: (d) =>
+				accessX(d) > 25000 && d.actual_greater_than_pred
+					? "black"
+					: "#bfbfbf",
+			scatterAnnimateClass: "scatter-point-animated",
+			showTT: (d) => true,
+			scatterPointHoverClass: (d) => "scatter-point-light-bg",
+			dataFilter: null,
+		},
+	];
+
+	function updateAxis(extentsX, extentsY, animate = false) {
 		let extX = expandScale(extentsX, 0, 0.05);
 		let extY = expandScale(extentsY, 0, 0.05);
 		scaleX = scaleLinear().domain(extX).range([0, dms.boundedWidth]);
@@ -182,8 +215,18 @@
 
 		scales = { x: scaleX, y: scaleY, size: scaleSize };
 
-		showAxisDetail = false;
-		const timeout = setTimeout(() => {
+		if (animate) {
+			showAxisDetail = false;
+			const timeout = setTimeout(() => {
+				chartSpecification = {
+					scales: scales,
+					data: data,
+					accessors: accessors,
+					dms: dms,
+				};
+				showAxisDetail = true;
+			}, 2000);
+		} else {
 			chartSpecification = {
 				scales: scales,
 				data: data,
@@ -191,19 +234,43 @@
 				dms: dms,
 			};
 			showAxisDetail = true;
-		}, 2000);
+		}
 	}
 
 	function setupPlot1() {
 		showAxisDetail = true;
 	}
 
+	function setupPlot2() {
+		showAxisDetail = true;
+	}
+
 	function setupPlot3() {
-		updateAxis(extentsX = [0, 20000], extentsY =[0, 3.5]);	
+		showAxisDetail = true;
+		updateAxis((extentsX = [0, 20500]), (extentsY = [0, 3.55]));
 	}
 
 	function setupPlot4() {
-		updateAxis(extentsX = extent(data, accessX), extentsY = extent(data, accessY));	
+		showAxisDetail = true;
+	}
+
+
+	let showModelFit = false;
+	function setupPlot6() {
+		showModelFit = false;
+		showAxisDetail = true;
+		updateAxis((extentsX = [0, 28000]), (extentsY = [0, 20]), true);
+		const timeout = setTimeout(() => showModelFit = true, 4000);
+	}
+
+	function setupPlot7() {
+		showModelFit = false;
+		showAxisDetail = true;
+		updateAxis((extentsX = expandScale(extent(data, accessX), 0, 0.05)), (extentsY = expandScale(extent(data, accessY), 0, 0.05)), true);
+		const timeout = setTimeout(() => showModelFit = true, 4000);
+		//showModelFit = true;
+	// 	;
+	// let extentsY = 
 	}
 
 	// setup plot based on plot number
@@ -211,27 +278,33 @@
 		case 1:
 			setupPlot1();
 			break;
+		case 2:
+			setupPlot2();
+			break;
 		case 3:
 			setupPlot3();
 			break;
 		case 4:
 			setupPlot4();
 			break;
+		case 6:
+			setupPlot6();
+			break;
+		case 7:
+			setupPlot7();
+			break;
 	}
 </script>
 
 <div class="interactive-chart">
-
-
 	<!-- the chart (all svg elements) -->
-	<svg 	width={dms.width} height={dms.height}
-			style="z-index: 10;">
+	<svg width={dms.width} height={dms.height} style="z-index: 10;">
 		<!-- axis -->
 		<g style={move(dms.marginLeft, dms.height - dms.marginBottom)}>
 			<AxisXCont {chartSpecification} {showAxisDetail} />
 		</g>
 		<g style={move(dms.marginLeft, dms.marginTop)}>
-			<AxisYCont {chartSpecification} {showAxisDetail}/>
+			<AxisYCont {chartSpecification} {showAxisDetail} />
 		</g>
 
 		<!-- scatter points -->
@@ -240,13 +313,21 @@
 			<ScatterPlot
 				cs={chartSpecification}
 				clipPath="url(#axis-cutoff)"
-				scatterAnnimateClass={scatterParameters[currentPlotNumber - 1].scatterAnnimateClass}
-				scatterPointHoverClass={scatterParameters[currentPlotNumber - 1].scatterPointHoverClass}
+				scatterAnnimateClass={scatterParameters[currentPlotNumber - 1]
+					.scatterAnnimateClass}
+				scatterPointHoverClass={scatterParameters[currentPlotNumber - 1]
+					.scatterPointHoverClass}
 				on:message={handleScatterMsg}
-				colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
+				colourScale={scatterParameters[currentPlotNumber - 1]
+					.colourScale}
 				showTT={scatterParameters[currentPlotNumber - 1].showTT}
 				dataFilter={null}
-				animationTimes={{inTime: 1000, inDelay: 1000, outTime: 10, outDelay: 2000}}
+				animationTimes={{
+					inTime: 1000,
+					inDelay: 1000,
+					outTime: 10,
+					outDelay: 2000,
+				}}
 			/>
 
 			<!-- emphasis layers -->
@@ -254,13 +335,24 @@
 				<ScatterPlot
 					cs={chartSpecification}
 					clipPath="url(#axis-cutoff)"
-					scatterAnnimateClass={scatterParameters[currentPlotNumber - 1].scatterAnnimateClass}
-					scatterPointHoverClass={scatterParameters[currentPlotNumber - 1].scatterPointHoverClass}
+					scatterAnnimateClass={scatterParameters[
+						currentPlotNumber - 1
+					].scatterAnnimateClass}
+					scatterPointHoverClass={scatterParameters[
+						currentPlotNumber - 1
+					].scatterPointHoverClass}
 					on:message={handleScatterMsg}
-					colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
+					colourScale={scatterParameters[currentPlotNumber - 1]
+						.colourScale}
 					showTT={scatterParameters[currentPlotNumber - 1].showTT}
-					dataFilter={scatterParameters[currentPlotNumber - 1].dataFilter}
-					animationTimes={{inTime: 1000, inDelay: 0, outTime: 10, outDelay: 0}}
+					dataFilter={scatterParameters[currentPlotNumber - 1]
+						.dataFilter}
+					animationTimes={{
+						inTime: 1000,
+						inDelay: 0,
+						outTime: 10,
+						outDelay: 0,
+					}}
 				/>
 			{/if}
 
@@ -268,13 +360,24 @@
 				<ScatterPlot
 					cs={chartSpecification}
 					clipPath="url(#axis-cutoff)"
-					scatterAnnimateClass={scatterParameters[currentPlotNumber - 1].scatterAnnimateClass}
-					scatterPointHoverClass={scatterParameters[currentPlotNumber - 1].scatterPointHoverClass}
+					scatterAnnimateClass={scatterParameters[
+						currentPlotNumber - 1
+					].scatterAnnimateClass}
+					scatterPointHoverClass={scatterParameters[
+						currentPlotNumber - 1
+					].scatterPointHoverClass}
 					on:message={handleScatterMsg}
-					colourScale={scatterParameters[currentPlotNumber - 1].colourScale}
+					colourScale={scatterParameters[currentPlotNumber - 1]
+						.colourScale}
 					showTT={scatterParameters[currentPlotNumber - 1].showTT}
-					dataFilter={scatterParameters[currentPlotNumber - 1].dataFilter}
-					animationTimes={{inTime: 1000, inDelay: 0, outTime: 10, outDelay: 0}}
+					dataFilter={scatterParameters[currentPlotNumber - 1]
+						.dataFilter}
+					animationTimes={{
+						inTime: 1000,
+						inDelay: 0,
+						outTime: 10,
+						outDelay: 0,
+					}}
 				/>
 			{/if}
 		</g>
@@ -285,55 +388,65 @@
 		</clipPath>
 
 		{#if currentPlotNumber == 2}
-			<Arrow 	start={{x:scaleX(1e5),y:scaleY(2.3)}} 
-				end={{x:scaleX(1e5),y:scaleY(10)}} 
+			<Arrow
+				start={{ x: scaleX(1e5), y: scaleY(2.3) }}
+				end={{ x: scaleX(1e5), y: scaleY(10) }}
 				colour="white"
-				strokeWidth=4
+				strokeWidth="4"
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
-				opacity=0.9/>
+				opacity="0.9"
+			/>
 		{/if}
 
 		{#if currentPlotNumber == 3}
-			<Arrow 	start={{x:scaleX(19200),y:scaleY(1.55)}} 
-				end={{x:scaleX(19200),y:scaleY(1.85)}} 
+			<Arrow
+				start={{ x: scaleX(19200), y: scaleY(1.55) }}
+				end={{ x: scaleX(19200), y: scaleY(1.85) }}
 				colour="#333333"
-				strokeWidth=3
+				strokeWidth="3"
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
-				opacity=0.9/>
+				opacity="0.9"
+			/>
 		{/if}
 
 		{#if currentPlotNumber == 4}
-			<Arrow 	
-				start={{x:scaleX(90000),y:scaleY(8.8)}} 
-				end={{x:scaleX(86000),y:scaleY(8.8)}} 
+			<Arrow
+				start={{ x: scaleX(90000), y: scaleY(8.8) }}
+				end={{ x: scaleX(86000), y: scaleY(8.8) }}
 				colour="#333333"
-				strokeWidth=2.8
+				strokeWidth="2.8"
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
-				opacity=0.9/>
+				opacity="0.9"
+			/>
 		{/if}
 
 		{#if currentPlotNumber == 5}
-			<Arrow 	
-				start={{x:scaleX(90000),y:scaleY(17)}} 
-				end={{x:scaleX(57000),y:scaleY(17)}} 
+			<Arrow
+				start={{ x: scaleX(90000), y: scaleY(17) }}
+				end={{ x: scaleX(57000), y: scaleY(17) }}
 				colour="#333333"
-				strokeWidth=2.8
+				strokeWidth="2.8"
 				marginAdj={move(dms.marginLeft, dms.marginTop)}
-				opacity=0.9/>
+				opacity="0.9"
+			/>
 		{/if}
 
-		{#if currentPlotNumber == 6}
-			<Line 	cs={chartSpecification}
-					marginAdj={move(dms.marginLeft, dms.marginTop)}
-					data={lm_data_developing}
-					clipPath="url(#axis-cutoff)"/>
+		{#if currentPlotNumber == 6 && showModelFit}
+			<Line
+				cs={chartSpecification}
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				data={lm_data_developing}
+				clipPath="url(#axis-cutoff)"
+			/>
 		{/if}
 
-		{#if currentPlotNumber == 7}
-			<Line 	cs={chartSpecification}
-					marginAdj={move(dms.marginLeft, dms.marginTop)}
-					data={lm_data_developed}
-					clipPath="url(#axis-cutoff)"/>
+		{#if currentPlotNumber == 7 && showModelFit}
+			<Line
+				cs={chartSpecification}
+				marginAdj={move(dms.marginLeft, dms.marginTop)}
+				data={lm_data_developed}
+				clipPath="url(#axis-cutoff)"
+			/>
 		{/if}
 	</svg>
 
@@ -349,14 +462,20 @@
 	{/if}
 
 	<!-- x axis label -->
-	<AxisLabel {chartSpecification} axis='x'
-	title="GDP per capita"
-	units="2011 USD adjusted for inflation"/>
+	<AxisLabel
+		{chartSpecification}
+		axis="x"
+		title="GDP per capita"
+		units="2011 USD adjusted for inflation"
+	/>
 
 	<!-- y axis label -->
-	<AxisLabel {chartSpecification} axis='y'
-	title="Carbon emissions per capita"
-	units="Tonnes of CO<sub>2</sub> per year"/>
+	<AxisLabel
+		{chartSpecification}
+		axis="y"
+		title="Carbon emissions per capita"
+		units="Tonnes of CO<sub>2</sub> per year"
+	/>
 
 	<!-- Size Legend: shown in plot 1 -->
 	{#if currentPlotNumber == 1}
@@ -371,7 +490,6 @@
 
 	<!-- Annotation: shown in plot 2 -->
 	{#if currentPlotNumber == 2}
-
 		<Annotation
 			leftPos={scaleX(1.1e5)}
 			topPos={scaleY(25.5)}
@@ -382,9 +500,10 @@
 
 		<AnnotationPlainText
 			leftPos={scaleX(1.02e5)}
-			topPos={scaleY(10)}
+			topPos={scaleY(14)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
-			text="Emissions of more than around 2.3 tonnes of CO<sub>2</sub> per capita are unlikely to be sustainable."/>
+			text="Emissions of more than around 2.3 tonnes of CO<sub>2</sub> per capita are unlikely to be sustainable."
+		/>
 	{/if}
 
 	<!-- Background rectangle: Plots 2 and 3 -->
@@ -491,7 +610,6 @@
 		background-image: url("./images/background-texture.jpg");
 		background-blend-mode: lighten;
 	}
-
 
 	div :global(.tt-line) {
 		margin: 0.5em;
