@@ -1,6 +1,6 @@
 <script>
   import Standardplot from "./components/Standardplot.svelte";
-  import Annotation from "./components/Annotation.svelte";
+  import AnnotationDesign from "./components/AnnotationDesign.svelte";
 
   // $: chartsDMS = {
   //   one: {width: 0, height: 0},
@@ -24,14 +24,13 @@
   // handling switching user interaction for switching between charts
   // 'Look for interesting subgroups' section
   let groupsPlotNum = 4;
-  let handleFossilFuel = () => groupsPlotNum = 4;
-  let handleDecoupling = () => groupsPlotNum = 5;
+  let handleFossilFuel = () => (groupsPlotNum = 4);
+  let handleDecoupling = () => (groupsPlotNum = 5);
 
   // 'Do some statistical modelling' section
   let modellingPlotNum = 6;
-  let handleDeveloping = () => modellingPlotNum = 6;
-  let handleDeveloped = () => modellingPlotNum = 7;
-
+  let handleDeveloping = () => (modellingPlotNum = 6);
+  let handleDeveloped = () => (modellingPlotNum = 7);
 </script>
 
 <main>
@@ -88,13 +87,29 @@
     <h2>A design perspective: what the constraints encouraged me to do?</h2>
     <h3>Think differently about greys</h3>
     <h3>Thinking differently about texture</h3>
-    <Annotation
-      leftPos={0}
-      topPos={0}
-      marginAdj={""}
-      annotationText="The 20 countries with the highest total fossil fuel production (coal, gas and oil combined) in 2015 are shown in black. Hover over the black circles for more details. "
-      theme="oil"
-    />
+    <div class="annotation-display">
+      <AnnotationDesign
+        leftPos={0}
+        topPos={0}
+        marginAdj={""}
+        annotationText="<b>Oil background</b>"
+        theme="oil"
+      />
+      <AnnotationDesign
+        leftPos={0}
+        topPos={0}
+        marginAdj={""}
+        annotationText="<b>Light paper background</b>"
+        theme="light"
+      />
+      <AnnotationDesign
+        leftPos={0}
+        topPos={0}
+        marginAdj={""}
+        annotationText="<b>Dark paper background</b>"
+        theme="dark"
+      />
+    </div>
     <h2>If you want to try out using constraints in your own practice?</h2>
   </div>
 
@@ -146,6 +161,11 @@
   .story-container {
     max-width: 900px;
     margin: auto;
+  }
+
+  .annotation-display{
+    display:flex;
+    justify-content: space-between;
   }
 
   /* default from template below */
