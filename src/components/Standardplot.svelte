@@ -125,7 +125,7 @@
 	export let plotNumber = 1;
 	$: currentPlotNumber = plotNumber;
 
-	let showAxisDetail = false;
+	let showAxisDetail = true;
 
 	let scatterParameters = [
 		{
@@ -237,23 +237,9 @@
 		}
 	}
 
-	function setupPlot1() {
-		showAxisDetail = true;
-	}
-
-	function setupPlot2() {
-		showAxisDetail = true;
-	}
-
 	function setupPlot3() {
-		showAxisDetail = true;
 		updateAxis((extentsX = [0, 20500]), (extentsY = [0, 3.55]));
 	}
-
-	function setupPlot4() {
-		showAxisDetail = true;
-	}
-
 
 	let showModelFit = false;
 	function setupPlot6() {
@@ -268,25 +254,22 @@
 		showAxisDetail = true;
 		updateAxis((extentsX = expandScale(extent(data, accessX), 0, 0.05)), (extentsY = expandScale(extent(data, accessY), 0, 0.05)), true);
 		const timeout = setTimeout(() => showModelFit = true, 4000);
-		//showModelFit = true;
-	// 	;
-	// let extentsY = 
 	}
 
 	// setup plot based on plot number
 	$: switch (currentPlotNumber) {
-		case 1:
-			setupPlot1();
-			break;
-		case 2:
-			setupPlot2();
-			break;
+		// case 1:
+		// 	setupPlot1();
+		// 	break;
+		// case 2:
+		// 	setupPlot2();
+		// 	break;
 		case 3:
 			setupPlot3();
 			break;
-		case 4:
-			setupPlot4();
-			break;
+		// case 4:
+		// 	setupPlot4();
+		// 	break;
 		case 6:
 			setupPlot6();
 			break;
