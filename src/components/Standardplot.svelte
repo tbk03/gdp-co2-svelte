@@ -201,7 +201,7 @@
 					? "black"
 					: "#bfbfbf",
 			scatterAnnimateClass: "scatter-point-animated",
-			showTT: (d) => true,
+			showTT: (d) => d.actual_greater_than_pred ? true : false,
 			scatterPointHoverClass: (d) => d.actual_greater_than_pred ? "scatter-point-light-bg" : "scatter-point-no-hover",
 			dataFilter: null,
 		},
@@ -607,7 +607,7 @@
 
 		<Annotation
 			leftPos={scaleX(100000)}
-			topPos={scaleY(20)}
+			topPos={scaleY(15)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Hover over the black points to see which countries are doing worse (in terms of carbon emission per capita) than the theoretical worst case trajectory."
 			theme="light"
