@@ -20,70 +20,83 @@
   let handleClickB5 = () => (plotNum = 5);
   let handleClickB6 = () => (plotNum = 6);
   let handleClickB7 = () => (plotNum = 7);
+
+  // handling switching user interaction for switching between charts
+  // 'Look for interesting subgroups' section
+  let groupsPlotNum = 4;
+  let handleFossilFuel = () => groupsPlotNum = 4;
+  let handleDecoupling = () => groupsPlotNum = 5;
+
+  // 'Do some statistical modelling' section
+  let modellingPlotNum = 6;
+  let handleDeveloping = () => modellingPlotNum = 6;
+  let handleDeveloped = () => modellingPlotNum = 7;
+
 </script>
 
 <main>
   <div class="story-container">
-  <h1>Creative constraints for data visualisation</h1>
+    <h1>Creative constraints for data visualisation</h1>
 
-  <button on:click={handleClickB1}>plot 1</button>
-  <button on:click={handleClickB2}>plot 2</button>
-  <button on:click={handleClickB3}>plot 3</button>
-  <button on:click={handleClickB4}>plot 4</button>
-  <button on:click={handleClickB5}>plot 5</button>
-  <button on:click={handleClickB6}>plot 6</button>
-  <button on:click={handleClickB7}>plot 7</button>
-  <div
-    class="chart-container"
-    id="1"
-    bind:offsetWidth={w}
-    bind:offsetHeight={h}
-  >
-    <Standardplot {w} {h} chartId={"1"} plotNumber={plotNum} />
-  </div>
+    <button on:click={handleClickB1}>plot 1</button>
+    <button on:click={handleClickB2}>plot 2</button>
+    <button on:click={handleClickB3}>plot 3</button>
+    <button on:click={handleClickB4}>plot 4</button>
+    <button on:click={handleClickB5}>plot 5</button>
+    <button on:click={handleClickB6}>plot 6</button>
+    <button on:click={handleClickB7}>plot 7</button>
+    <div
+      class="chart-container"
+      id="1"
+      bind:offsetWidth={w}
+      bind:offsetHeight={h}
+    >
+      <Standardplot {w} {h} chartId={"1"} plotNumber={plotNum} />
+    </div>
 
-  <h2>Why creative constraints in data visualisation practice?</h2>
-  <h2>
-    What could creative constraints look like in data visualisation practice?
-  </h2>
-  <h2>What you need to know about the chart I chose to work with?</h2>
+    <h2>Why creative constraints in data visualisation practice?</h2>
+    <h2>
+      What could creative constraints look like in data visualisation practice?
+    </h2>
+    <h2>What you need to know about the chart I chose to work with?</h2>
 
-  <div class="chart-container" id="p1">
-    <Standardplot {w} {h} chartId={"p1"} plotNumber={1} />
+    <div class="chart-container" id="p1">
+      <Standardplot {w} {h} chartId={"p1"} plotNumber={1} />
+    </div>
+    <h2>A data perspective: what the constraints encouraged me to do?</h2>
+    <h3>Add context</h3>
+    <div class="chart-container" id="p2">
+      <Standardplot {w} {h} chartId={"p2"} plotNumber={2} />
+    </div>
+    <h3>View the data at a different scale</h3>
+    <div class="chart-container" id="p3">
+      <Standardplot {w} {h} chartId={"p3"} plotNumber={3} />
+    </div>
+    <h3>Look for interesting subgroups</h3>
+    <button on:click={handleFossilFuel}>Top 20 Fossil Fuel Producers</button>
+    <button on:click={handleDecoupling}>Growth decoupling from emissions</button
+    >
+    <div class="chart-container" id="p4">
+      <Standardplot {w} {h} chartId={"p4"} plotNumber={groupsPlotNum} />
+    </div>
+    <h3>Do some statistical modelling</h3>
+    <button on:click={handleDeveloping}>Developing economies</button>
+    <button on:click={handleDeveloped}>Developed economies</button>
+    <div class="chart-container" id="p6">
+      <Standardplot {w} {h} chartId={"p6"} plotNumber={modellingPlotNum} />
+    </div>
+    <h2>A design perspective: what the constraints encouraged me to do?</h2>
+    <h3>Think differently about greys</h3>
+    <h3>Thinking differently about texture</h3>
+    <Annotation
+      leftPos={0}
+      topPos={0}
+      marginAdj={""}
+      annotationText="The 20 countries with the highest total fossil fuel production (coal, gas and oil combined) in 2015 are shown in black. Hover over the black circles for more details. "
+      theme="oil"
+    />
+    <h2>If you want to try out using constraints in your own practice?</h2>
   </div>
-  <h2>A data perspective: what the constraints encouraged me to do?</h2>
-  <h3>Add context</h3>
-  <div class="chart-container" id="p2">
-    <Standardplot {w} {h} chartId={"p2"} plotNumber={2} />
-  </div>
-  <h3>View the data at a different scale</h3>
-  <div class="chart-container" id="p3">
-    <Standardplot {w} {h} chartId={"p3"} plotNumber={3} />
-  </div>
-  <h3>Look for interesting subgroups</h3>
-  <button>Top 20 Fossil Fuel Producers</button>
-  <button>Growth decoupling from emissions</button>
-  <div class="chart-container" id="p4">
-    <Standardplot {w} {h} chartId={"p4"} plotNumber={4} />
-  </div>
-  <h3>Do some statistical modelling</h3>
-  <button>Developing economies</button>
-  <button>Developed economies</button>
-  <div class="chart-container" id="p6">
-    <Standardplot {w} {h} chartId={"p6"} plotNumber={6} />
-  </div>
-  <h2>A design perspective: what the constraints encouraged me to do?</h2>
-  <h3>Think differently about greys</h3>
-  <h3>Thinking differently about texture</h3>
-  <Annotation
-			leftPos={0}
-			topPos={0}
-			marginAdj={""}
-			annotationText="The 20 countries with the highest total fossil fuel production (coal, gas and oil combined) in 2015 are shown in black. Hover over the black circles for more details. "
-			theme="oil"
-		/>
-  <h2>If you want to try out using constraints in your own practice?</h2>
-</div>
 
   <!-- <div  class='chart-container' id='chart2'
         bind:offsetWidth={chartsDMS.two.width}
@@ -153,11 +166,13 @@
     width: 16rem;
   } */
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: "Poppins", sans-serif;
   }
 
-  h2{
+  h2 {
     font-size: 2rem;
     text-align: left;
   }
