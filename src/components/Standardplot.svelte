@@ -245,7 +245,7 @@
 	function setupPlot6() {
 		showModelFit = false;
 		showAxisDetail = true;
-		updateAxis((extentsX = [0, 28000]), (extentsY = [0, 20]), true);
+		updateAxis((extentsX = [0, 30500]), (extentsY = [0, 20]), true);
 		const timeout = setTimeout(() => showModelFit = true, 4000);
 	}
 
