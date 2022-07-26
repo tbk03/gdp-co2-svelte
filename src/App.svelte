@@ -1,6 +1,8 @@
 <script>
   import Standardplot from "./components/Standardplot.svelte";
   import AnnotationDesign from "./components/AnnotationDesign.svelte";
+  import TitleBar from "./components/TitleBar.svelte";
+import FooterBar from "./components/FooterBar.svelte";
 
   // $: chartsDMS = {
   //   one: {width: 0, height: 0},
@@ -59,11 +61,28 @@
     </h2>
     <h2>What you need to know about the chart I chose to work with?</h2>
 
+    <!-- PLOT 1 -->
+    <TitleBar>
+      <div slot="title">hello</div>
+      <div slot="subtitle">goodbye</div>
+    </TitleBar>
+
     <div class="chart-container" id="p1">
       <Standardplot {w} {h} chartId={"p1"} plotNumber={1} />
     </div>
+
+    <FooterBar>
+      <div slot="footer"><b>Source:</b> Additional data from ...</div>
+    </FooterBar>
+
     <h2>A data perspective: what the constraints encouraged me to do?</h2>
     <h3>Add context</h3>
+    
+    <!-- PLOT 2 -->
+    <TitleBar>
+      <div slot="title">hello</div>
+      <div slot="subtitle">goodbye</div>
+    </TitleBar>
     <div class="chart-container" id="p2">
       <Standardplot {w} {h} chartId={"p2"} plotNumber={2} />
     </div>
@@ -163,8 +182,8 @@
     margin: auto;
   }
 
-  .annotation-display{
-    display:flex;
+  .annotation-display {
+    display: flex;
     justify-content: space-between;
   }
 
