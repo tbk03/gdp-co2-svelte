@@ -245,7 +245,7 @@
 	function setupPlot6() {
 		showModelFit = false;
 		showAxisDetail = true;
-		updateAxis((extentsX = [0, 35000]), (extentsY = [0, 20]), true);
+		updateAxis((extentsX = [0, 36500]), (extentsY = [0, 20]), true);
 		const timeout = setTimeout(() => (showModelFit = true), 4000);
 	}
 
@@ -633,8 +633,8 @@
 			linear-gradient(black, var(--greyMidEmp));
 		background-size: cover;
 		background-blend-mode: darken;
-		transition: all 3s;
-		transition-delay: 2s;
+		/* transition: all 3s;
+		transition-delay: 2s; */
 	}
 
 	.sus-rect,

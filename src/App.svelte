@@ -105,6 +105,10 @@ import FooterBar from "./components/FooterBar.svelte";
     </div>
     <h2>A design perspective: what the constraints encouraged me to do?</h2>
     <h3>Think differently about greys</h3>
+    <div class="image-container">
+      <img src="./images/plot-svg.jpg" alt="gridlines showing different greys" width={3 * w / 4}>
+      <img src="./images/plot-svg-simp-grid.jpg" alt="gridlines showing different greys" width={3 * w / 4}>
+    </div>
     <h3>Thinking differently about texture</h3>
     <div class="annotation-display">
       <AnnotationDesign
@@ -170,7 +174,7 @@ import FooterBar from "./components/FooterBar.svelte";
     margin: auto;
     display: flex;
     height: 65vh;
-    max-height: 800px;
+    max-height: 700px;
     min-width: 600px;
 
     /* min-width: 600px; */
@@ -181,6 +185,7 @@ import FooterBar from "./components/FooterBar.svelte";
     max-width: 900px;
     margin: auto;
   }
+
 
   .annotation-display {
     display: flex;
