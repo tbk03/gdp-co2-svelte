@@ -2,7 +2,7 @@
   import Standardplot from "./components/Standardplot.svelte";
   import AnnotationDesign from "./components/AnnotationDesign.svelte";
   import TitleBar from "./components/TitleBar.svelte";
-import FooterBar from "./components/FooterBar.svelte";
+  import FooterBar from "./components/FooterBar.svelte";
 
   // $: chartsDMS = {
   //   one: {width: 0, height: 0},
@@ -55,7 +55,15 @@ import FooterBar from "./components/FooterBar.svelte";
       <Standardplot {w} {h} chartId={"1"} plotNumber={plotNum} />
     </div>
 
-    <h2>Why creative constraints in data visualisation practice?</h2>
+    <div class="section container">
+      <br/>
+      <p>One of the biggest of the challenges data visualisation designers face is the almost limitless range possible directions in which they could take a project. They are making a constant stream of decisions, both small and large. Decisions which ultimately come to define the finished visualisations.  </p>
+      <p>When making data visualisations my head is constantly full of questions and decision points. Does this colour look right with the other colours? Have I picked the wrong chart type, maybe another would be better? Are these lines to wide or the points too big? And, so on …</p>
+      <p>Recently, I was thinking about how I face similar challenges when writing and producing music. The challenge of the unbounded space of possibilities and questions. One of the strategies I have used to help with in a musical context is setting myself arbitrary creative constraints. For example, can I make a track using only one synthesiser.</p>
+      <p>I started using these constraints having been inspired by a <a href="https://makingmusic.ableton.com/arbitrary-constraints">chapter written by Dennis DeSantis</a> in ’74 Creative Strategies of Electronic Music Producers’. A from Igor Stravinsky used in the chapter really stuck with me. I reproduce the quote here because I think beautifully encapsulates the essence of an idea that is very applicable to data visualisation design practice.</p>
+      <p class="indented-section"><i>“My freedom thus consists in my moving about within the narrow frame that I have assigned to myself for each one of my undertakings. I shall go even further: my freedom will be so much the greater and more meaningful the more narrowly I limit my field of action and the more I surround myself with obstacles. Whatever diminishes constraint diminishes strength. The more constraints one imposes, the more one frees oneself of the claims that shackle the spirit”. Igor Stravinsky, Poetics of Music</i></p>
+    </div>
+
     <h2>
       What could creative constraints look like in data visualisation practice?
     </h2>
@@ -77,7 +85,7 @@ import FooterBar from "./components/FooterBar.svelte";
 
     <h2>A data perspective: what the constraints encouraged me to do?</h2>
     <h3>Add context</h3>
-    
+
     <!-- PLOT 2 -->
     <TitleBar>
       <div slot="title">hello</div>
@@ -106,8 +114,16 @@ import FooterBar from "./components/FooterBar.svelte";
     <h2>A design perspective: what the constraints encouraged me to do?</h2>
     <h3>Think differently about greys</h3>
     <div class="image-container">
-      <img src="./images/plot-svg.jpg" alt="gridlines showing different greys" width={3 * w / 4}>
-      <img src="./images/plot-svg-simp-grid.jpg" alt="gridlines showing different greys" width={3 * w / 4}>
+      <img
+        src="./images/plot-svg.jpg"
+        alt="gridlines showing different greys"
+        width={(3 * w) / 4}
+      />
+      <img
+        src="./images/plot-svg-simp-grid.jpg"
+        alt="gridlines showing different greys"
+        width={(3 * w) / 4}
+      />
     </div>
     <h3>Thinking differently about texture</h3>
     <div class="annotation-display">
@@ -186,7 +202,6 @@ import FooterBar from "./components/FooterBar.svelte";
     margin: auto;
   }
 
-
   .annotation-display {
     display: flex;
     justify-content: space-between;
@@ -236,11 +251,16 @@ import FooterBar from "./components/FooterBar.svelte";
     max-width: 14rem;
   }
 
-  /* p {
-    max-width: 14rem;
+  p {
+    font-size: 1.2rem;
     margin: 1rem auto;
     line-height: 1.35;
-  } */
+    text-align: left;
+  }
+
+  .indented-section{
+    margin-left: 4rem;
+  }
 
   @media (min-width: 480px) {
     h1 {
