@@ -42,7 +42,7 @@
 }
 
 .title{
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin-bottom: 0.2rem;
 }
 

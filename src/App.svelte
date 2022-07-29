@@ -39,7 +39,7 @@
   <div class="story-container">
     <h1>Creative constraints for data visualisation</h1>
 
-    <button on:click={handleClickB1}>plot 1</button>
+    <!-- <button on:click={handleClickB1}>plot 1</button>
     <button on:click={handleClickB2}>plot 2</button>
     <button on:click={handleClickB3}>plot 3</button>
     <button on:click={handleClickB4}>plot 4</button>
@@ -53,7 +53,7 @@
       bind:offsetHeight={h}
     >
       <Standardplot {w} {h} chartId={"1"} plotNumber={plotNum} />
-    </div>
+    </div> -->
 
     <div class="section container">
       <br />
@@ -94,9 +94,8 @@
           meaningful the more narrowly I limit my field of action and the more I
           surround myself with obstacles. Whatever diminishes constraint
           diminishes strength. The more constraints one imposes, the more one
-          frees oneself of the claims that shackle the spirit”. Igor Stravinsky,
-          Poetics of Music</i
-        >
+          frees oneself of the claims that shackle the spirit”.</i> <br/><br/><b>Igor Stravinsky,
+          Poetics of Music</b>
       </p>
       <br />
     </div>
@@ -133,18 +132,74 @@
     <h2>What you need to know about the chart I chose to work with?</h2>
 
     <!-- PLOT 1 -->
-    <TitleBar>
-      <div slot="title">hello</div>
-      <div slot="subtitle">goodbye</div>
-    </TitleBar>
+    <div class="section container">
+      <TitleBar>
+        <div slot="title">
+          To the surprise of pretty much no one, higher income countries tend to
+          have higher carbon emissions.
+        </div>
+      </TitleBar>
 
-    <div class="chart-container" id="p1">
-      <Standardplot {w} {h} chartId={"p1"} plotNumber={1} />
+      <div
+        class="chart-container"
+        id="p1"
+        bind:offsetWidth={w}
+        bind:offsetHeight={h}
+      >
+        <Standardplot {w} {h} chartId={"p1"} plotNumber={1} />
+      </div>
+
+      <FooterBar>
+        <div slot="footer">
+          <b>Source:</b>
+          <a href="https://ourworldindata.org/grapher/co2-emissions-vs-gdp"
+            >Our World in Data</a
+          >
+        </div>
+      </FooterBar>
+
+      <p>
+        The chart I chose (shown above) is part of wide ranging and hotly
+        contested debates around the following question: is unbounded economic
+        growth compatibility with ongoing climate stability? If there is a
+        strong, positive relationship between the size of a country’s economy
+        and the amount of CO2 emitted, then there is a big problem. A world full
+        of perpetually growing economies could lead to perpetually grow carbon
+        emission and climate impacts.
+      </p>
+      <p>
+        Each point in the scatterplot is a country and the size of the point is
+        defined by the population of the country. On the x axis we see the GDP
+        per capita. This is often used as a fairly crude proxy measure for the
+        quality of life, based on the at least partial flawed assumption that
+        people with higher income are having a better life. Meanwhile on the y
+        axis we see CO2 emissions per capita. This is of interest in it’s own
+        right, but it can also be used as a proxy for the overall environmental
+        damage caused by the average person in a given country.
+      </p>
+      <p>
+        The classic argument made by economists is focuses on the differences by
+        countries in the early phases of economic development (up to somewhere
+        between $10,000 and $25,000 gdp per capita depending on the perspective
+        taken) and ‘fully’ economically developed countries. The argument goes
+        something like this.
+      </p>
+      <ul>
+        <li>
+          During the early phases of economic development, there is a strong,
+          positive relationship between quality of life (remember gdp per capita
+          is used as a proxy) and carbon emissions.
+        </li>
+        <li>
+          However, after an economy had ‘fully’ developed the impact of each
+          unit of a countries economic activity should then fall. In other
+          words, after a certain point in the economic development of a country,
+          it should become greener and cleaner as it rebalances away from heavy
+          industry toward service industries.
+        </li>
+      </ul>
+      <br/>
     </div>
-
-    <FooterBar>
-      <div slot="footer"><b>Source:</b> Additional data from ...</div>
-    </FooterBar>
 
     <h2>A data perspective: what the constraints encouraged me to do?</h2>
     <h3>Add context</h3>
@@ -324,7 +379,7 @@
   li {
     font-size: 1.2rem;
     margin: 1rem auto;
-    line-height: 1;
+    line-height: 1.2;
     text-align: left;
   }
 
