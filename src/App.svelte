@@ -56,17 +56,80 @@
     </div>
 
     <div class="section container">
-      <br/>
-      <p>One of the biggest of the challenges data visualisation designers face is the almost limitless range possible directions in which they could take a project. They are making a constant stream of decisions, both small and large. Decisions which ultimately come to define the finished visualisations.  </p>
-      <p>When making data visualisations my head is constantly full of questions and decision points. Does this colour look right with the other colours? Have I picked the wrong chart type, maybe another would be better? Are these lines to wide or the points too big? And, so on …</p>
-      <p>Recently, I was thinking about how I face similar challenges when writing and producing music. The challenge of the unbounded space of possibilities and questions. One of the strategies I have used to help with in a musical context is setting myself arbitrary creative constraints. For example, can I make a track using only one synthesiser.</p>
-      <p>I started using these constraints having been inspired by a <a href="https://makingmusic.ableton.com/arbitrary-constraints">chapter written by Dennis DeSantis</a> in ’74 Creative Strategies of Electronic Music Producers’. A from Igor Stravinsky used in the chapter really stuck with me. I reproduce the quote here because I think beautifully encapsulates the essence of an idea that is very applicable to data visualisation design practice.</p>
-      <p class="indented-section"><i>“My freedom thus consists in my moving about within the narrow frame that I have assigned to myself for each one of my undertakings. I shall go even further: my freedom will be so much the greater and more meaningful the more narrowly I limit my field of action and the more I surround myself with obstacles. Whatever diminishes constraint diminishes strength. The more constraints one imposes, the more one frees oneself of the claims that shackle the spirit”. Igor Stravinsky, Poetics of Music</i></p>
+      <br />
+      <p>
+        One of the biggest of the challenges data visualisation designers face
+        is the almost limitless range possible directions in which they could
+        take a project. They are making a constant stream of decisions, both
+        small and large. Decisions which ultimately come to define the finished
+        visualisations.
+      </p>
+      <p>
+        When making data visualisations my head is constantly full of questions
+        and decision points. Does this colour look right with the other colours?
+        Have I picked the wrong chart type, maybe another would be better? Are
+        these lines to wide or the points too big? And, so on …
+      </p>
+      <p>
+        Recently, I was thinking about how I face similar challenges when
+        writing and producing music. The challenge of the unbounded space of
+        possibilities and questions. One of the strategies I have used to help
+        with in a musical context is setting myself arbitrary creative
+        constraints. For example, can I make a track using only one synthesiser.
+      </p>
+      <p>
+        I started using these constraints having been inspired by a <a
+          href="https://makingmusic.ableton.com/arbitrary-constraints"
+          >chapter written by Dennis DeSantis</a
+        > in ’74 Creative Strategies of Electronic Music Producers’. A from Igor
+        Stravinsky used in the chapter really stuck with me. I reproduce the quote
+        here because I think beautifully encapsulates the essence of an idea that
+        is very applicable to data visualisation design practice.
+      </p>
+      <p class="indented-section">
+        <i
+          >“My freedom thus consists in my moving about within the narrow frame
+          that I have assigned to myself for each one of my undertakings. I
+          shall go even further: my freedom will be so much the greater and more
+          meaningful the more narrowly I limit my field of action and the more I
+          surround myself with obstacles. Whatever diminishes constraint
+          diminishes strength. The more constraints one imposes, the more one
+          frees oneself of the claims that shackle the spirit”. Igor Stravinsky,
+          Poetics of Music</i
+        >
+      </p>
+      <br />
     </div>
 
-    <h2>
-      What could creative constraints look like in data visualisation practice?
-    </h2>
+    <div class="section container">
+      <h2>
+        What could creative constraints look like in data visualisation
+        practice?
+      </h2>
+      <p>
+        Coming back to data visualisation, after that short musical detour. In
+        this article, explore what creative constraints for data visualisation
+        look like in practice. I do this by working through an example of how I
+        used constraints to shape my own work. Hopefully, this will give you a
+        sense of what you might gain from working with creative constraints from
+        time to time.
+      </p>
+      <p>So, here are the arbitrary creative constraints I set myself:</p>
+      <ol>
+        <li>
+          Pick a simple chart relatively well-known chart that you know well.
+        </li>
+        <li>
+          Create alternative versions of the chart which presents an alternative
+          perspective on the data that you haven’t seen before.
+        </li>
+        <li>
+          Don’t use any colour in the alternative versions of the chart, just
+          work in greyscale.
+        </li>
+      </ol>
+      <br />
+    </div>
     <h2>What you need to know about the chart I chose to work with?</h2>
 
     <!-- PLOT 1 -->
@@ -258,7 +321,14 @@
     text-align: left;
   }
 
-  .indented-section{
+  li {
+    font-size: 1.2rem;
+    margin: 1rem auto;
+    line-height: 1;
+    text-align: left;
+  }
+
+  .indented-section {
     margin-left: 4rem;
   }
 
