@@ -36,7 +36,7 @@
     margin-bottom: 1rem;
 
     color: white;
-    background-image: url("./images/oil.jpg");
+    background-image: url("/images/oil.jpg");
     background-color: var(--greyLowEmp);
     background-blend-mode: color-burn;
 }

@@ -68,21 +68,21 @@
 
     .dark-theme {
         color: white;
-        background-image: url("./images/postittexture.jpg");
+        background-image: url("/images/postittexture.jpg");
         background-color: var(--greyMaxEmp);
         background-blend-mode: color-burn;
     }
 
     .light-theme {
         color: var(--greyText);
-        background-image: url("./images/postittexture.jpg");
+        background-image: url("/images/postittexture.jpg");
         background-color: var(--greyMinEmp);
         background-blend-mode: color;
     }
 
     .oil-theme {
         color: white;
-        background-image: url("./images/oil.jpg");
+        background-image: url("/images/oil.jpg");
         background-blend-mode: color-burn;
     }
 
