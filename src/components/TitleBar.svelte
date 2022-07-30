@@ -43,7 +43,7 @@
 
 .title{
     font-size: 1.6rem;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.8rem;
 }
 
 .subtitle{

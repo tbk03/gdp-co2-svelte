@@ -28,9 +28,12 @@
         background-size: cover;
         margin-top: 1.2rem;
         color: var(--greyText);
+        max-width: 500px;
+        margin-left: auto;
     }
 
     .footer {
         font-size: 1.1rem;
+        text-align: right;
     }
 </style>

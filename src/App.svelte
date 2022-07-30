@@ -94,8 +94,8 @@
           meaningful the more narrowly I limit my field of action and the more I
           surround myself with obstacles. Whatever diminishes constraint
           diminishes strength. The more constraints one imposes, the more one
-          frees oneself of the claims that shackle the spirit”.</i> <br/><br/><b>Igor Stravinsky,
-          Poetics of Music</b>
+          frees oneself of the claims that shackle the spirit”.</i
+        > <br /><br /><b>Igor Stravinsky, Poetics of Music</b>
       </p>
       <br />
     </div>
@@ -198,31 +198,96 @@
           industry toward service industries.
         </li>
       </ul>
+      <br />
+    </div>
+
+    <div class="section container">
+      <h2>A data perspective: what the constraints encouraged me to do?</h2>
+      <p>
+        I’ll come to how the constraints encouraged me to be more creative in
+        the design and aesthetics of my versions of the chart later on. First, I
+        wanted to talk about how the constraints encouraged me to more creative
+        when working with the data itself. Working within the constraints
+        ‘forced my hand’ a little. To think in more detail about the stories
+        that could be told with the data. To explore in more depth potential
+        connections that occurred to me.
+      </p>
+    </div>
+
+    <div class="section container">
+      <h3>Adding more context to the chart</h3>
+      <p>
+        The graph is often presented, as at the start of this article, with a
+        crucial piece of context missing. What level of emissions of CO2 per
+        capita is compatible will keeping climate change impacts (in some sense)
+        in check. Without this context the graph provides no sense of the scale
+        of the decarbonisation challenge that we face.
+      </p>
+      <p>
+        So, my first alternative version of the graph, brings in this key
+        context. One of the most thought-provoking recent estimates, is that per
+        capita carbon emissions need to fall to 2.3 tonnes per year by 2030.
+        This would be to keep global heating to 1.5 C above pre-industrial
+        levels. This estimate comes from research commissioned by Oxfam. It was
+        conducted by two leading research institutes: (1) the Stockholm
+        Environment Institute and, (2) the Institute for European Environmental
+        Policy.
+      </p>
+      <p>
+        Hovering over the points in the graph below, you can a real sense of
+        where richer countries are at in the process of decarbonisation. For
+        example, per capita emission in say Australia and the United States
+        would need to fall by 86% in around only 8 years to reach sustainable
+        levels.
+      </p>
+      <br />
+
+      <TitleBar>
+        <div slot="title">
+          Adding critical context transforms the message conveyed by the chart
+        </div>
+        <div slot="subtitle">
+          The scale of the carbon emission reduction challenge faced by many
+          countries is laid bare
+        </div>
+      </TitleBar>
+      <div class="chart-container" id="p2">
+        <Standardplot {w} {h} chartId={"p2"} plotNumber={2} />
+      </div>
+      <FooterBar>
+        <div slot="footer">
+          <b>Additional data:</b>
+          <a
+            href="https://oxfamilibrary.openrepository.com/bitstream/handle/10546/621305/bn-carbon-inequality-2030-051121-en.pdf;jsessionid=1BE3FACE9EADBE7145E74FEE0A93C371?sequence=1"
+            >Oxfam, the Stockholm Environment Institute, and the Institute for
+            European Environmental Policy.</a
+          >
+        </div>
+      </FooterBar>
+    </div>
+
+    <div class="section container">
+
+      <h3>View the data at a different scale</h3>
+
+      <div class="chart-container" id="p3">
+        <Standardplot {w} {h} chartId={"p3"} plotNumber={3} />
+      </div>
+    </div>
+
+    <div class="section container">
+      <h3>Look for interesting subgroups</h3>
+
+      <button on:click={handleFossilFuel}>Top 20 Fossil Fuel Producers</button>
+      <button on:click={handleDecoupling}>Growth decoupling from emissions</button>
+
+
+      <div class="chart-container" id="p4">
+        <Standardplot {w} {h} chartId={"p4"} plotNumber={groupsPlotNum} />
+      </div>
       <br/>
     </div>
 
-    <h2>A data perspective: what the constraints encouraged me to do?</h2>
-    <h3>Add context</h3>
-
-    <!-- PLOT 2 -->
-    <TitleBar>
-      <div slot="title">hello</div>
-      <div slot="subtitle">goodbye</div>
-    </TitleBar>
-    <div class="chart-container" id="p2">
-      <Standardplot {w} {h} chartId={"p2"} plotNumber={2} />
-    </div>
-    <h3>View the data at a different scale</h3>
-    <div class="chart-container" id="p3">
-      <Standardplot {w} {h} chartId={"p3"} plotNumber={3} />
-    </div>
-    <h3>Look for interesting subgroups</h3>
-    <button on:click={handleFossilFuel}>Top 20 Fossil Fuel Producers</button>
-    <button on:click={handleDecoupling}>Growth decoupling from emissions</button
-    >
-    <div class="chart-container" id="p4">
-      <Standardplot {w} {h} chartId={"p4"} plotNumber={groupsPlotNum} />
-    </div>
     <h3>Do some statistical modelling</h3>
     <button on:click={handleDeveloping}>Developing economies</button>
     <button on:click={handleDeveloped}>Developed economies</button>
