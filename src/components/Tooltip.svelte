@@ -189,7 +189,7 @@
 		padding-top: 5px;
 		padding-bottom: 20px;
 		line-height: 1.25;
-		background-image: url("./images/postittexture.jpg");
+		background-image: url("/images/postittexture.jpg");
 		background-size: cover;
 		background-blend-mode: hard-light;
 		background-color: var(--greyLowEmp);
