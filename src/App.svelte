@@ -107,7 +107,7 @@
       </h2>
       <p>
         Coming back to data visualisation, after that short musical detour. In
-        this article, explore what creative constraints for data visualisation
+        this article, I explore what creative constraints for data visualisation
         look like in practice. I do this by working through an example of how I
         used constraints to shape my own work. Hopefully, this will give you a
         sense of what you might gain from working with creative constraints from
@@ -537,6 +537,7 @@
           annotationText="<b>Dark paper background</b>"
           theme="dark"
         />
+        <br />
         <br />
       </div>
     </div>
