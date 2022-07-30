@@ -55,7 +55,7 @@
       <Standardplot {w} {h} chartId={"1"} plotNumber={plotNum} />
     </div> -->
 
-    <div class="section container">
+    <div class="section-container">
       <br />
       <p>
         One of the biggest of the challenges data visualisation designers face
@@ -100,7 +100,7 @@
       <br />
     </div>
 
-    <div class="section container">
+    <div class="section-container">
       <h2>
         What could creative constraints look like in data visualisation
         practice?
@@ -132,7 +132,7 @@
     <h2>What you need to know about the chart I chose to work with?</h2>
 
     <!-- PLOT 1 -->
-    <div class="section container">
+    <div class="section-container">
       <TitleBar>
         <div slot="title">
           To the surprise of pretty much no one, higher income countries tend to
@@ -201,7 +201,7 @@
       <br />
     </div>
 
-    <div class="section container">
+    <div class="section-container">
       <h2>A data perspective: what the constraints encouraged me to do?</h2>
       <p>
         I’ll come to how the constraints encouraged me to be more creative in
@@ -214,7 +214,7 @@
       </p>
     </div>
 
-    <div class="section container">
+    <div class="section-container">
       <h3>Adding more context to the chart</h3>
       <p>
         The graph is often presented, as at the start of this article, with a
@@ -266,7 +266,7 @@
       </FooterBar>
     </div>
 
-    <div class="section container">
+    <div class="section-container">
       <h3>Viewing the data at a different scale</h3>
       <p>
         The first version of the chart (above) puts the emphasis on countries
@@ -305,7 +305,7 @@
       <br />
     </div>
 
-    <div class="section container">
+    <div class="section-container">
       <h3>Picking out subgroups within the data</h3>
       <p>
         Working within the constraints, made me to think a lot harder about
@@ -379,51 +379,226 @@
       <br />
     </div>
 
-    <h3>Do some statistical modelling</h3>
-    <button on:click={handleDeveloping}>Developing economies</button>
-    <button on:click={handleDeveloped}>Developed economies</button>
-    <div class="chart-container" id="p6">
-      <Standardplot {w} {h} chartId={"p6"} plotNumber={modellingPlotNum} />
+    <div class="section-container">
+      <h3>Do some statistical modelling</h3>
+
+      <p>
+        The last big thing, on the data side, that the constraints encouraged me
+        to do was some statistical modelling. I think that having a background
+        in research and statistics generally puts me off doing statistical
+        modelling to include within data visualisations. This is for two
+        reasons: (1) I think I won’t have enough time to do ‘proper’ modelling,
+        and; (2) I worry about how to communicate the modelling in an accessible
+        way. So, it was cool that the constraints freed me up a bit from those
+        concerns to use statistical modelling in an illustrative way.
+      </p>
+      <p>
+        I decided I would use some modelling to highlight the richer countries
+        that have considerably higher emissions than would be expected. This is
+        based on the idea from economic theory that after a certain point in a
+        countries development emission growth should slow down.
+      </p>
+      <p>
+        In the chart below, first you can see a line which represent the typical
+        trajectory of countries with a developing economy (up to $25,000). I
+        won’t go into the details here, other than to say it is just a pretty
+        basic linear model. You can think of this trajectory as a theoretical
+        worst case.
+      </p>
+      <p>
+        Then if you click the ‘Developed Economies’ button, you can see the what
+        it would look like if this early-phase development trajectory continued
+        (i.e. growth in emissions did not slow down once an economy was
+        developed). Just seven countries sit above this trajectory.
+      </p>
+      <br />
+
+      <TitleBar>
+        <div slot="title">
+          Your stats and modelling do not need to be peer-review academic
+          research quality to enhance a data visualisation
+        </div>
+        <div slot="subtitle">
+          Only a handful of countries with developed economies have higher
+          carbon emissions than the theoretical worst-case scenario
+        </div>
+      </TitleBar>
+
+      <button on:click={handleDeveloping} class="chart-button"
+        >Developing economies</button
+      >
+      <button on:click={handleDeveloped} class="chart-button"
+        >Developed economies</button
+      >
+
+      <div class="chart-container" id="p6">
+        <Standardplot {w} {h} chartId={"p6"} plotNumber={modellingPlotNum} />
+      </div>
+      <br />
     </div>
-    <h2>A design perspective: what the constraints encouraged me to do?</h2>
-    <h3>Think differently about greys</h3>
-    <div class="image-container">
-      <img
-        src="./images/plot-svg.jpg"
-        alt="gridlines showing different greys"
-        width={(3 * w) / 4}
-      />
-      <img
-        src="./images/plot-svg-simp-grid.jpg"
-        alt="gridlines showing different greys"
-        width={(3 * w) / 4}
-      />
+
+    <div class="section-container">
+      <h2>A design perspective: what the constraints encouraged me to do?</h2>
+      <p>
+        I came to data visualisation from a scientific research background. So,
+        I am always on the look out for ways to develop my design skills. But I
+        am simultaneously overwhelmed by both how much there is to learn in the
+        world of design, and where I have started from (i.e. no design
+        background). Working within the creative constraint really helped me to
+        focus on exploring a couple of aspects of data visualisation design in
+        detail. The things that really caught my attention, during the project,
+        where the possibilities for me to think differently about using greys
+        and textures.
+      </p>
+      <br/>
     </div>
-    <h3>Thinking differently about texture</h3>
-    <div class="annotation-display">
-      <AnnotationDesign
-        leftPos={0}
-        topPos={0}
-        marginAdj={""}
-        annotationText="<b>Oil background</b>"
-        theme="oil"
-      />
-      <AnnotationDesign
-        leftPos={0}
-        topPos={0}
-        marginAdj={""}
-        annotationText="<b>Light paper background</b>"
-        theme="light"
-      />
-      <AnnotationDesign
-        leftPos={0}
-        topPos={0}
-        marginAdj={""}
-        annotationText="<b>Dark paper background</b>"
-        theme="dark"
-      />
+
+    <div class="section-container">
+      <h3>Thinking differently about greys</h3>
+      <p>
+        Working initially in greyscale, and only adding colour at the end, is
+        the types of advice often seen in data visualisation books. This is for
+        various reasons including: working with colour can very difficult and
+        time consuming; and, working without colour should in theory encourage a
+        minimal and clear design approach. I had always failed to heed this
+        advice though; I find it just too tempting to explore how colour could
+        enhance a data visualisation.
+      </p>
+      <p>
+        Restricting myself to greyscale proved really helpful for me, not only
+        did it take away a potential distraction. It also, as in the quote at
+        the start of the article, gave me the freedom to explore aspects of
+        chart design I had not considered before. For example, I explored how
+        alternating lighter and darker greys in the gridlines behind the plot
+        (see below).
+      </p>
+
+      <div class="image-container">
+        <img
+          src="./images/plot-svg.jpg"
+          alt="gridlines showing different greys"
+          width={(3 * w) / 4}
+        />
+
+        <p>
+          This helped make the grid less visual imposing, pushing the grid
+          further in the background and leaving more emphasis on the data points
+          themselves. Just for comparison, here is a slightly more imposing
+          version grid with all the lines the same darker grey.
+        </p>
+        <img
+          src="./images/plot-svg-simp-grid.jpg"
+          alt="gridlines showing different greys"
+          width={(3 * w) / 4}
+        />
+      </div>
     </div>
-    <h2>If you want to try out using constraints in your own practice?</h2>
+
+    <div class="section-container">
+      <h3>Thinking differently about texture</h3>
+      <p>
+        Again, without a colour palette to procrastinate over, I was freed up to
+        explore how texture could be used to enhance the appearance of my
+        charts. The constraints gave me the chance to learn how to use images to
+        add texture using html and css. I tried to apply textures to different
+        chart elements to provide subtle contrasts, which did not distract the
+        reader attention from the data itself. It would never have occurred to
+        me to put textured background on annotations, being constrained and not
+        able to use colour drove me to think of this.
+      </p>
+      <p>
+        Perhaps, mostly usefully for me, in the context as my development as
+        data visualisation designer, the constraints inspired me to connect the
+        textures used to subject matter of the graph. I was really pleased with
+        the version of the graph showing the top fossil fuel producing
+        countries, where the background of the annotations a texture based on
+        photo of a pool of oil.
+      </p>
+      <br />
+      <div class="annotation-display">
+        <AnnotationDesign
+          leftPos={0}
+          topPos={0}
+          marginAdj={""}
+          annotationText="<b>Oil background</b>"
+          theme="oil"
+        />
+        <AnnotationDesign
+          leftPos={0}
+          topPos={0}
+          marginAdj={""}
+          annotationText="<b>Light paper background</b>"
+          theme="light"
+        />
+        <AnnotationDesign
+          leftPos={0}
+          topPos={0}
+          marginAdj={""}
+          annotationText="<b>Dark paper background</b>"
+          theme="dark"
+        />
+        <br />
+      </div>
+    </div>
+
+    <div class="section-container">
+      <h2>If you want to try out using constraints in your own practice?</h2>
+      <p>
+        I hope that in this reading about my experience has been shown you that
+        there might be some value to exploring using creative constraints in
+        your own data visualisation practice. The big things I got out of this
+        exercise for my own practice were:
+      </p>
+      <ul>
+        <li>
+          A way to focus my personal projects, which have in the past tended to
+          sprawl in the past.
+        </li>
+        <li>
+          A great approach to use when learning new tools and technologies. In
+          this case the constraints really allowed me to focus on learning the
+          basics of visualising data using Svelte and D3.
+        </li>
+        <li>
+          A much need reminder that you often have to work through the obvious
+          ideas for visualising a dataset, before you get to the more innovative
+          potentially higher impact ideas.
+        </li>
+        <li>
+          Some really helpful design ideas which I can reuse as I continue
+          developing a consistent visual identity for my data visualisation
+          work.
+        </li>
+      </ul>
+      <p>
+        If you don’t have time to go all in on the creative constraints in the
+        form of a specific personal project (like the one I’ve written about
+        above), here are a few ideas.
+      </p>
+      <ul>
+        <li>
+          Create the first draft of a chart in greyscale. I was sceptical too,
+          but found it worth trying and will do this again.
+        </li>
+        <li>
+          Sketch out multiple possible versions of chart, thinking about things
+          like adding context and what different views of the data could be
+          created by cropping the axis.
+        </li>
+        <li>
+          Think about what statistical modelling might help you understand the
+          data better. Even if you don’t have time to actually do the modelling
+          it might help you think differently about the data itself. If stats is
+          outside you skillset, ask some else what might be interesting from
+          statistical modelling perspective.
+        </li>
+      </ul>
+      <p>
+        Do <a href="mailto:chrisjmartin03@gmail.com">get in touch</a> if reading
+        about my experience of using creative constraints sparked off any ideas for
+        you. It would be great to hear from you.
+      </p>
+    </div>
   </div>
 
   <!-- <div  class='chart-container' id='chart2'
