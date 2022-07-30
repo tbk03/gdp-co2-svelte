@@ -267,25 +267,116 @@
     </div>
 
     <div class="section container">
+      <h3>Viewing the data at a different scale</h3>
+      <p>
+        The first version of the chart (above) puts the emphasis on countries
+        where emissions need to fall. So, primarily wealthy countries across
+        Europe, North America, the Middle East etc. This got me pondering how by
+        defaulting to displaying a plot at the full extents of the data, I am
+        guided towards telling certain stories. Working within the constraints
+        gave me the freedom to side-step one of my default ways of working.
+      </p>
+      <p>
+        So, in the version of the chart below I focussed in on a subset of the
+        data. Providing a view on where there is scope for some countries to
+        increase their emissions as their economies grow. For example, per
+        capita emission in India could grow by 33% before hitting the 2.3 tonnes
+        per year per capita threshold. For me, just zooming on one part of the
+        chart provides a totally different view and communicates a very
+        different message.
+      </p>
+      <br />
 
-      <h3>View the data at a different scale</h3>
+      <TitleBar>
+        <div slot="title">
+          Viewing some the data opens up the opportunity to tell a different
+          story
+        </div>
+        <div slot="subtitle">
+          There remain many countries where carbon emissions could grow
+          sustainability as the economy grows
+        </div>
+      </TitleBar>
 
       <div class="chart-container" id="p3">
         <Standardplot {w} {h} chartId={"p3"} plotNumber={3} />
       </div>
+
+      <br />
     </div>
 
     <div class="section container">
-      <h3>Look for interesting subgroups</h3>
+      <h3>Picking out subgroups within the data</h3>
+      <p>
+        Working within the constraints, made me to think a lot harder about
+        which groups of countries would be potentially interesting to highlight.
+        Typically, the graph is presented with the colour of point showing the
+        continent that the country sits within. So, thinking beyond that
+        geographic angle, and having explored the data a bit by this point two
+        group of countries really interested me. You can choose which groups of
+        countries you view using the buttons above the chart.
+      </p>
+      <p>
+        First, countries which produce a lot of fossil fuels. In the version of
+        the graph below the top 20 fossil fuel producing countries (oil, gas and
+        coal combined) are shown in black. This emphasises that major fossil
+        fuel producers have relatively high emissions compared to other
+        countries. In other words, that ready local access to fossil fuels can
+        enable high carbon lifestyles.
+      </p>
+      <p>
+        Secondly, I was interested in countries which are decoupling. That is
+        countries where the economy is growing and carbon emissions are falling.
+        This puts decoupling countries on the trajectory to the ‘ideal’ state of
+        high levels of income and low carbon emissions. Highlighting the
+        decoupling countries in black shows that they relatively low emissions
+        (given their levels of income).
+      </p>
+      <p>
+        Switching between the major fossil fuel producers and decoupling
+        countries, shows up that the United States is unique in appearing both
+        groups. This is the type of unexpected insight shows the value of
+        working within the constraints, I would have been unlikely to make this
+        connection otherwise.
+      </p>
+      <br />
 
-      <button on:click={handleFossilFuel}>Top 20 Fossil Fuel Producers</button>
-      <button on:click={handleDecoupling}>Growth decoupling from emissions</button>
+      <TitleBar>
+        <div slot="title">
+          Looking beyond the obvious subgroups can help make interesting
+          connections
+        </div>
+        <div slot="subtitle">
+          It is appears challenging for major fossil fuel producers to decouple
+          economic growth from carbon emissions
+        </div>
+      </TitleBar>
 
-
+      <button on:click={handleFossilFuel} class="chart-button"
+        >Top Fossil Fuel Producers</button
+      >
+      <button on:click={handleDecoupling} class="chart-button"
+        >Decoupling economies</button
+      >
       <div class="chart-container" id="p4">
         <Standardplot {w} {h} chartId={"p4"} plotNumber={groupsPlotNum} />
       </div>
-      <br/>
+
+      <FooterBar>
+        <div slot="footer">
+          <b>Additional data:</b> Fossil fuel producers -
+          <a
+            href="https://ourworldindata.org/fossil-fuels#coal-production-how-much-do-countries-produce"
+            >Our World in Data</a
+          >; Decoupling economies -
+          <a
+            href="https://www.wri.org/insights/roads-decoupling-21-countries-are-reducing-carbon-emissions-while-growing-gdp"
+            >World Resources Institute</a
+          >.
+        </div>
+      </FooterBar>
+
+      <br />
     </div>
 
     <h3>Do some statistical modelling</h3>
@@ -450,6 +541,10 @@
 
   .indented-section {
     margin-left: 4rem;
+  }
+
+  .chart-button {
+    margin-bottom: 1.5rem;
   }
 
   @media (min-width: 480px) {
