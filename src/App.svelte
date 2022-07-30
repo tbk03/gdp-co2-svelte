@@ -57,7 +57,6 @@
 
     <div class="section-container">
       <br />
-      <p>test edit</p>
       <p>
         One of the biggest of the challenges data visualisation designers face
         is the almost limitless range possible directions in which they could
