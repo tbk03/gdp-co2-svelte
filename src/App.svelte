@@ -1,29 +1,30 @@
 <script>
+  /**
+   * Creates the article on Creative Constraints in 'Data Visualisation'
+   */
+
+  // ---------------------------------------------------------------------
+  // import components
+  // ---------------------------------------------------------------------
+
+  // plot components
   import Standardplot from "./components/Standardplot.svelte";
-  import AnnotationDesign from "./components/AnnotationDesign.svelte";
   import TitleBar from "./components/TitleBar.svelte";
   import FooterBar from "./components/FooterBar.svelte";
 
-  // $: chartsDMS = {
-  //   one: {width: 0, height: 0},
-  //   two: {width: 0, height: 0},
-  //   three: {width: 0, height: 0},
-  //   four: {width: 0, height: 0}
-  // };
+  // other components
+  import AnnotationDesign from "./components/AnnotationDesign.svelte";
 
-  $: w = 0;
-  $: h = 0;
+  // ---------------------------------------------------------------------
+  // update width of charts and other components based on browser width
+  // ---------------------------------------------------------------------
+  $: w = 0; // max-width set in css
+  $: h = 0; // max-height set in css
 
-  let plotNum = 1;
-  let handleClickB1 = () => (plotNum = 1);
-  let handleClickB2 = () => (plotNum = 2);
-  let handleClickB3 = () => (plotNum = 3);
-  let handleClickB4 = () => (plotNum = 4);
-  let handleClickB5 = () => (plotNum = 5);
-  let handleClickB6 = () => (plotNum = 6);
-  let handleClickB7 = () => (plotNum = 7);
-
+  // ---------------------------------------------------------------------
   // handling switching user interaction for switching between charts
+  // ---------------------------------------------------------------------
+
   // 'Look for interesting subgroups' section
   let groupsPlotNum = 4;
   let handleFossilFuel = () => (groupsPlotNum = 4);
@@ -33,28 +34,34 @@
   let modellingPlotNum = 6;
   let handleDeveloping = () => (modellingPlotNum = 6);
   let handleDeveloped = () => (modellingPlotNum = 7);
+
+  // ---------------------------------------------------------------------
+  // in case I want to go back to clicker / scrolly telling ---------------
+  // ---------------------------------------------------------------------
+  // $: chartsDMS = {
+  //   one: {width: 0, height: 0},
+  //   two: {width: 0, height: 0},
+  //   three: {width: 0, height: 0},
+  //   four: {width: 0, height: 0}
+  // };
+
+  // let plotNum = 1;
+  // let handleClickB1 = () => (plotNum = 1);
+  // let handleClickB2 = () => (plotNum = 2);
+  // let handleClickB3 = () => (plotNum = 3);
+  // let handleClickB4 = () => (plotNum = 4);
+  // let handleClickB5 = () => (plotNum = 5);
+  // let handleClickB6 = () => (plotNum = 6);
+  // let handleClickB7 = () => (plotNum = 7);
 </script>
 
 <main>
   <div class="story-container">
     <h1>Creative constraints for data visualisation</h1>
 
-    <!-- <button on:click={handleClickB1}>plot 1</button>
-    <button on:click={handleClickB2}>plot 2</button>
-    <button on:click={handleClickB3}>plot 3</button>
-    <button on:click={handleClickB4}>plot 4</button>
-    <button on:click={handleClickB5}>plot 5</button>
-    <button on:click={handleClickB6}>plot 6</button>
-    <button on:click={handleClickB7}>plot 7</button>
-    <div
-      class="chart-container"
-      id="1"
-      bind:offsetWidth={w}
-      bind:offsetHeight={h}
-    >
-      <Standardplot {w} {h} chartId={"1"} plotNumber={plotNum} />
-    </div> -->
-
+    <!-- -------------------------------------------------------------------- -->
+    <!-- Introduction -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <br />
       <p>
@@ -100,6 +107,9 @@
       <br />
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- Creative Constraints in Data Visualisation -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h2>
         What could creative constraints look like in data visualisation
@@ -131,7 +141,9 @@
     </div>
     <h2>What you need to know about the chart I chose to work with?</h2>
 
-    <!-- PLOT 1 -->
+    <!-- -------------------------------------------------------------------- -->
+    <!-- The chart that I chose -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <TitleBar>
         <div slot="title">
@@ -201,6 +213,9 @@
       <br />
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A data perspective -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h2>A data perspective: what the constraints encouraged me to do?</h2>
       <p>
@@ -214,6 +229,9 @@
       </p>
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A data perspective: adding context -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h3>Adding more context to the chart</h3>
       <p>
@@ -266,6 +284,9 @@
       </FooterBar>
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A data perspective: view a differnt scale -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h3>Viewing the data at a different scale</h3>
       <p>
@@ -305,6 +326,9 @@
       <br />
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A data perspective: subgroups -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h3>Picking out subgroups within the data</h3>
       <p>
@@ -379,6 +403,9 @@
       <br />
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A data perspective: statisitcal modelling -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h3>Do some statistical modelling</h3>
 
@@ -437,6 +464,9 @@
       <br />
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A design perspective -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h2>A design perspective: what the constraints encouraged me to do?</h2>
       <p>
@@ -450,9 +480,12 @@
         where the possibilities for me to think differently about using greys
         and textures.
       </p>
-      <br/>
+      <br />
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A design perspective: greys -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h3>Thinking differently about greys</h3>
       <p>
@@ -494,6 +527,9 @@
       </div>
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- A design perspective: texture -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h3>Thinking differently about texture</h3>
       <p>
@@ -542,6 +578,9 @@
       </div>
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- Conclusion / the end -->
+    <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h2>If you want to try out using constraints in your own practice?</h2>
       <p>
@@ -602,6 +641,25 @@
     </div>
   </div>
 
+  <!-- -------------------------------------------------------------------- -->
+  <!-- KEEP FOR POTENTIAL USE LATER -->
+  <!-- -------------------------------------------------------------------- -->
+  <!-- <button on:click={handleClickB1}>plot 1</button>
+    <button on:click={handleClickB2}>plot 2</button>
+    <button on:click={handleClickB3}>plot 3</button>
+    <button on:click={handleClickB4}>plot 4</button>
+    <button on:click={handleClickB5}>plot 5</button>
+    <button on:click={handleClickB6}>plot 6</button>
+    <button on:click={handleClickB7}>plot 7</button>
+    <div
+      class="chart-container"
+      id="1"
+      bind:offsetWidth={w}
+      bind:offsetHeight={h}
+    >
+      <Standardplot {w} {h} chartId={"1"} plotNumber={plotNum} />
+    </div> -->
+
   <!-- <div  class='chart-container' id='chart2'
         bind:offsetWidth={chartsDMS.two.width}
         bind:offsetHeight={chartsDMS.two.height}>
@@ -633,7 +691,24 @@
 </main>
 
 <style>
+  /* --------------------------------------------------------------------------
+  Setup 
+  -------------------------------------------------------------------------- */
   @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+  :root {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+
+  /* --------------------------------------------------------------------------
+  Style containers 
+  -------------------------------------------------------------------------- */
+
+  main {
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto;
+  }
 
   .chart-container {
     /* to center */
@@ -642,8 +717,6 @@
     height: 65vh;
     max-height: 700px;
     min-width: 600px;
-
-    /* min-width: 600px; */
     max-width: 900px;
   }
 
@@ -652,43 +725,22 @@
     margin: auto;
   }
 
+  .indented-section {
+    margin-left: 4rem;
+  }
+
   .annotation-display {
     display: flex;
     justify-content: space-between;
   }
 
-  /* default from template below */
-
-  :root {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  }
-
-  main {
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-  }
-
-  /* img {
-    height: 16rem;
-    width: 16rem;
-  } */
-
+  /* --------------------------------------------------------------------------
+  Style text 
+  -------------------------------------------------------------------------- */
   h1,
   h2,
   h3 {
     font-family: "Poppins", sans-serif;
-  }
-
-  h2 {
-    font-size: 2rem;
-    text-align: left;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    text-align: left;
   }
 
   h1 {
@@ -699,6 +751,16 @@
     line-height: 1.1;
     margin: 2rem auto;
     max-width: 14rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    text-align: left;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    text-align: left;
   }
 
   p {
@@ -715,21 +777,19 @@
     text-align: left;
   }
 
-  .indented-section {
-    margin-left: 4rem;
-  }
-
+  /* --------------------------------------------------------------------------
+  Style user interaction components 
+  -------------------------------------------------------------------------- */
   .chart-button {
     margin-bottom: 1.5rem;
   }
 
+  /* --------------------------------------------------------------------------
+  From default template
+  -------------------------------------------------------------------------- */
   @media (min-width: 480px) {
     h1 {
       max-width: none;
     }
-
-    /* p {
-      max-width: none;
-    } */
   }
 </style>
