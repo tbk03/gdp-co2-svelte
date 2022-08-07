@@ -58,6 +58,8 @@
 <main>
   <div class="story-container">
     <h1>Creative constraints for data visualisation</h1>
+    <h2>Version 1.0: For feedback from Elevate</h2>
+    <p></p>
 
     <!-- -------------------------------------------------------------------- -->
     <!-- Introduction -->

@@ -122,6 +122,15 @@
 	// -------------------------------------------------------------------------------------------
 	// 8. Customising the versions of the charts
 	// -------------------------------------------------------------------------------------------
+
+	// Plot 1: The basic plot including point size legend
+	// Plot 2: Countries where carbon emissions need to fall
+	// Plot 3: Countries where carbon emissions could rise
+	// Plot 4: Top 20 fossil producers
+	// Plot 5: Decoupling economies
+	// Plot 6: Modelling developing economies
+	// Plot 7: Modelling developed economies where emissions are worse than the theoretical worst case
+
 	export let plotNumber = 1;
 	$: currentPlotNumber = plotNumber;
 
