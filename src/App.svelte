@@ -57,8 +57,16 @@
 
 <main>
   <div class="story-container">
-    <h1>Creative constraints for data visualisation</h1>
-    <h2>Version 1.1: After feedback from Elevate</h2>
+    <div class="image-container">
+      <img
+        src="/images/creative_constraints.jpg"
+        alt="gridlines showing different greys"
+        width={w}
+      />
+      <h1 class="title-on-image">Creative constraints for data visualisation</h1>
+      <h2>Version 1.1: After feedback from Elevate</h2>
+    </div>
+    
     <p />
 
     <!-- -------------------------------------------------------------------- -->
@@ -346,6 +354,14 @@
     display: flex;
     justify-content: space-between;
   }
+  
+  .image-container{
+    margin: 3%;
+    position: relative;
+    margin: auto;
+    text-align: center;
+  }
+
 
   /* --------------------------------------------------------------------------
   Style text 
@@ -365,13 +381,14 @@
   }
 
   h1 {
-    color: black;
+    color: white;
     text-transform: uppercase;
     font-size: 3rem;
     font-weight: 100;
     line-height: 1.1;
     margin: 2rem auto;
     max-width: 14rem;
+    font-weight: bold;
   }
 
   h2 {
@@ -397,6 +414,16 @@
     margin: 1rem auto;
     line-height: 1.2;
     text-align: left;
+  }
+
+  .title-on-image{
+    position: absolute;
+    margin: auto;
+    top: 50px;
+    left: 0px;
+    /* background-color: black;
+    padding-top: 30px;
+    padding-bottom: 30px; */
   }
 
   /* --------------------------------------------------------------------------
