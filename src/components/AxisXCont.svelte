@@ -91,7 +91,7 @@
                 {/if}
 
                 <!-- show minor ticks if required and screen is wider than 600px  -->
-                {#if i % 2 != 0 && chartSpecification.dms.width > 700}
+                {#if i % 2 != 0 && chartSpecification.dms.width > 800}
                     <line
                         class="minor-tick"
                         x1={t}
