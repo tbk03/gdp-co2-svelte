@@ -63,18 +63,45 @@
         alt="gridlines showing different greys"
         width={w}
       />
-      <h1 class="title-on-image">Creative constraints for data visualisation</h1>
-      <h2>Version 1.1: After feedback from Elevate</h2>
+      <h1 class="title-on-image">
+        Creative constraints for data visualisation
+      </h1>
     </div>
-    
-    <p />
+
+    <h3>By Chris Martin</h3>
 
     <!-- -------------------------------------------------------------------- -->
     <!-- Introduction -->
     <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <br />
-      <p>One of the biggest of the challenges ...</p>
+      <p>
+        One of the biggest challenges data visualisation designers face is the
+        unbounded space of the possible. There are just so many possible ways
+        any given dataset could be visualised.
+      </p>
+      <p>
+        When making data visualisations my head is constantly full of questions.
+        Am I framing this in the ‘right’ way? Does this colour look right with
+        the others? Have I picked the wrong chart type, maybe another would be
+        better? Are these lines too wide or the points too big? And, so on …
+      </p>
+      <p>
+        Recently, I was thinking about how I face similar challenges when
+        writing and producing music. The challenge of an unbounded space of
+        possibilities. One of the strategies I have used to help me in a musical
+        context is setting myself arbitrary creative constraints. For example, I
+        might limit myself to using only one synthesiser on a track.
+      </p>
+      <p>
+        I started using constraints like this having been inspired by a <a
+          href="https://makingmusic.ableton.com/arbitrary-constraints"
+          >chapter written by Dennis DeSantis</a
+        > in ’74 Creative Strategies for Electronic Music Producers’. A quote from
+        Igor Stravinsky in the chapter really stuck with me. It beautifully encapsulates
+        the essence of an idea that I think is very much transferable to data visualisation
+        design.
+      </p>
 
       <p class="indented-section">
         <i
@@ -91,15 +118,34 @@
     </div>
 
     <!-- -------------------------------------------------------------------- -->
-    <!-- Creative Constraints in Data Visualisation -->
+    <!-- My experiment -->
     <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h2>
         Experimenting with creative constraints in my own data visualisation
         practice
       </h2>
-      <p>...</p>
-
+      <br />
+      <p>
+        I started to wonder what using creative constraints in data
+        visualisation would look like in practice. So, I decided to create
+        myself a little experiment based on a couple of creative constraints:
+      </p>
+      <ul>
+        <li>
+          Pick a simple chart that you know well and remake it in ways you
+          haven’t seen before.
+        </li>
+        <li>Don’t use any colour, just work in greyscale.</li>
+      </ul>
+      <p>
+        In the rest of this visual essay I will try to give you a sense of how
+        my experiment went and what I learnt from it. I hope this will encourage
+        you to consider using creative constraints in your own practice from
+        time to time.
+      </p>
+      <p>Here is the chart I chose to remake.</p>
+      <br />
       <div
         class="chart-container"
         id="p1"
@@ -117,13 +163,61 @@
           >
         </div>
       </FooterBar>
+      <br />
+      <p>
+        As you read on, it will probably be helpful to remember three things
+        about the chart.
+      </p>
+      <ul>
+        <li>
+          Each point in the scatterplot is a country and the size of the point
+          is defined by the population of the country.
+        </li>
+        <li>
+          On the x axis we see GDP per capita. This is used as an indicator of
+          the quality of life of a ‘typical’ person in a given country. Based on
+          the, at least partially, flawed assumption that the higher someone’s
+          income the better their quality of life.
+        </li>
+        <li>
+          On the y axis we see CO2 emissions per capita. This is of interest in
+          its own right. It can also be used as an indicator of the overall
+          environmental damage caused by the ‘typical’ person in a given
+          country.
+        </li>
+      </ul>
 
       <br />
     </div>
 
+    <!-- -------------------------------------------------------------------- -->
+    <!-- AESTHETICS  -->
+    <!-- -------------------------------------------------------------------- -->
+
     <div class="section-container">
       <h2>Looking beyond the data when thinking about aesthetics</h2>
-      <p>...</p>
+      <br />
+      <p>
+        I found that working without colour made it more challenging to create
+        contrasts between the data and non-data elements of a chart. The
+        non-data elements being things like the axis, the axis labels and ticks,
+        and reference grid lines.
+      </p>
+      <p>
+        Normally, and without thinking about it, I would create these contrasts
+        by using colour for data elements and greys for non-data elements.
+        Working within my greyscale constraint meant I had to think harder than
+        normal about how to de-emphasise the non-data elements in my chart. I
+        wanted the non-data elements to sit comfortably in the background, while
+        the data elements remained in the foreground as the focus of the
+        reader’s attention.
+      </p>
+      <p>
+        I started thinking through in detail how much visual emphasis I wanted
+        to give to each element of the chart. In the end, I thought of each
+        element as having a visual emphasis rating between one and five (five
+        being the most visual emphasis).
+      </p>
 
       <table>
         <thead>
@@ -137,8 +231,32 @@
             <td>5. Maximum</td>
             <td>Data points</td>
           </tr>
+          <tr>
+            <td>4. High</td>
+            <td>Annotations</td>
+          </tr>
+          <tr>
+            <td>3. Medium</td>
+            <td>Axis lines and labels</td>
+          </tr>
+          <tr>
+            <td>2. Low</td>
+            <td>Major gridlines and axis ticks</td>
+          </tr>
+          <tr>
+            <td>1. Minimum</td>
+            <td>Minor gridlines and axis ticks</td>
+          </tr>
         </tbody>
       </table>
+      <br />
+      <p>
+        As you can see in the table above, rather than giving all non data
+        elements the same emphasis, I gave some a minimal or low emphasis. In
+        practice, this meant that I used darker and lighter shades of grey,
+        stroke width, and stroke length to create subtle contrasts between
+        different non-data elements of the chart. Here is the result.
+      </p>
 
       <div class="image-container">
         <img
@@ -147,7 +265,20 @@
           width={w}
         />
       </div>
+
+      <p>
+        While it was time consuming to think through the aesthetics of the
+        non-data elements in this level of detail, it did come with a
+        longer-term pay off. I now have a consistent and reusable non-data
+        background layer, which hopefully will give my charts a more distinct
+        visual identity.
+      </p>
+      <br/>
     </div>
+
+    <!-- -------------------------------------------------------------------- -->
+    <!-- TEXTURES  -->
+    <!-- -------------------------------------------------------------------- -->
 
     <div class="section-container">
       <h2>Using textures which connect to the topic of the chart</h2>
@@ -354,14 +485,13 @@
     display: flex;
     justify-content: space-between;
   }
-  
-  .image-container{
+
+  .image-container {
     margin: 3%;
     position: relative;
     margin: auto;
     text-align: center;
   }
-
 
   /* --------------------------------------------------------------------------
   Style text 
@@ -369,7 +499,8 @@
   h1,
   h2,
   h3,
-  p {
+  p,
+  li {
     font-family: "Poppins", sans-serif;
     color: #404040;
   }
@@ -377,7 +508,7 @@
   h2 {
     padding-bottom: 8px;
     margin-bottom: 8px;
-    border-bottom: solid 2px #737373;
+    border-bottom: solid 1px #737373;
   }
 
   h1 {
@@ -398,7 +529,7 @@
   }
 
   h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     text-align: left;
   }
 
@@ -410,13 +541,13 @@
   }
 
   li {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 1rem auto;
     line-height: 1.2;
     text-align: left;
   }
 
-  .title-on-image{
+  .title-on-image {
     position: absolute;
     margin: auto;
     top: 50px;
@@ -433,6 +564,7 @@
   tbody {
     font-family: "Lato", sans-serif;
     text-align: left;
+    color: #404040;
   }
 
   thead {
@@ -446,8 +578,7 @@
   }
 
   tbody {
-    font-size: 1.0rem;
-    font-style: italic;
+    font-size: 1.1rem;
   }
   th,
   td {
