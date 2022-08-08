@@ -32,8 +32,17 @@
 
   // 'Do some statistical modelling' section
   let modellingPlotNum = 6;
-  let handleDeveloping = () => (modellingPlotNum = 6);
-  let handleDeveloped = () => (modellingPlotNum = 7);
+  let buttonSelectedDeveloping = "chart-button-selected";
+  let buttonSelectedDeveloped = "chart-button-not-selected";
+  let handleDeveloping = () => {
+    modellingPlotNum = 6;
+    buttonSelectedDeveloping = "chart-button-selected";
+    buttonSelectedDeveloped = "chart-button-not-selected";
+  };
+  let handleDeveloped = () => {(modellingPlotNum = 7);
+    buttonSelectedDeveloping = "chart-button-not-selected";
+    buttonSelectedDeveloped = "chart-button-selected";
+  }
 
   // ---------------------------------------------------------------------
   // in case I want to go back to clicker / scrolly telling ---------------
@@ -112,7 +121,7 @@
           surround myself with obstacles. Whatever diminishes constraint
           diminishes strength. The more constraints one imposes, the more one
           frees oneself of the claims that shackle the spirit”.</i
-        > <br /><br /><b>Igor Stravinsky, Poetics of Music</b>
+        > <br /><br /><b>Igor Stravinsky, Poetics of Music.</b>
       </p>
       <br />
     </div>
@@ -216,7 +225,7 @@
         I started thinking through in detail how much visual emphasis I wanted
         to give to each element of the chart. In the end, I thought of each
         element as having a visual emphasis rating between one and five (five
-        being the most visual emphasis).
+        being the maximum visual emphasis).
       </p>
 
       <table style="width:60%">
@@ -350,13 +359,13 @@
       </p>
       <p>
         As I worked through various iterations of the chart, I realised a
-        crucial piece of context was missing. What level of annual CO2 emissions
+        crucial piece of context was missing. What level of annual CO<sub>2</sub> emissions
         per capita is compatible with keeping climate change impacts (in some
         sense) in check? Without this context the graph provides no sense of the
         scale of the decarbonisation challenge that we collectively face. So, I
         did some research and identified a recent and credible estimate of a
         sustainable level of annual carbon emissions per person (2.3 tonnes
-        CO2e).
+        CO<sub>2</sub>e).
       </p>
       <p>
         I went through several iterations of creating charts that integrated
@@ -447,10 +456,10 @@
 
       <br />
 
-      <button on:click={handleDeveloping} class="chart-button"
+      <button on:click={handleDeveloping} class="chart-button {buttonSelectedDeveloping}"
         >Developing economies</button
       >
-      <button on:click={handleDeveloped} class="chart-button"
+      <button on:click={handleDeveloped} class="chart-button {buttonSelectedDeveloped}"
         >Developed economies</button
       >
 
@@ -464,7 +473,7 @@
           >'Your statistics and modelling do not need to be peer-reviewed
           academic research quality to enhance a data visualisation'</i
         >. I definitely plan to put this on a post it note above my desk, so I
-        don’t get stuck with my tendency to avoid using stats and modelling.
+        don’t get stuck and completely avoid using stats and modelling.
       </p>
       <br />
     </div>
@@ -507,8 +516,7 @@
       <p>
         There are so many different creative constraints you could set for
         yourself in your own experiments. As a starting point, here are just a
-        few ideas for different aspects of data visualisation practice that you
-        could think about.
+        few ideas for some different aspects of data visualisation practice.
       </p>
 
       <table style="width:90%">
@@ -573,13 +581,35 @@
           </tr>
         </tbody>
       </table>
-      <br/>
-      <p class="last-element">
-        Do <a href="mailto:chrisjmartin03@gmail.com">get in touch</a> if reading about my experience of using creative
-        constraints sparked off any ideas for you. Or, if you try any of the
-        ideas above. It would be great to hear from you, and see where you get
-        to with your own experiments.
+      <br />
+      <p>
+        Do <a href="mailto:chrisjmartin03@gmail.com">get in touch</a> if reading
+        about my experience of using creative constraints sparked off any ideas for
+        you. Or, if you try any of the ideas above. It would be great to hear from
+        you, and see where you get to with your own experiments.
       </p>
+      <br />
+    </div>
+    <div class="section-container last-element">
+      <h3>Acknowledgements</h3>
+      <ul>
+        <li>
+          The pattern at the top of the page was produced with code adapted from <a
+            href="https://art-from-code.netlify.app/day-2/session-2/#mosaica"
+            >Art from Code</a
+          > by Danielle Navarro.
+        </li>
+        <li>
+          The photograph of oil used in the annotation background texture was
+          taken by <a href="https://unsplash.com/photos/zbai2Y1GBIw"
+            >Tom Barrett</a
+          >.
+        </li>
+        <li>
+          Feedback and ideas throughout the development and writing process from
+          the <a href="https://www.elevatedataviz.com/">Elevate Data Viz</a> community.
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -758,8 +788,10 @@
   /* --------------------------------------------------------------------------
   Style tables
   -------------------------------------------------------------------------- */
-  table{margin-left: auto;
-  margin-right: auto;}
+  table {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   thead,
   tbody {
@@ -791,7 +823,22 @@
   Style user interaction components 
   -------------------------------------------------------------------------- */
   .chart-button {
+    font-family: "Lato", sans-serif;
     margin-bottom: 1.5rem;
+    background-color: #404040;
+    padding: 10px;
+    font-weight: bold;
+    transition-duration: 1s;
+  }
+
+  .chart-button-selected {
+    background-color: white; /* Green */
+    color: #404040;
+  }
+
+  .chart-button-not-selected {
+    color: white;
+    border: 1px solid #404040;
   }
 
   /* --------------------------------------------------------------------------

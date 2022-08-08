@@ -45,14 +45,24 @@
 	// 2. Functions for creating tooltip text
 	// -------------------------------------------------------------------------------------------
 
+	function formatPopulation(x){
+		if(x < 1e6) {return format(",")(x);}
+		if(x < 1e9) {return (x/1e6).toFixed(1) + " million";}
+		return (x/1e9).toFixed(2) + " billion";
+	}
+
 	function createTooltipTextPlot1(attributes) {
+
+		let popFormatted = formatPopulation(attributes["data-population"].value);
+
 		let line1 =
 			"<p class='tt-line data-country'>" +
 			attributes["data-country"].value +
 			"</p>";
 		let line2 =
 			"<p class='tt-line'> Each year for each of the <b>" +
-			format(",")(attributes["data-population"].value) +
+			// format(",")(attributes["data-population"].value) +
+			popFormatted +
 			"</b> people: </p>";
 		let line3 =
 			"<p class='tt-line'><b>$" +
