@@ -219,10 +219,10 @@
         being the most visual emphasis).
       </p>
 
-      <table>
+      <table style="width:60%">
         <thead>
           <tr>
-            <th>Visual Emphasis</th>
+            <th style="width:30%">Visual Emphasis</th>
             <th>Chart components</th>
           </tr>
         </thead>
@@ -511,11 +511,11 @@
         could think about.
       </p>
 
-      <table>
+      <table style="width:90%">
         <thead>
           <tr>
-            <th>Aspect of data visualisation practice</th>
-            <th>Ideas for creative constraints</th>
+            <th style="width:30%">Aspect of data visualisation practice</th>
+            <th style="width:60%">Ideas for creative constraints</th>
           </tr>
         </thead>
         <tbody>
@@ -573,7 +573,7 @@
           </tr>
         </tbody>
       </table>
-
+      <br/>
       <p class="last-element">
         Do <a href="mailto:chrisjmartin03@gmail.com">get in touch</a> if reading about my experience of using creative
         constraints sparked off any ideas for you. Or, if you try any of the
@@ -757,6 +757,9 @@
   /* --------------------------------------------------------------------------
   Style tables
   -------------------------------------------------------------------------- */
+  table{margin-left: auto;
+  margin-right: auto;}
+
   thead,
   tbody {
     font-family: "Lato", sans-serif;
@@ -780,7 +783,6 @@
   th,
   td {
     padding: 15px;
-    width: 20%;
   }
 
   /* --------------------------------------------------------------------------
