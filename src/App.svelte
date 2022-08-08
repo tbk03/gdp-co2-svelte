@@ -68,7 +68,7 @@
       </h1>
     </div>
 
-    <h3>By Chris Martin</h3>
+    <h3>Chris Martin - August 2022</h3>
 
     <!-- -------------------------------------------------------------------- -->
     <!-- Introduction -->
@@ -273,7 +273,7 @@
         background layer, which hopefully will give my charts a more distinct
         visual identity.
       </p>
-      <br/>
+      <br />
     </div>
 
     <!-- -------------------------------------------------------------------- -->
@@ -282,7 +282,30 @@
 
     <div class="section-container">
       <h2>Using textures which connect to the topic of the chart</h2>
-      <p>...</p>
+      <p>
+        As I worked without colour, I also gravitated towards using textures to
+        add visual interest to my charts, and to enhance the overall design
+        aesthetic. I focused on adding textured backgrounds to annotations and
+        tooltips.. Going through iterations of various chart versions enabled me
+        to quickly experiment with different texture options. Discarding those
+        options that didn’t work without much concern, as I hadn’t invested much
+        time or energy in them.
+      </p>
+      <p>
+        Initially, I experimented a lot with different paper based textures.
+        Here, I was just thinking about subtly enhancing the visual appearance
+        of the chart. While making a version of the chart that highlighted the
+        top 20 fossil fuel producing countries, I stumbled on an alternative
+        approach.
+      </p>
+      <p>
+        I started thinking about how the textures could connect to the theme of
+        the chart. This led me to creating a crude oil textured background for
+        annotations. Oil is probably the fossil fuel people most commonly think
+        of in the context of climate change. The dark liquid texture also worked
+        well as a backdrop to the annotation text. The chart below shows this
+        texture in the context.
+      </p>
 
       <br />
 
@@ -296,21 +319,59 @@
           <a
             href="https://ourworldindata.org/fossil-fuels#coal-production-how-much-do-countries-produce"
             >Our World in Data</a
-          >; Decoupling economies -
-          <a
-            href="https://www.wri.org/insights/roads-decoupling-21-countries-are-reducing-carbon-emissions-while-growing-gdp"
-            >World Resources Institute</a
-          >.
+          >
         </div>
       </FooterBar>
+      <br />
+      <p>
+        Over the last year or so, I have built a habit where I try to align the
+        meanings and associations of colours with the message of a chart. Maybe
+        it should have been obvious, but I had never considered doing something
+        similar with texture. It was only working with my ‘no colour’ constraint
+        that I made this connection. It is something I definitely want to carry
+        though into my future work.
+      </p>
+      <br />
     </div>
 
     <!-- -------------------------------------------------------------------- -->
-    <!-- A data perspective: view a differnt scale -->
+    <!-- CONTEXT -->
     <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h2>Thinking deeply about embedding context into a chart</h2>
-      <p>...</p>
+      <br />
+      <p>
+        When working normally, I would think about the different chart options
+        that could be used with the data at hand. As well as how to use several
+        potentially complementary charts together. Being constrained to work
+        with just one chart (a scatter chart) made me think more deeply about
+        how I embedded context into the chart. I couldn’t fall back on adding
+        more charts to create a story with the data.
+      </p>
+      <p>
+        As I worked through various iterations of the chart, I realised a
+        crucial piece of context was missing. What level of annual CO2 emissions
+        per capita is compatible with keeping climate change impacts (in some
+        sense) in check? Without this context the graph provides no sense of the
+        scale of the decarbonisation challenge that we collectively face. So, I
+        did some research and identified a recent and credible estimate of a
+        sustainable level of annual carbon emissions per person (2.3 tonnes
+        CO2e).
+      </p>
+      <p>
+        I went through several iterations of creating charts that integrated
+        this additional context. These included adding a simple horizontal line,
+        and visually representing countries above and below the 2.3 tonnes
+        threshold in different ways.
+      </p>
+      <p>
+        It took me a bit of time to realise that I actually needed two versions
+        of the chart to explain the importance of the 2.3 tonnes threshold. One
+        which showed the countries where carbon emissions need to fall, and by
+        how much. A second which shows the other side of the story, the
+        countries where emissions could rise to a sustainable level as their
+        economies grow. The two charts I settled on are shown below.
+      </p>
 
       <br />
 
@@ -328,21 +389,61 @@
           >
         </div>
       </FooterBar>
-
+      <br />
+      <br />
+      <br />
       <div class="chart-container" id="p4">
         <Standardplot {w} {h} chartId={"p4"} plotNumber={3} />
       </div>
+      <br />
+      <p>
+        Reflecting on the process of creating these charts, I recognised that I
+        often feel a pressure to find the one ‘best’ way to show the data. A
+        single way that conveys a clear and unambiguous message. Working within
+        the constraints freed me up from this pressure, and helped me to
+        communicate a more nuanced message through two versions of the same
+        chart. The primary difference between the two charts is just the axis
+        extents, but this gives two very different views of the data.
+      </p>
 
       <br />
     </div>
 
     <!-- -------------------------------------------------------------------- -->
-    <!-- A data perspective: statisitcal modelling -->
+    <!-- STATS -->
     <!-- -------------------------------------------------------------------- -->
     <div class="section-container">
       <h2>Feeling free to use statistical techniques to enhance a chart</h2>
 
-      <p>...</p>
+      <p>
+        Working with only one chart also encouraged me to do some statistical
+        modelling. I have some background in statistics, but I generally avoid
+        using statistical modelling within my data visualisations. This is for
+        two reasons: (1) I think I won’t have enough time to do ‘proper’
+        modelling; and, (2) I worry about how to communicate modelling in an
+        accessible way.
+      </p>
+      <p>
+        Having exhausted other options within the creative constraints, I was
+        left with the option of doing some statistics. This absence of
+        alternatives helped me to overcome my mental barriers, and actually get
+        on with doing some modelling with fewer concerns.
+      </p>
+      <p>
+        I started by doing some research about how in theory, a country's carbon
+        emissions should change as its economy grows. The next step was to
+        experiment with a few different models (using R). In essence, these
+        models described the trajectory a country should theoretically take
+        across the graph as its economy grows.
+      </p>
+      <p>
+        Then it was a case of thinking through how to visually explain the
+        model, and its implications, in a way that is accessible for people
+        without a statistical background. I’m not sure I got the whole way with
+        this last step. Take a look at the chart below and see what you think.
+        You can change between two views of the model and the data using the
+        buttons above the chart.
+      </p>
 
       <br />
 
@@ -357,6 +458,15 @@
         <Standardplot {w} {h} chartId={"p6"} plotNumber={modellingPlotNum} />
       </div>
       <br />
+      <p>
+        It felt like I learnt something really important from producing this
+        last version of the chart. <i
+          >'Your statistics and modelling do not need to be peer-reviewed
+          academic research quality to enhance a data visualisation'</i
+        >. I definitely plan to put this on a post it note above my desk, so I
+        don’t get stuck with my tendency to avoid using stats and modelling.
+      </p>
+      <br />
     </div>
 
     <!-- -------------------------------------------------------------------- -->
@@ -366,7 +476,40 @@
       <h2>
         Using creative constraints in your own data visualisation practice
       </h2>
-      <p>...</p>
+      <br />
+      <p>
+        I hope that reading about my experiences has piqued your interest in
+        using creative constraints in your own data visualisation practice. The
+        biggest things I got out of my experiment with creative constraints
+        were:
+      </p>
+      <ul>
+        <li>
+          A way to focus my personal projects, which have tended to sprawl in
+          the past!
+        </li>
+        <li>
+          A great approach to use when learning new tools and technologies. In
+          this case, working with the constraints helped me to focus on learning
+          the basics of visualising data using Svelte and D3.
+        </li>
+        <li>
+          A much needed reminder that you often have to work through the obvious
+          ideas for visualising a dataset. Before you then get to the more
+          innovative, potentially higher impact ideas.
+        </li>
+        <li>
+          Some really helpful design ideas that I can reuse as I develop a
+          consistent visual identity for my work.
+        </li>
+      </ul>
+
+      <p>
+        There are so many different creative constraints you could set for
+        yourself in your own experiments. As a starting point, here are just a
+        few ideas for different aspects of data visualisation practice that you
+        could think about.
+      </p>
 
       <table>
         <thead>
@@ -377,16 +520,65 @@
         </thead>
         <tbody>
           <tr>
-            <td>5. Maximum</td>
-            <td>Data points</td>
+            <td>Use of colour.</td>
+            <td
+              >Use only colours found in a photo related to the topic of your
+              chart.</td
+            >
+          </tr>
+          <tr>
+            <td>Use of shape.</td>
+            <td
+              >Make a chart without any circles or open lines, only use squares
+              and rectangles.</td
+            >
+          </tr>
+          <tr>
+            <td>Use of scale.</td>
+            <td
+              >Make a chart which uses only logarithmic scales, and explain
+              these to the reader. Find a dataset where it makes sense to do
+              this.</td
+            >
+          </tr>
+          <tr>
+            <td>Non-data elements of the chart (axis, gridlines etc.).</td>
+            <td
+              >Remake a version of one of your previous charts, but without an
+              axis.</td
+            >
+          </tr>
+          <tr>
+            <td>Choice of chart.</td>
+            <td
+              >Show the same dataset using as many different chart types as
+              possible. Make sure to include chart types you don’t think will
+              work.</td
+            >
+          </tr>
+          <tr>
+            <td>Analysis and statistics.</td>
+            <td
+              >Apply an analytical technique you haven’t used before, and
+              integrate the findings into a chart. Remember you don’t need to
+              master the technique to use it in your experiment.</td
+            >
+          </tr>
+          <tr>
+            <td>Technologies.</td>
+            <td
+              >Only use one tool (e.g. Datawrapper, Figma …) to create a chart.
+              Or, maybe just use a pen and paper to hand-draw a chart.</td
+            >
           </tr>
         </tbody>
       </table>
 
-      <p>
-        Do <a href="mailto:chrisjmartin03@gmail.com">get in touch</a> if reading
-        about my experience of using creative constraints sparked off any ideas for
-        you. It would be great to hear from you.
+      <p class="last-element">
+        Do <a href="mailto:chrisjmartin03@gmail.com">get in touch</a> if reading about my experience of using creative
+        constraints sparked off any ideas for you. Or, if you try any of the
+        ideas above. It would be great to hear from you, and see where you get
+        to with your own experiments.
       </p>
     </div>
   </div>
@@ -496,6 +688,7 @@
   /* --------------------------------------------------------------------------
   Style text 
   -------------------------------------------------------------------------- */
+
   h1,
   h2,
   h3,
@@ -555,6 +748,10 @@
     /* background-color: black;
     padding-top: 30px;
     padding-bottom: 30px; */
+  }
+
+  .last-element {
+    padding-bottom: 300px;
   }
 
   /* --------------------------------------------------------------------------
