@@ -85,7 +85,7 @@
         z-index: 14;
 
         padding: 15px;
-        max-width: 150px;
+        max-width: 175px;
         background-size: cover;
         box-shadow: 1px 1px 6px var(--greyText);
         border-radius: 7.5px;

@@ -174,7 +174,7 @@
 		display: flex;
 		flex-direction: column;
 		max-height: 50vh;
-		max-width: 200px;
+		max-width: 250px;
 		border: 1px solid var(--greyLowEmp);
 		font-size: 16px;
 		color: var(--greyText);

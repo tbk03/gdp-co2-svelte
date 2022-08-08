@@ -658,9 +658,10 @@
     /* to center */
     margin: auto;
     display: flex;
-    height: 65vh;
-    max-height: 700px;
-    min-width: 600px;
+    height: 700px;
+    /* max-height: 700px;
+    min-height: 500px; */
+    min-width: 700px;
     max-width: 900px;
   }
 
@@ -718,7 +719,7 @@
   h2 {
     font-size: 1.8rem;
     text-align: left;
-    line-height: 1.3;
+    line-height: 1.1;
   }
 
   h3 {
@@ -765,6 +766,7 @@
     font-family: "Lato", sans-serif;
     text-align: left;
     color: #404040;
+    vertical-align: baseline;
   }
 
   thead {

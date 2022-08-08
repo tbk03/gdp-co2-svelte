@@ -84,7 +84,8 @@
 
 	$: scaleSize = scaleSqrt()
 		.domain(extent(data, accessSize))
-		.range([dms.boundedWidth / 150, dms.boundedWidth / 40]);
+		.range([dms.boundedWidth / 205, dms.boundedWidth / 45]);
+
 
 	// -------------------------------------------------------------------------------------------
 	// 5. Create chart specification object (to pass to other components - axis etc)
@@ -562,7 +563,7 @@
 	{#if currentPlotNumber == 4}
 		<Annotation
 			leftPos={scaleX(1.1e5)}
-			topPos={scaleY(30)}
+			topPos={scaleY(35)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="The 20 countries with the highest total fossil fuel production (coal, gas and oil combined) in 2015 are shown in black. Hover over the black circles for more details. "
 			theme="oil"
@@ -570,7 +571,7 @@
 
 		<Annotation
 			leftPos={scaleX(0.9e5)}
-			topPos={scaleY(12)}
+			topPos={scaleY(18)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="<b>Norway</b> is an outlier amongst the major fossil fuel producing countries. It has high GDP per capita and relatively low carbon emissions per capita."
 			theme="oil"
@@ -608,7 +609,7 @@
 	{#if currentPlotNumber == 7}
 		<Annotation
 			leftPos={scaleX(100000)}
-			topPos={scaleY(39)}
+			topPos={scaleY(40)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="The line shows an approximate trajectory of a country continuing on the path of a typical developing economy (GDP per capita less than $25,000), after it's economy had become developed. This can thought of as a theoretical worst case."
 			theme="dark"
@@ -616,7 +617,7 @@
 
 		<Annotation
 			leftPos={scaleX(100000)}
-			topPos={scaleY(15)}
+			topPos={scaleY(20)}
 			marginAdj={move(dms.marginLeft, dms.marginTop)}
 			annotationText="Hover over the black points to see which countries are doing worse (in terms of carbon emission per capita) than the theoretical worst case trajectory."
 			theme="light"
