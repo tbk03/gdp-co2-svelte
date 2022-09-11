@@ -698,6 +698,9 @@
   .story-container {
     max-width: 900px;
     margin: auto;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top:50px;
   }
 
   .indented-section {
